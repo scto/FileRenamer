@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">FileRenamer</string>	
+		
+	<string name="farright_text">I am the far right pane. I have an ImageButton control.</string>
+	<string name="right_text">Lion looking right in the right pane.</string>
+	<string name="middle_text">MONKEY in the middle pane.</string>
+	<string name="left_text">Zebra leaping left in the left pane.</string>
+	<string name="farleft_text">I am the far left pane. I have a Button.</string>
+
+	<string name="fileExplorerTextView">Choose</string>
+	<string name="fileExplorerSdCardButton">SD Card</string>
+	<string name="fileExplorerUpButton">Up</string>
+
+	<string name="mainAboutMenu">AboutUs</string>
+	<string name="mainSettingsMenu">Settings</string>
+	<string name="mainHelpMenu">Help</string>
+	<string name="mainExitMenu">Exit</string>
+		
+	<string name="tvDisplay">Menu</string>
+	<string name="bRename">Rename</string>
+	<string name="bSettings">Settings</string>
+	<string name="bAboutUs">AboutUs</string>
+	<string name="bHelp">Help</string>
+	<string name="bExit">Exit</string>
+	
+	<string name="alertDialogAboutUsTitleTextView">About Us</string>
+	<string name="alertDialogAboutUsMessageHeaderTextView">FileRenamer 2012</string>
+	<string name="alertDialogAboutUsOkButton">Ok</string>
+	
+	<string name="alertDialogHelpTitleTextView">Help</string>
+	<string name="alertDialogHelpMessageHeaderTextView">Need to be done</string>
+	<string name="alertDialogHelpOkButton">Ok</string>
+	
+	<string name="alertDialogExitTitleTextView">Exit</string>
+	<string name="alertDialogExitMessageHeaderTextView">Do you want to exit?</string>
+	<string name="alertDialogExitOkButton">Yes</string>
+	<string name="alertDialogExitNoButton">No</string>
+		
+	<string name="tabHostAddTab">Add</string>
+	<string name="tabHostRemoveTab">Remove</string>
+	<string name="tabHostReplaceTab">Replace</string>
+		
+	
+</resources>

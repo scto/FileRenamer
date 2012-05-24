@@ -1,0 +1,138 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+    
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+        
+		<LinearLayout
+			android:orientation="horizontal"
+			android:background="@drawable/bar"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+            
+			<Button
+				android:id="@+id/bPrevious"
+				android:background="@drawable/pre"
+				android:onClick="farLeftPreviousButtonClick"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+            
+			<TextView
+				android:textStyle="bold"
+				android:textColor="@android:color/white"
+				android:gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Add Numbers"
+				android:layout_weight="1.0" />
+            
+			<Button
+				android:id="@+id/bNext"
+				android:background="@drawable/nex"
+				android:onClick="farLeftNextButtonClick"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+        
+		</LinearLayout>
+        
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:isScrollContainer="true"
+			android:overScrollMode="ifContentScrolls">
+        
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="Starting Number:" />
+            
+			<EditText
+				android:id="@+id/etStartNumber"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:inputType="number" />
+            
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="Increment or Drecrement Value:" />
+            
+			<EditText
+				android:id="@+id/etIndevalue"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:inputType="number" />
+            
+			<RadioGroup
+				android:id="@+id/rgIn"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+                
+				<RadioButton
+					android:id="@+id/rbaIncrease"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:checked="true"
+					android:text="Increase" />
+            
+				<RadioButton
+					android:id="@+id/rbDecrease"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="Drecease" />
+            
+			</RadioGroup>
+            
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="Add At:" />
+            
+			<EditText
+				android:id="@+id/etAddAt"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="1" android:singleLine="true"
+				android:inputType="number" />
+            
+			<TextView
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="From:" />
+            
+			<RadioGroup
+				android:id="@+id/rgOut"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+                
+				<RadioButton
+					android:id="@+id/rbStarting"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:checked="true"
+					android:text="Starting" />
+            
+				<RadioButton
+					android:id="@+id/rbEnd"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="End" />
+            
+			</RadioGroup>
+            
+			<Button
+				android:id="@+id/bApply"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="Preview" />
+        
+		</LinearLayout>
+    
+	</LinearLayout>
+</ScrollView>
