@@ -47,34 +47,6 @@
 					
 			</LinearLayout>
             
-			<LinearLayout
-            	android:orientation="horizontal"
-            	android:layout_width="fill_parent"
-                android:layout_height="fill_parent" 
-            	android:id="@+id/tabRemove">
-
-				<TextView 
-                	android:layout_width="wrap_content"
-                	android:layout_height="wrap_content" 
-                	android:text="Add Chars or Numbers" />
-
-				<Button
-                	android:layout_width="wrap_content"
-                	android:layout_height="wrap_content" 
-                	android:text="A" /> 
-
-				<Button
-                	android:layout_width="wrap_content"
-                	android:layout_height="wrap_content" 
-                	android:text="B" /> 
-
-				<Button
-                	android:layout_width="wrap_content"
-                	android:layout_height="wrap_content" 
-                	android:text="C" /> 
-
-			</LinearLayout>
-			
 			<TextView 
                 android:id="@+id/tabReplace"
                 android:layout_width="fill_parent"

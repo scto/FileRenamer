@@ -9,39 +9,42 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
+import android.support.v4.view.*;
 
 public class ViewPagerActivity extends Activity
 {
+	ViewPager myPager;
+	MyPagerAdapter adapter;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewpager);
-
-		MyPagerAdapter adapter = new MyPagerAdapter();
-		ViewPager myPager = (ViewPager) findViewById(R.id.myfivepanelpager);
-		myPager.setAdapter(adapter);
-		myPager.setCurrentItem(2);
+		myPager = (ViewPager) findViewById(R.id.fivePanelPager);
+		adapter = new MyPagerAdapter(this, myPager);		
 	}
-	
-	public void farLeftPreviousButtonClick(View v)
+		
+	public class MyPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener
 	{
-		Toast.makeText(this, "Far Left Button Clicked", Toast.LENGTH_SHORT).show(); 
-	}
-
-	public void farLeftNextButtonClick(View v)
-	{
-		Toast.makeText(this, "Far Right Elephant Button Clicked", Toast.LENGTH_SHORT).show(); 
-	}
-
-	private class MyPagerAdapter extends PagerAdapter
-	{
+		private final Context mContext;
+		private final ViewPager mViewPager;
+		
+		public MyPagerAdapter(Activity activity, ViewPager pager)
+		{
+			mContext = activity;
+			mViewPager = pager;
+			mViewPager.setAdapter(this);
+			mViewPager.setCurrentItem(2);
+			mViewPager.setOnPageChangeListener(this);		
+		}
+		
 		public int getCount()
 		{
 			return 5;
 		}
-
+		
 		public Object instantiateItem(View collection, int position)
 		{
 			LayoutInflater inflater = (LayoutInflater) collection.getContext()
@@ -51,20 +54,30 @@ public class ViewPagerActivity extends Activity
 			switch (position)
 			{
 				case 0:
+				{
 					resId = R.layout.farleft;
 					break;
+				}
 				case 1:
-					resId = R.layout.left;
-					break;
+					{
+						resId = R.layout.left;
+						break;
+					}
 				case 2:
-					resId = R.layout.middle;
-					break;
+					{
+						resId = R.layout.middle;
+						break;
+					}
 				case 3:
-					resId = R.layout.right;
-					break;
+					{
+						resId = R.layout.right;
+						break;
+					}
 				case 4:
-					resId = R.layout.farright;
-					break;
+					{
+						resId = R.layout.farright;
+						break;
+					}
 			}
 			View view = inflater.inflate(resId, null);
 			((ViewPager) collection).addView(view, 0);
@@ -77,6 +90,20 @@ public class ViewPagerActivity extends Activity
 			((ViewPager) arg0).removeView((View) arg2);
 		}
 
+		private String[] titles = new String[]
+		{
+			" AddNumbers ",
+			" AddCustom ",
+			" AddDate ",
+			" FindAndReplace ",
+			" RemoveChars "
+		};
+
+		@Override
+		public String getPageTitle(int position) {
+			return titles[position];
+		}
+		
 		@Override
 		public void finishUpdate(View arg0)
 		{
@@ -107,5 +134,26 @@ public class ViewPagerActivity extends Activity
 		{
 			// TODO Auto-generated method stub
 		}
+		
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+		{
+        }
+
+        @Override
+        public void onPageSelected(int position)
+		{
+			Context context = getApplicationContext();
+			CharSequence text = titles[position];
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state)
+		{
+        }
 	}
 }

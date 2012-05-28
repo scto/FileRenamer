@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="actionbar_title_color">#FF339933</color>
+    <color name="actionbar_bacground_color">#000000</color>
+    <color name="blue">#33B5E5</color>
+    <color name="blue_transparent_less">#8833B5E5</color>
+    <color name="blue_transparent">#5533B5E5</color>
+    <color name="blue_transparent_more">#2233B5E5</color>
+    <color name="white">#000000</color>
+    <color name="orange">#ffa500</color>
+    <color name="tab_background_normal">#000</color> <!-- #333333 -->
+    <color name="tab_background_selected">#000</color>
+    <color name="pager_tiltle_stip">#000000</color>
+    <color name="tab_background_gray">#CCCCCCCC</color>
+    <color name="custom_menu_background">#ff222222</color>
+    <color name="common_background">#000</color>
+
+</resources>

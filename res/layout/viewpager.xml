@@ -7,7 +7,20 @@
 	<android.support.v4.view.ViewPager
 		android:layout_width="match_parent" 
 		android:layout_height="match_parent" 
-		android:id="@+id/myfivepanelpager"
-	android:background="#234567"/>
+		android:id="@+id/fivePanelPager"
+		android:background="@color/blue">
+		
+		<android.support.v4.view.PagerTitleStrip
+			android:id="@+id/pagerTitleStrip"
+			android:layout_width="match_parent" 
+			android:layout_height="match_parent"
+			android:background="@drawable/bg_pager_title_strip"
+            android:textColor="@color/blue"
+			android:textSize="10sp"
+			android:textStyle="bold"
+			android:layout_gravity="top">
+		</android.support.v4.view.PagerTitleStrip>
 
+	</android.support.v4.view.ViewPager>
+	
 </LinearLayout>

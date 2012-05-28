@@ -9,16 +9,8 @@
         
 		<LinearLayout
 			android:orientation="horizontal"
-			android:background="@drawable/bar"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
-            
-			<Button
-				android:id="@+id/bPrevious"
-				android:background="@drawable/pre"
-				android:onClick="farLeftPreviousButtonClick"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" />
             
 			<TextView
 				android:textStyle="bold"
@@ -28,14 +20,7 @@
 				android:layout_height="wrap_content"
 				android:text="Add Numbers"
 				android:layout_weight="1.0" />
-            
-			<Button
-				android:id="@+id/bNext"
-				android:background="@drawable/nex"
-				android:onClick="farLeftNextButtonClick"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" />
-        
+                
 		</LinearLayout>
         
 		<LinearLayout
@@ -48,6 +33,7 @@
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:textColor="@android:color/white"
 				android:text="Starting Number:" />
             
 			<EditText
@@ -55,11 +41,13 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:singleLine="true"
+				android:textColor="@android:color/white"
 				android:inputType="number" />
             
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:textColor="@android:color/white"
 				android:text="Increment or Drecrement Value:" />
             
 			<EditText
@@ -67,6 +55,7 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:singleLine="true"
+				android:textColor="@android:color/white"
 				android:inputType="number" />
             
 			<RadioGroup
@@ -79,12 +68,14 @@
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
 					android:checked="true"
+					android:textColor="@android:color/white"
 					android:text="Increase" />
             
 				<RadioButton
 					android:id="@+id/rbDecrease"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
+					android:textColor="@android:color/white"
 					android:text="Drecease" />
             
 			</RadioGroup>
@@ -92,18 +83,22 @@
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:textColor="@android:color/white"
 				android:text="Add At:" />
             
 			<EditText
 				android:id="@+id/etAddAt"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="1" android:singleLine="true"
+				android:text="1"
+				android:singleLine="true"
+				android:textColor="@android:color/white"
 				android:inputType="number" />
             
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:textColor="@android:color/white"
 				android:text="From:" />
             
 			<RadioGroup
@@ -116,12 +111,14 @@
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
 					android:checked="true"
+					android:textColor="@android:color/white"
 					android:text="Starting" />
             
 				<RadioButton
 					android:id="@+id/rbEnd"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
+					android:textColor="@android:color/white"
 					android:text="End" />
             
 			</RadioGroup>

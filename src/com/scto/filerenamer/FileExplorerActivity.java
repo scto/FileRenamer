@@ -281,7 +281,7 @@ public class FileExplorerActivity extends ListActivity
 			&& (!((String)localObject).contains("unmounted"))
 			&& (!((String)localObject).contains("shared")))
 		{
-			tvFileExplorerTextView = (TextView) findViewById(R.id.tvFileExplorerTextView);
+			//tvFileExplorerTextView = (TextView) findViewById(R.id.tvFileExplorerTextView);
 			bSdCard = (Button) findViewById(R.id.bSdCard);
 			bUp = (Button) findViewById(R.id.bUp);
 

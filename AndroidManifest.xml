@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.scto.filerenamer"
 	android:versionCode="1"
-	android:versionName="1.0">
+	android:versionName="1.0">	
 	
 	<uses-sdk
 		android:minSdkVersion="8"
-		android:targetSdkVersion="11" />
+		android:targetSdkVersion="11" />	
 	
 	<uses-permission android:name="android.permission.SET_WALLPAPER"></uses-permission>
 	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
@@ -14,95 +14,101 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
 	<uses-permission android:name="android.permission.VIBRATE" />
-
+	
 	<application
 		android:icon="@drawable/icon"
-		android:label="@string/app_name">
+		android:label="@string/appNameLabel">
 
 		<activity
 			android:name=".SplashActivity"
-			android:label="@string/app_name"
+			android:label="@string/appNameLabel"
 			android:theme="@style/Theme.Transparent">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".MainActivity"
-			android:label="@string/app_name"
+			android:label="@string/appNameLabel"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.MAINACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".FileExplorerActivity"
-			android:label="@string/app_name"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+			android:label="@string/fileExplorerLabel"
+			android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.FILEEXPLORERACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".PreferencesActivity"
-			android:label="@string/app_name"
+			android:label="@string/preferencesLabel"
+			android:icon="@drawable/ic_menu_settings"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.PREFERENCESACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
 		<activity
-			android:name=".AboutUsActivity"
-			android:label="@string/app_name"
-			android:theme="@style/Theme.Transparent">
+			android:name=".AboutActivity"
+			android:label="@string/aboutLabel"
+			android:icon="@drawable/ic_menu_about"
+			android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.ABOUTACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".HelpActivity"
-			android:label="@string/app_name"
-			android:theme="@style/Theme.Transparent">
+			android:label="@string/helpLabel"
+			android:icon="@drawable/ic_menu_help"
+			android:theme="@android:style/Theme.Dialog">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.HELPACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>	
-		<activity
-			android:name=".ExitActivity"
-			android:label="@string/app_name"
-			android:theme="@style/Theme.Transparent">
-			<intent-filter>
-				<action android:name="com.scto.filerenamer.EXITACTIVITY" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>	
+
 		<activity
 			android:name=".ViewPagerActivity"
-			android:label="@string/app_name"
-			android:theme="@android:style/Theme.NoTitleBar">
+			android:label="@string/viewPageLabel"
+			android:icon="@drawable/icon"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.VIEWPAGERACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".TabHostActivity"
-			android:label="@string/app_name"
-			android:theme="@android:style/Theme.NoTitleBar">
+			android:label="@string/tabHostLabel"
+			android:icon="@drawable/icon"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.TABHOSTACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".SharedPreferencesActivity"
-			android:label="@string/app_name">
+			android:label="@string/sharedPreferencesLabel"
+			android:icon="@drawable/icon"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 			<intent-filter>
 				<action android:name="com.scto.filerenamer.SHAREDPREFERENCESACTIVITY" />
 				<category android:name="android.intent.category.DEFAULT" />

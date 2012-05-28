@@ -33,16 +33,16 @@ public class MainActivity extends Activity
 	Button bRename, bSettings, bAbout, bHelp, bExit;
 	TextView tvDisplay;
 	
-	final int ABOUTUS_DIALOG 	= 0;
-	final int HELP_DIALOG 		= 1;
-	final int EXIT_DIALOG 		= 2;
+	final int EXIT_DIALOG 		= 0;
 	
 	ActionBar mActionBar = null;
+
+	String what;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
-	{
+	{		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		
@@ -83,9 +83,8 @@ public class MainActivity extends Activity
 		{
 			public void onClick(View v)
 			{
-				//Intent openAboutUsActivity = new Intent("com.scto.filerenamer.ABOUTACTIVITY");
-				//startActivity(openAboutUsActivity);
-				showDialog(ABOUTUS_DIALOG);
+				Intent openAboutUsActivity = new Intent("com.scto.filerenamer.ABOUTACTIVITY");
+				startActivity(openAboutUsActivity);
 			}
 		});
 
@@ -93,9 +92,8 @@ public class MainActivity extends Activity
 		{
 			public void onClick(View v)
 			{
-				//Intent openHelpActivity = new Intent("com.scto.filerenamer.HELPACTIVITY");
-				//startActivity(openHelpActivity);
-				showDialog(HELP_DIALOG);
+				Intent openHelpActivity = new Intent("com.scto.filerenamer.HELPACTIVITY");
+				startActivity(openHelpActivity);
 			}
 		});
 
@@ -103,8 +101,6 @@ public class MainActivity extends Activity
 		{
 			public void onClick(View v)
 			{
-				//Intent openExitActivity = new Intent("com.scto.filerenamer.EXITACTIVITY");
-				//startActivity(openExitActivity);
 				showDialog(EXIT_DIALOG);
 			}
 		});
@@ -117,16 +113,6 @@ public class MainActivity extends Activity
 		Dialog myDialog = null;
 		switch(dialogId)
 		{
-			case ABOUTUS_DIALOG:
-			{
-				myDialog = createAboutUsDialog();
-				break;
-			}
-			case HELP_DIALOG:
-			{
-				myDialog = createHelpDialog();
-				break;
-			}
 			case EXIT_DIALOG:
 			{
 				myDialog = createExitDialog(); 
@@ -140,14 +126,14 @@ public class MainActivity extends Activity
 	private AlertDialog createExitDialog()
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setIcon(R.drawable.icon);
+		builder.setIcon(R.drawable.ic_menu_exit);
 		builder.setTitle(R.string.alertDialogExitTitleTextView);
 		builder.setMessage(R.string.alertDialogExitMessageHeaderTextView); 
 		builder.setPositiveButton(R.string.alertDialogExitOkButton, new DialogInterface.OnClickListener() 
 		{
 			public void onClick(DialogInterface dialog, int id)
 			{
-				// nichts weiter tun; Dialog schlie�en
+				// Close dialog, close finish
 				dialog.dismiss();
 				finish();
 			}
@@ -157,7 +143,7 @@ public class MainActivity extends Activity
 		{
 			public void onClick(DialogInterface dialog, int id)
 			{
-				// nichts weiter tun; Dialog schlie�en
+				// Only close dialog
 				dialog.dismiss();
 			}
 		});
@@ -166,49 +152,7 @@ public class MainActivity extends Activity
 		builder.setCancelable(false);
 		AlertDialog dialog = builder.create();
 		return dialog; 
-	}
-	
-	private AlertDialog createHelpDialog()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setIcon(R.drawable.icon);
-		builder.setTitle(R.string.alertDialogHelpTitleTextView);
-		builder.setMessage(R.string.alertDialogHelpMessageHeaderTextView); 
-		builder.setPositiveButton(R.string.alertDialogHelpOkButton, new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int id)
-			{
-				// nichts weiter tun; Dialog schlie�en
-				dialog.dismiss();
-			}
-		});
-
-		// nicht schliessen mit BACK-Button
-		builder.setCancelable(false);
-		AlertDialog dialog = builder.create();
-		return dialog; 
-	}
-	
-	private AlertDialog createAboutUsDialog()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setIcon(R.drawable.icon);
-		builder.setTitle(R.string.alertDialogAboutUsTitleTextView);
-		builder.setMessage(R.string.alertDialogAboutUsMessageHeaderTextView); 
-		builder.setPositiveButton(R.string.alertDialogAboutUsOkButton, new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int id)
-			{
-				// nichts weiter tun; Dialog schlie�en
-				dialog.dismiss();
-			}
-		});
-
-		// nicht schliessen mit BACK-Button
-		builder.setCancelable(false);
-		AlertDialog dialog = builder.create();
-		return dialog; 
-	}
+	}	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -229,10 +173,10 @@ public class MainActivity extends Activity
 			case R.id.menu_about:
 			{
 				Toast.makeText(this, "Tapped about", Toast.LENGTH_SHORT).show();
-				//Intent openAboutActivity = new Intent("com.scto.filerenamer.ABOUTACTIVITY");
-				//startActivity(openAboutActivity);
-				myDialog = createAboutUsDialog();
-				showDialog(EXIT_DIALOG);
+				Intent openAboutActivity = new Intent("com.scto.filerenamer.ABOUTACTIVITY");
+				startActivity(openAboutActivity);
+				//myDialog = createAboutUsDialog();
+				//showDialog(EXIT_DIALOG);
 				return true;
 			}
 			case R.id.menu_exit:
@@ -245,8 +189,10 @@ public class MainActivity extends Activity
 			case R.id.menu_help:
 			{
 				Toast.makeText(this, "Tapped exit", Toast.LENGTH_SHORT).show();
-				myDialog = createHelpDialog();
-				showDialog(HELP_DIALOG);
+				Intent openHelpActivity = new Intent("com.scto.filerenamer.HELPACTIVITY");
+				startActivity(openHelpActivity);				
+				//myDialog = createHelpDialog();
+				//showDialog(HELP_DIALOG);
 				return true;
 			}
 			case R.id.menu_settings:
@@ -261,6 +207,13 @@ public class MainActivity extends Activity
 				return super.onOptionsItemSelected(item);
 			}
 		}
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		finish();
 	}	
 }
 	

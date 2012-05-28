@@ -8,7 +8,7 @@
 		android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-
+				
 		<ImageView
 			android:id="@+id/icon"
 			android:layout_width="wrap_content"
@@ -16,14 +16,14 @@
 			android:paddingLeft="5dp"
 			android:paddingRight="5dp"
 			android:src="@drawable/ic_folder" />
-
+	
 		<TextView
 			android:id="@+id/rowtext"
 			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
 			android:layout_gravity="bottom"
     		android:textSize="18sp" />
-
+			
 	</TableRow>
-
+	
 </TableLayout>
