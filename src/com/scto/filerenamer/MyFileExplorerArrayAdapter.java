@@ -11,19 +11,23 @@ public class MyFileExplorerArrayAdapter extends ArrayAdapter<String>
 	private final String dir;
 	private final int layout;
 	private final String[] values;
-
-	public MyFileExplorerArrayAdapter( Context paramContext, int paramInt, String[] paramArrayOfString, String paramString )
+	private final int mThemeId;
+	
+	public MyFileExplorerArrayAdapter( Context paramContext, int paramTheme,  String[] paramArrayOfString, String paramString, int paramInt )
 	{
-		super( paramContext, paramInt, paramArrayOfString );
+		super( paramContext, paramTheme, paramArrayOfString );
 		this.context = paramContext;
 		this.layout = paramInt;
 		this.values = paramArrayOfString;
 		this.dir = paramString;
+		this.mThemeId = paramTheme;
+
 	}
 
 	@Override
 	public View getView( int paramInt, View paramView, ViewGroup paramViewGroup )
 	{
+		context.setTheme( this.mThemeId );
 		LayoutInflater inflater = ( LayoutInflater ) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View localView = inflater.inflate( this.layout, paramViewGroup, false );
 		TextView localTextView = ( TextView ) localView.findViewById( R.id.rowtext );

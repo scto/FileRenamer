@@ -3,15 +3,18 @@ package com.scto.filerenamer;
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.preference.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
 import java.io.*;
 import java.util.*;
 
-public class FileExplorerActivity extends ListActivity
+public class FileExplorerActivity extends ListActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {	
 	private static final String TAG = FileExplorerActivity.class.getSimpleName();
+	private static SharedPreferences sSettings;
+	private static int mThemeId = -1;
 	
 	Button bSdCard;
 	Button bUp;
@@ -118,9 +121,9 @@ public class FileExplorerActivity extends ListActivity
 			}
 			else if(new File(curDir).list().length != 0)
 			{
-				Intent openViewPagerActivity = new Intent("com.scto.filerenamer.VIEWPAGERACTIVITY");
-				//openViewPagerActivity.putExtra("dir", this.curDir);
-				startActivity(openViewPagerActivity);
+				Intent openFileRenamerActivity = new Intent("com.scto.filerenamer.FILERENAMERACTIVITY");
+				openFileRenamerActivity.putExtra("dir", this.curDir);
+				startActivity(openFileRenamerActivity);
 				onDestroy();
 			}
 			else
@@ -224,7 +227,7 @@ public class FileExplorerActivity extends ListActivity
 		filelist = ((String[])((String[])localObject1).clone());
 
 		Log.d(TAG, "listUpdate() : setListAdapter(new MyFileExplorerArrayAdapter(this, R.layout.fileexplorerrow, ((String[])localObject1), this.curDir))");		
-		setListAdapter(new MyFileExplorerArrayAdapter(this, R.layout.fileexplorerrow, ((String[])localObject1), this.curDir));
+		setListAdapter(new MyFileExplorerArrayAdapter( this, mThemeId, ( ( String[])localObject1), this.curDir, R.layout.fileexplorerrow ) );
 	}
 	
 	@Override
@@ -251,7 +254,24 @@ public class FileExplorerActivity extends ListActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
 	{
-		Log.d(TAG, "onCreate()");	
+		Log.d(TAG, "onCreate()");
+		SharedPreferences settings = getSettings(this);
+		settings.registerOnSharedPreferenceChangeListener(this);
+		sSettings = settings;
+
+		if( sSettings.getBoolean( "change_theme", false ) == false )
+		{
+			Log.i( TAG, "onCreate: setTheme light" );
+			mThemeId = R.style.AppTheme_Light;
+			setTheme( mThemeId );
+		}
+		else
+		{
+			Log.i( TAG, "onCreate: setTheme dark" );
+			mThemeId = R.style.AppTheme_Dark;
+			setTheme( mThemeId );			
+		}
+		
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.fileexplorer);
 		
@@ -341,29 +361,16 @@ public class FileExplorerActivity extends ListActivity
 	@Override
 	protected void onListItemClick(ListView paramListView, View paramView, int paramInt, long paramLong)
 	{
-		Log.d(TAG, "onListItemClick() : Start");
-		Log.d(TAG, "onListItemClick() : super.onListItemClick(paramListView, paramView, paramInt, paramLong)");
 		super.onListItemClick(paramListView, paramView, paramInt, paramLong);
-		Log.d(TAG, "onListItemClick() : tempDir = curDir");	
 		this.tempDir = this.curDir;
-		Log.d(TAG, "onListItemClick() : context_menu_opened");
 		this.context_menu_opened = Boolean.valueOf(true);
-		Log.d(TAG, "onListItemClick() : this.curDir = (this.curDir + / + this.filelist[(paramInt - 2)])");
 		
-		Log.d(TAG, "CurrentDir Alt=" + this.curDir);
 		this.curDir = this.curDir + "/" + this.filelist[paramInt];
-		Log.d(TAG, "CurrentDir Neu=" + this.curDir);
-		
-		Log.d(TAG, "FileListEintrag=" + this.filelist[paramInt]);
-		Log.d(TAG, "Position=" + paramInt); 
-		
+				
 		//this.curDir = (this.curDir + "/" + this.filelist[(paramInt - 2)]);
 		
-		Log.d(TAG, "onListItemClick() : registerForContextMenu(paramListView)");
 		registerForContextMenu(paramListView);
-		Log.d(TAG, "onListItemClick() : paramView.showContextMenu()");
 		paramView.showContextMenu();
-		Log.d(TAG, "onListItemClick() : End");
 	}
 	
 	@Override
@@ -382,4 +389,53 @@ public class FileExplorerActivity extends ListActivity
 		super.onDestroy();
 		finish();
 	}
+	
+	@Override
+	protected void onSaveInstanceState( Bundle outState )
+	{
+		super.onSaveInstanceState( outState );
+		outState.putInt( "theme", mThemeId );
+	}
+	
+	public static SharedPreferences getSettings( Context context )
+	{
+		if( sSettings == null )
+		{
+			sSettings = PreferenceManager.getDefaultSharedPreferences( context );
+		}
+		return sSettings;
+	}
+
+	@Override
+	public void onSharedPreferenceChanged( SharedPreferences settings, String key )
+	{
+		loadPreference( key );
+	}
+
+	private void loadPreference(String key)
+	{
+		SharedPreferences settings = getSettings(this);
+		if ("change_theme".equals(key))
+		{
+			boolean theme = settings.getBoolean( "change_theme", false );
+			if( theme == false )
+			{
+				Log.i( TAG, "loadPreference: setTheme light" );
+				mThemeId = R.style.AppTheme_Light;
+			}
+			else
+			{
+				Log.i( TAG, "loadPreference: setTheme dark" );
+				mThemeId = R.style.AppTheme_Dark;
+			}
+			updateTheme();
+		}
+	}
+
+	public void updateTheme()
+	{
+		setTheme( mThemeId );
+		this.recreate();
+	}		
+	
 }

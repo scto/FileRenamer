@@ -52,7 +52,10 @@ THE SOFTWARE.
 	<string name="dialog_exit_negative_button">No</string>
 		
 	<!-- ViewPager Activity -->
-		
+	<string name="fileExplorerTextView">Choose</string>
+	<string name="fileExplorerSdCardButton">SD Card</string>
+	<string name="fileExplorerUpButton">Up</string>
+	
 	<!-- FarLeft Page -->
 	<string name="farleft_textview_add_numbers">Add Numbers</string>
 	<string name="farleft_textview_starting_number">Starting number</string>

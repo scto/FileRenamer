@@ -1,7 +1,7 @@
+.settings
 bin/*
 gen/*
-build.properties
-local.properties
 .classpath
 .project
-.settings
+proguard.cfg
+project.properties
