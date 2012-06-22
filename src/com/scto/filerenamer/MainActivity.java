@@ -96,9 +96,11 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
+				/*
 				Intent openFileExplorerActivity = new Intent("com.scto.filerenamer.FILEEXPLORERACTIVITY");
 				openFileExplorerActivity.putExtra("what", "renamer");
 				startActivity(openFileExplorerActivity);
+				*/
 			}
 		});
 
