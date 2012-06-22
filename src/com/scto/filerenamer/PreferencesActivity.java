@@ -27,7 +27,6 @@ import java.util.*;
 import android.content.*;
 
 import com.scto.filerenamer.DebugLog;
-import com.scto.filerenamer.Utils;
 
 /**
  * The preferences activity in which one can change application preferences.

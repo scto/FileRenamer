@@ -44,11 +44,11 @@
         </activity>
 
         <activity
-			android:name=".FileExplorerActivity"
+			android:name=".AndroidFileBrowser"
             android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter >
-                <action android:name="com.scto.filerenamer.FILEEXPLORERACTIVITY" />
+                <action android:name="com.scto.filerenamer.ANDROIDFILEBROWSER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

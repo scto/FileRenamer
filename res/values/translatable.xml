@@ -22,7 +22,13 @@ THE SOFTWARE.
 -->
 <resources>
 	<string name="app_name">File Renamer</string>
-
+	<string name="dirname_app_name">Fil Renamer - by scto</string>
+    <string name="menu_new_folder">New Folder</string>
+    <string name="dirnameinput_cmd_return">Save</string>
+    <string name="dirnameinput_hint">Enter a directory-name:</string>
+    <string name="up_one_level">..</string>
+    <string name="current_dir">.</string>
+	
 	<!-- Main Activity (main screen) -->
 	<string name="tvDisplay">Menu</string>
 	<string name="bRename">Rename</string>
