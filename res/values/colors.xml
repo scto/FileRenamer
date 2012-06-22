@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
 <resources>
-
-    <color name="actionbar_title_color">#FF339933</color>
-    <color name="actionbar_bacground_color">#000000</color>
-    <color name="blue">#33B5E5</color>
-    <color name="blue_transparent_less">#8833B5E5</color>
-    <color name="blue_transparent">#5533B5E5</color>
-    <color name="blue_transparent_more">#2233B5E5</color>
-    <color name="white">#000000</color>
-    <color name="orange">#ffa500</color>
-    <color name="tab_background_normal">#000</color> <!-- #333333 -->
-    <color name="tab_background_selected">#000</color>
-    <color name="pager_tiltle_stip">#000000</color>
-    <color name="tab_background_gray">#CCCCCCCC</color>
-    <color name="custom_menu_background">#ff222222</color>
-    <color name="common_background">#000</color>
-
+    <color name="actionbar_background_light">#ccffffff</color>
+    <color name="actionbar_background_dark">#cc000000</color>
+    <color name="drag_active_color">#80cccccc</color>
 </resources>

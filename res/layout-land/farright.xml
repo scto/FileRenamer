@@ -19,73 +19,67 @@
 				android:gravity="center"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Remove Chars"
+				android:text="@string/farright_textview_remove_chars"
 				android:layout_weight="1.0" />
-                    
+            
 		</LinearLayout>
         
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/white"
-			android:text="Remove char at:" />
+			android:text="string_farright_textview_remove_char_at" />
         
 		<EditText
-			android:id="@id/txt_charat"
+			android:id="@+id/txt_charat"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="1"
+			android:text="@string/farright_edittext_start_at"
 			android:singleLine="true"
-			android:textColor="@android:color/white"
 			android:inputType="number" />
         
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/white"
-			android:text="No of char:" />
+			android:text="@string/farright_textview_no_of_char" />
         
 		<EditText
-			android:id="@id/txt_nochar"
+			android:id="@+id/txt_nochar"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="1"
+			android:text="@string/farright_edittext_no_of_char"
 			android:singleLine="true"
-			android:textColor="@android:color/white"
 			android:inputType="number" />
         
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/white"
-			android:text="From:" />
+			android:text="@string/farright_textview_from" />
         
 		<RadioGroup
-			android:id="@id/ra"
+			android:id="@+id/ra"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
         
 			<RadioButton
-				android:id="@id/ra_starting"
+				android:id="@+id/ra_starting"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:textColor="@android:color/white"
-				android:checked="true" android:text="Starting" />
+				android:checked="true"
+				android:text="@string/radiobutton_starting" />
             
 			<RadioButton
-				android:id="@id/ra_end"
+				android:id="@+id/ra_end"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:textColor="@android:color/white"
-				android:text="End" />
+				android:text="@string/radiobutton_end" />
         
 		</RadioGroup>
         
 		<Button
-			android:id="@id/bt_apply"
+			android:id="@+id/bt_preview"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="Preview" />
+			android:text="@string/button_preview" />
     
 	</LinearLayout>
 

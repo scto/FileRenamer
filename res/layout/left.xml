@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
+	android:layout_height="fill_parent">
   
     <LinearLayout
 		android:orientation="vertical"
@@ -12,78 +11,71 @@
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
-                        
+            
 			<TextView
 				android:textStyle="bold"
-				android:textColor="@android:color/black"
+				android:textColor="@android:color/white"
 				android:gravity="center"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Add Custom Text"
+				android:text="@string/left_textview_add_custom_text"
 				android:layout_weight="1.0" />
-                    
+            
 		</LinearLayout>
         
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/black"
-			android:text="Custom:" />
+			android:text="@string/left_textview_custom" />
         
 		<EditText
-			android:id="@id/txt_add"
+			android:id="@+id/txt_add"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/black"
 			android:singleLine="true" />
         
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/black"
-			android:text="Add At:" />
+			android:text="@string/left_textview_add_at" />
         
 		<EditText
-			android:id="@id/txt_addat"
+			android:id="@+id/txt_addat"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="1"
+			android:text="@string/left_edittext_add_at"
 			android:singleLine="true"
-			android:textColor="@android:color/black"
 			android:inputType="number" />
         
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/black"
-			android:text="From:" />
+			android:text="@string/left_textview_from" />
         
 		<RadioGroup
-			android:id="@id/ra"
+			android:id="@+id/ra"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
         
 			<RadioButton
-				android:id="@id/ra_starting"
+				android:id="@+id/ra_starting"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:checked="true"
-				android:textColor="@android:color/black"
-				android:text="Starting" />
+				android:text="@string/radiobutton_starting" />
             
 			<RadioButton
-				android:id="@id/ra_end"
+				android:id="@+id/ra_end"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:textColor="@android:color/black"
-				android:text="End" />
+				android:text="@string/radiobutton_end" />
 		</RadioGroup>
         
 		<Button
-			android:id="@id/bt_apply"
+			android:id="@+id/bt_preview"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="Preview" />
+			android:text="@string/button_preview" />
     
 	</LinearLayout>
 

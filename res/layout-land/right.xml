@@ -2,68 +2,63 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-
+  
     <LinearLayout
 		android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-
-        <LinearLayout
+        
+		<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
-
-            <TextView
+            
+			<TextView
 				android:textStyle="bold"
 				android:textColor="@android:color/white"
 				android:gravity="center"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Find and Replace"
+				android:text="@string/right_textview_find_and_replace"
 				android:layout_weight="1.0" />
-
+        
 		</LinearLayout>
         
 		<TextView
 			android:layout_width="fill_parent"
-			android:textColor="@android:color/white"
 			android:layout_height="wrap_content"
-			android:text="Find" />
+			android:text="@string/right_textview_find" />
         
 		<EditText
-			android:id="@id/txt_find"
+			android:id="@+id/txt_find"
 			android:layout_width="fill_parent"
-			android:textColor="@android:color/white"
 			android:layout_height="wrap_content"
 			android:singleLine="true" />
         
 		<TextView
 			android:layout_width="fill_parent"
-			android:textColor="@android:color/white"
 			android:layout_height="wrap_content"
-			android:text="Replace" />
+			android:text="@string/right_textview_replace" />
         
 		<EditText
-			android:id="@id/txt_replace"
+			android:id="@+id/txt_replace"
 			android:layout_width="fill_parent"
-			android:textColor="@android:color/white"
 			android:layout_height="wrap_content"
 			android:singleLine="true" />
         
 		<Button
-			android:id="@id/bt_apply"
+			android:id="@+id/bt_preview"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="Preview" />
+			android:text="@string/button_preview" />
         
 		<CheckBox
-			android:id="@id/matchcase"
+			android:id="@+id/matchcase"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="@android:color/white"
 			android:checked="true"
-			android:text="MatchCase" />
-    
+			android:text="@string/right_checkbox_matchcase" />
+
 	</LinearLayout>
 
 </ScrollView>

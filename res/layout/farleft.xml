@@ -11,16 +11,16 @@
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
-            
+                        
 			<TextView
 				android:textStyle="bold"
-				android:textColor="@android:color/black"
+				android:textColor="@android:color/white"
 				android:gravity="center"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Add Numbers"
+				android:text="@string/farleft_textview_add_numbers"
 				android:layout_weight="1.0" />
-        
+                    
 		</LinearLayout>
         
 		<LinearLayout
@@ -33,29 +33,25 @@
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:textColor="@android:color/black"
-				android:text="Starting Number:" />
+				android:text="@string/farleft_textview_starting_number" />
             
 			<EditText
 				android:id="@+id/etStartNumber"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:singleLine="true"
-				android:textColor="@android:color/black"
 				android:inputType="number" />
             
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:textColor="@android:color/black"
-				android:text="Increment or Drecrement Value:" />
+				android:text="@string/farleft_textview_increment_or_decrement_value" />
             
 			<EditText
 				android:id="@+id/etIndevalue"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:singleLine="true"
-				android:textColor="@android:color/black"
 				android:inputType="number" />
             
 			<RadioGroup
@@ -68,38 +64,33 @@
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
 					android:checked="true"
-					android:textColor="@android:color/black"
-					android:text="Increase" />
+					android:text="@string/farleft_radiobutton_increase" />
             
 				<RadioButton
 					android:id="@+id/rbDecrease"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:textColor="@android:color/black"
-					android:text="Drecease" />
+					android:text="@string/farleft_radiobutton_decrease" />
             
 			</RadioGroup>
             
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:textColor="@android:color/black"
-				android:text="Add At:" />
+				android:text="@string/farleft_textview_add_at" />
             
 			<EditText
 				android:id="@+id/etAddAt"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="1"
+				android:text="@string/farleft_edittext_add_at"
 				android:singleLine="true"
-				android:textColor="@android:color/black"
 				android:inputType="number" />
             
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:textColor="@android:color/black"
-				android:text="From:" />
+				android:text="@string/farleft_textview_from" />
             
 			<RadioGroup
 				android:id="@+id/rgOut"
@@ -107,27 +98,25 @@
 				android:layout_height="wrap_content">
                 
 				<RadioButton
-					android:id="@+id/rbStarting"
+					android:id="@+id/raStarting"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
 					android:checked="true"
-					android:textColor="@android:color/black"
-					android:text="Starting" />
+					android:text="@string/radiobutton_starting" />
             
 				<RadioButton
-					android:id="@+id/rbEnd"
+					android:id="@+id/raEnd"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:textColor="@android:color/black"
-					android:text="End" />
+					android:text="@string/radiobutton_end" />
             
 			</RadioGroup>
             
 			<Button
-				android:id="@+id/bApply"
+				android:id="@+id/bPreview"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:text="Preview" />
+				android:text="@string/button_preview" />
         
 		</LinearLayout>
     

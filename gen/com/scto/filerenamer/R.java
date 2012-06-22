@@ -13,197 +13,323 @@ public final class R {
         public static final int disappear=0x7f040001;
     }
     public static final class array {
-        public static final int lValues=0x7f070001;
-        public static final int list=0x7f070000;
+        public static final int entry_values=0x7f0c0000;
+        public static final int root_access_entries=0x7f0c0001;
+        public static final int theme_type_entries=0x7f0c0003;
+        public static final int theme_type_values=0x7f0c0002;
     }
     public static final class attr {
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int listDragShadowBackground=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int menuIconPreference=0x7f010001;
     }
     public static final class color {
-        public static final int actionbar_bacground_color=0x7f080001;
-        public static final int actionbar_title_color=0x7f080000;
-        public static final int blue=0x7f080002;
-        public static final int blue_transparent=0x7f080004;
-        public static final int blue_transparent_less=0x7f080003;
-        public static final int blue_transparent_more=0x7f080005;
-        public static final int common_background=0x7f08000d;
-        public static final int custom_menu_background=0x7f08000c;
-        public static final int orange=0x7f080007;
-        public static final int pager_tiltle_stip=0x7f08000a;
-        public static final int tab_background_gray=0x7f08000b;
-        public static final int tab_background_normal=0x7f080008;
-        /**  #333333 
+        public static final int actionbar_background_dark=0x7f070001;
+        public static final int actionbar_background_light=0x7f070000;
+        /**  Color used in LibraryActivity list dividers 
          */
-        public static final int tab_background_selected=0x7f080009;
-        public static final int white=0x7f080006;
+        public static final int divider_color=0x7f070003;
+        public static final int drag_active_color=0x7f070002;
+    }
+    public static final class dimen {
+        public static final int titles_size=0x7f080000;
     }
     public static final class drawable {
-        public static final int bg_pager_title_strip=0x7f020000;
-        public static final int ic_file=0x7f020001;
-        public static final int ic_folder=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int ic_menu_about=0x7f020004;
-        public static final int ic_menu_exit=0x7f020005;
-        public static final int ic_menu_help=0x7f020006;
-        public static final int ic_menu_settings=0x7f020007;
-        public static final int icon=0x7f020008;
-        public static final int img=0x7f020009;
-        public static final int splash_background=0x7f02000a;
+        public static final int btn_notification_ic_example_default=0x7f020000;
+        public static final int btn_notification_ic_example_pressed=0x7f020001;
+        public static final int ic_contact_picture=0x7f020002;
+        public static final int ic_file=0x7f020003;
+        public static final int ic_folder=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int ic_logo=0x7f020006;
+        public static final int ic_menu_about=0x7f020007;
+        public static final int ic_menu_exit=0x7f020008;
+        public static final int ic_menu_help=0x7f020009;
+        public static final int ic_menu_mark=0x7f02000a;
+        public static final int ic_menu_preference_holo_dark=0x7f02000b;
+        public static final int ic_menu_preference_holo_light=0x7f02000c;
+        public static final int ic_menu_preferences=0x7f02000d;
+        public static final int ic_menu_refresh=0x7f02000e;
+        public static final int ic_menu_settings=0x7f02000f;
+        public static final int ic_menu_share_holo_dark=0x7f020010;
+        public static final int ic_menu_share_holo_light=0x7f020011;
+        public static final int ic_menu_toggle_holo_dark=0x7f020012;
+        public static final int ic_menu_toggle_holo_light=0x7f020013;
+        public static final int ic_popup_reminder=0x7f020014;
+        public static final int ic_settings_applications=0x7f020015;
+        public static final int ic_settings_display=0x7f020016;
+        public static final int icon=0x7f020017;
+        public static final int list_focused_holo=0x7f020018;
+        public static final int list_longpressed_holo=0x7f020019;
+        public static final int list_pressed_holo_dark=0x7f02001a;
+        public static final int list_selector_background_transition_holo_dark=0x7f02001b;
+        public static final int list_selector_disabled_holo_dark=0x7f02001c;
+        public static final int logo=0x7f02001d;
+        public static final int notification_default_largeicon=0x7f02001e;
+        public static final int selectable_item_bg=0x7f02001f;
+        public static final int splash_background=0x7f020020;
+        public static final int title_home_alt=0x7f020021;
+        public static final int title_home_default=0x7f020022;
+        public static final int title_search_alt=0x7f020023;
+        public static final int title_search_default=0x7f020024;
     }
     public static final class id {
-        public static final int LayoutRoot=0x7f090042;
-        public static final int SplashImageView=0x7f09004e;
-        public static final int TheSplashLayout=0x7f09004d;
-        public static final int ad=0x7f090000;
-        public static final int add_date=0x7f090009;
-        public static final int add_time=0x7f09000a;
-        public static final int bAboutUs=0x7f090046;
-        public static final int bApply=0x7f09003d;
-        public static final int bExit=0x7f090048;
-        public static final int bHelp=0x7f090047;
-        public static final int bLoad=0x7f09004b;
-        public static final int bRename=0x7f090044;
-        public static final int bSave=0x7f09004a;
-        public static final int bSdCard=0x7f09003f;
-        public static final int bSettings=0x7f090045;
-        public static final int bUp=0x7f090040;
-        public static final int bt_about=0x7f090025;
-        public static final int bt_apply=0x7f090008;
-        public static final int bt_dup=0x7f090024;
-        public static final int bt_exit=0x7f090026;
-        public static final int bt_filelist=0x7f090022;
-        public static final int bt_nex=0x7f090002;
-        public static final int bt_pre=0x7f090001;
-        public static final int bt_tag=0x7f090023;
-        public static final int btapply=0x7f090021;
-        public static final int calbum=0x7f09002c;
-        public static final int calbumartist=0x7f090031;
-        public static final int cartist=0x7f09002d;
-        public static final int cbSplashScreen=0x7f090053;
-        public static final int cbSplashScreenMusic=0x7f090054;
-        public static final int cgenre=0x7f09002e;
-        public static final int ctitle=0x7f09002b;
-        public static final int ctrack=0x7f090030;
-        public static final int cyear=0x7f09002f;
-        public static final int dup_add=0x7f090012;
-        public static final int dup_cancel=0x7f090013;
-        public static final int dup_edit=0x7f090011;
-        public static final int etAddAt=0x7f090039;
-        public static final int etIndevalue=0x7f090035;
-        public static final int etSharedPrefs=0x7f090049;
-        public static final int etStartNumber=0x7f090034;
-        public static final int fivePanelPager=0x7f090051;
-        public static final int icon=0x7f090014;
-        public static final int layout_root=0x7f090032;
-        public static final int list=0x7f090027;
-        public static final int listview=0x7f090015;
-        public static final int matchcase=0x7f090018;
-        public static final int menu_about=0x7f090055;
-        public static final int menu_exit=0x7f090058;
-        public static final int menu_help=0x7f090057;
-        public static final int menu_settings=0x7f090056;
-        public static final int pagerTitleStrip=0x7f090052;
-        public static final int pb=0x7f090028;
-        public static final int ra=0x7f090005;
-        public static final int ra_decre=0x7f090010;
-        public static final int ra_end=0x7f090007;
-        public static final int ra_in=0x7f09000e;
-        public static final int ra_incre=0x7f09000f;
-        public static final int ra_starting=0x7f090006;
-        public static final int rbDecrease=0x7f090038;
-        public static final int rbEnd=0x7f09003c;
-        public static final int rbStarting=0x7f09003b;
-        public static final int rbaIncrease=0x7f090037;
-        public static final int rgIn=0x7f090036;
-        public static final int rgOut=0x7f09003a;
-        public static final int rowtext=0x7f090041;
-        public static final int sp_genre=0x7f09001d;
-        public static final int tabAdd=0x7f09004f;
-        public static final int tabReplace=0x7f090050;
-        public static final int tagfile=0x7f090019;
-        public static final int text=0x7f090033;
-        public static final int tvDisplay=0x7f090043;
-        public static final int tvFileExplorerTextView=0x7f09003e;
-        public static final int tvLoadSharedPrefs=0x7f09004c;
-        public static final int txt_add=0x7f090003;
-        public static final int txt_addat=0x7f090004;
-        public static final int txt_addthis=0x7f09000b;
-        public static final int txt_album=0x7f09001b;
-        public static final int txt_albumartist=0x7f090020;
-        public static final int txt_artist=0x7f09001c;
-        public static final int txt_charat=0x7f090029;
-        public static final int txt_find=0x7f090016;
-        public static final int txt_indevalue=0x7f09000d;
-        public static final int txt_nochar=0x7f09002a;
-        public static final int txt_replace=0x7f090017;
-        public static final int txt_startno=0x7f09000c;
-        public static final int txt_title=0x7f09001a;
-        public static final int txt_track=0x7f09001f;
-        public static final int txt_year=0x7f09001e;
+        public static final int LayoutRoot=0x7f0e0010;
+        public static final int add_date=0x7f0e001b;
+        public static final int add_time=0x7f0e001c;
+        public static final int bAboutUs=0x7f0e0018;
+        public static final int bExit=0x7f0e001a;
+        public static final int bHelp=0x7f0e0019;
+        public static final int bPreview=0x7f0e0009;
+        public static final int bRename=0x7f0e0016;
+        public static final int bSettings=0x7f0e0017;
+        public static final int bt_preview=0x7f0e000f;
+        public static final int etAddAt=0x7f0e0005;
+        public static final int etIndevalue=0x7f0e0001;
+        public static final int etStartNumber=0x7f0e0000;
+        public static final int logo=0x7f0e001e;
+        public static final int matchcase=0x7f0e0023;
+        public static final int menu_about=0x7f0e0026;
+        public static final int menu_exit=0x7f0e0029;
+        public static final int menu_help=0x7f0e0028;
+        public static final int menu_settings=0x7f0e0027;
+        public static final int pager=0x7f0e0012;
+        public static final int ra=0x7f0e000c;
+        public static final int raEnd=0x7f0e0008;
+        public static final int raStarting=0x7f0e0007;
+        public static final int ra_end=0x7f0e000e;
+        public static final int ra_starting=0x7f0e000d;
+        public static final int rbDecrease=0x7f0e0004;
+        public static final int rbaIncrease=0x7f0e0003;
+        public static final int rgIn=0x7f0e0002;
+        public static final int rgOut=0x7f0e0006;
+        public static final int summary=0x7f0e0020;
+        public static final int time_bar=0x7f0e0025;
+        public static final int title=0x7f0e001f;
+        public static final int tvDisplay=0x7f0e0015;
+        public static final int txt_add=0x7f0e0013;
+        public static final int txt_addat=0x7f0e0014;
+        public static final int txt_addthis=0x7f0e001d;
+        public static final int txt_charat=0x7f0e000a;
+        public static final int txt_find=0x7f0e0021;
+        public static final int txt_nochar=0x7f0e000b;
+        public static final int txt_replace=0x7f0e0022;
+        public static final int value=0x7f0e0024;
+        public static final int widget1=0x7f0e0011;
     }
     public static final class layout {
-        public static final int about=0x7f030000;
+        public static final int dialog_whatsnew=0x7f030000;
         public static final int farleft=0x7f030001;
         public static final int farright=0x7f030002;
-        public static final int fileexplorer=0x7f030003;
-        public static final int fileexplorerrow=0x7f030004;
-        public static final int help=0x7f030005;
-        public static final int left=0x7f030006;
+        public static final int filerenamer=0x7f030003;
+        public static final int fragment_tabs_pager=0x7f030004;
+        public static final int left=0x7f030005;
+        public static final int listview=0x7f030006;
         public static final int main=0x7f030007;
         public static final int middle=0x7f030008;
-        public static final int right=0x7f030009;
-        public static final int sharedpreferences=0x7f03000a;
+        public static final int notification=0x7f030009;
+        public static final int right=0x7f03000a;
         public static final int splash=0x7f03000b;
-        public static final int tabhost=0x7f03000c;
-        public static final int viewpager=0x7f03000d;
+        public static final int time_pref=0x7f03000c;
     }
     public static final class menu {
-        public static final int list_menu=0x7f0c0000;
+        public static final int list_menu=0x7f0d0000;
+        public static final int main_menu=0x7f0d0001;
+    }
+    public static final class plurals {
+        /**  Preferences 
+         */
+        public static final int files=0x7f0b0000;
     }
     public static final class raw {
         public static final int backgroundmusic=0x7f060000;
         public static final int splashsound=0x7f060001;
     }
     public static final class string {
-        public static final int about=0x7f0a0015;
-        public static final int aboutActivityOkButton=0x7f0a0017;
-        public static final int aboutLabel=0x7f0a0003;
-        public static final int aboutMessage=0x7f0a0016;
-        public static final int alertDialogExitMessageHeaderTextView=0x7f0a001b;
-        public static final int alertDialogExitNoButton=0x7f0a001d;
-        public static final int alertDialogExitOkButton=0x7f0a001c;
-        public static final int alertDialogExitTitleTextView=0x7f0a001a;
-        public static final int appNameLabel=0x7f0a0000;
-        public static final int bAboutUs=0x7f0a0012;
-        public static final int bExit=0x7f0a0014;
-        public static final int bHelp=0x7f0a0013;
-        public static final int bRename=0x7f0a0010;
-        public static final int bSettings=0x7f0a0011;
-        public static final int fileExplorerLabel=0x7f0a0001;
-        public static final int fileExplorerSdCardButton=0x7f0a0009;
-        public static final int fileExplorerTextView=0x7f0a0008;
-        public static final int fileExplorerUpButton=0x7f0a000a;
-        public static final int help=0x7f0a0018;
-        public static final int helpActivityOkButton=0x7f0a0019;
-        public static final int helpLabel=0x7f0a0004;
-        public static final int mainAboutMenu=0x7f0a000b;
-        public static final int mainExitMenu=0x7f0a000e;
-        public static final int mainHelpMenu=0x7f0a000d;
-        public static final int mainSettingsMenu=0x7f0a000c;
-        public static final int preferencesLabel=0x7f0a0002;
-        public static final int sharedPreferencesLabel=0x7f0a0007;
-        public static final int tabHostAddTab=0x7f0a001e;
-        public static final int tabHostLabel=0x7f0a0006;
-        public static final int tabHostRemoveTab=0x7f0a001f;
-        public static final int tabHostReplaceTab=0x7f0a0020;
-        public static final int tvDisplay=0x7f0a000f;
-        public static final int viewPageLabel=0x7f0a0005;
+        /**  Preference About 
+         */
+        public static final int about=0x7f0a0056;
+        public static final int addCustom=0x7f0a0058;
+        public static final int addDate=0x7f0a0059;
+        /**  Page Titles 
+         */
+        public static final int addNumber=0x7f0a0057;
+        public static final int app_name=0x7f0a0000;
+        public static final int bAboutUs=0x7f0a0004;
+        public static final int bExit=0x7f0a0006;
+        public static final int bHelp=0x7f0a0005;
+        public static final int bRename=0x7f0a0002;
+        public static final int bSettings=0x7f0a0003;
+        /**  All Page(s) 
+         */
+        public static final int button_preview=0x7f0a0035;
+        public static final int change_theme_summary=0x7f0a004a;
+        public static final int change_theme_title=0x7f0a0049;
+        public static final int check_root_access_on_startup_summary=0x7f0a0045;
+        public static final int check_root_access_on_startup_title=0x7f0a0044;
+        public static final int dialog_about_message=0x7f0a000d;
+        public static final int dialog_about_positive_button=0x7f0a000e;
+        public static final int dialog_about_title=0x7f0a000c;
+        public static final int dialog_exit_message=0x7f0a0013;
+        public static final int dialog_exit_negative_button=0x7f0a0015;
+        public static final int dialog_exit_positive_button=0x7f0a0014;
+        public static final int dialog_exit_title=0x7f0a0012;
+        public static final int dialog_help_message=0x7f0a0010;
+        public static final int dialog_help_positive_button=0x7f0a0011;
+        public static final int dialog_help_title=0x7f0a000f;
+        public static final int disable_root=0x7f0a0047;
+        public static final int enable_root=0x7f0a0046;
+        public static final int farleft_edittext_add_at=0x7f0a001c;
+        public static final int farleft_radiobutton_decrease=0x7f0a001a;
+        public static final int farleft_radiobutton_increase=0x7f0a0019;
+        public static final int farleft_textview_add_at=0x7f0a001b;
+        /**  ViewPager Activity 
+ FarLeft Page 
+         */
+        public static final int farleft_textview_add_numbers=0x7f0a0016;
+        public static final int farleft_textview_from=0x7f0a001d;
+        public static final int farleft_textview_increment_or_decrement_value=0x7f0a0018;
+        public static final int farleft_textview_starting_number=0x7f0a0017;
+        public static final int farright_edittext_no_of_char=0x7f0a0033;
+        public static final int farright_edittext_remove_chars=0x7f0a0030;
+        public static final int farright_edittext_start_at=0x7f0a0031;
+        public static final int farright_textview_from=0x7f0a0034;
+        public static final int farright_textview_no_of_char=0x7f0a0032;
+        /**  Farright Page 
+         */
+        public static final int farright_textview_remove_chars=0x7f0a002f;
+        /**  Preference FileRenamer 
+         */
+        public static final int filerenamer_screen=0x7f0a0042;
+        public static final int findAndReplace=0x7f0a005a;
+        public static final int holo_dark=0x7f0a004d;
+        public static final int holo_dark_no_titlebar=0x7f0a004f;
+        public static final int holo_light=0x7f0a004c;
+        public static final int holo_light_no_titlebar=0x7f0a004e;
+        public static final int left_edittext_add_at=0x7f0a0021;
+        public static final int left_textview_add_at=0x7f0a0020;
+        /**  Left Page 
+         */
+        public static final int left_textview_add_custom_text=0x7f0a001e;
+        public static final int left_textview_custom=0x7f0a001f;
+        public static final int left_textview_from=0x7f0a0022;
+        public static final int logo_art=0x7f0a0039;
+        /**  Main Menu 
+         */
+        public static final int mainAboutMenu=0x7f0a0007;
+        public static final int mainExitMenu=0x7f0a000a;
+        public static final int mainHelpMenu=0x7f0a0009;
+        public static final int mainSettingsMenu=0x7f0a0008;
+        public static final int middle_checkbox_date=0x7f0a0025;
+        public static final int middle_checkbox_time=0x7f0a0026;
+        public static final int middle_edittext_add_at=0x7f0a0029;
+        public static final int middle_textview_add_at=0x7f0a0028;
+        /**  Middle Page 
+         */
+        public static final int middle_textview_add_date=0x7f0a0023;
+        public static final int middle_textview_add_this=0x7f0a0027;
+        public static final int middle_textview_choose=0x7f0a0024;
+        public static final int middle_textview_from=0x7f0a002a;
+        /**  Preference Misc 
+         */
+        public static final int misc_features=0x7f0a0048;
+        /**  Notification 
+         */
+        public static final int notification_files_renamed=0x7f0a0038;
+        /**  Notification Preference 
+         */
+        public static final int notifications=0x7f0a0041;
+        public static final int personal=0x7f0a003a;
+        public static final int play_splash_screen_sound_summary=0x7f0a0054;
+        public static final int play_splash_screen_sound_timeout_title=0x7f0a0055;
+        public static final int play_splash_screen_sound_title=0x7f0a0053;
+        public static final int preference_personal_checkbox_root_summary=0x7f0a0040;
+        public static final int preference_personal_checkbox_root_title=0x7f0a003f;
+        public static final int preference_personal_edittext_email_summary=0x7f0a003e;
+        public static final int preference_personal_edittext_email_title=0x7f0a003d;
+        public static final int preference_personal_edittext_name_summary=0x7f0a003c;
+        public static final int preference_personal_edittext_name_title=0x7f0a003b;
+        public static final int radiobutton_end=0x7f0a0037;
+        public static final int radiobutton_starting=0x7f0a0036;
+        public static final int removeChars=0x7f0a005b;
+        public static final int right_checkbox_matchcase=0x7f0a002e;
+        public static final int right_textview_find=0x7f0a002c;
+        /**  Right Page 
+         */
+        public static final int right_textview_find_and_replace=0x7f0a002b;
+        public static final int right_textview_replace=0x7f0a002d;
+        public static final int root_access_title=0x7f0a0043;
+        public static final int settings=0x7f0a000b;
+        public static final int show_splash_screen_summary=0x7f0a0051;
+        public static final int show_splash_screen_timeout_title=0x7f0a0052;
+        public static final int show_splash_screen_title=0x7f0a0050;
+        public static final int theme_type_title=0x7f0a004b;
+        /**  Main Activity (main screen) 
+         */
+        public static final int tvDisplay=0x7f0a0001;
     }
     public static final class style {
-        public static final int Animations=0x7f0b0001;
-        public static final int Animations_SplashScreen=0x7f0b0002;
-        public static final int Theme_Transparent=0x7f0b0000;
+        public static final int ActionBar=0x7f090000;
+        public static final int ActionBar_Dark=0x7f090002;
+        public static final int ActionBar_Light=0x7f090001;
+        public static final int AlertDialogItem=0x7f09000c;
+        public static final int Animations=0x7f090006;
+        public static final int Animations_SplashScreen=0x7f090007;
+        public static final int AppTheme_Dark=0x7f090004;
+        public static final int AppTheme_Light=0x7f090003;
+        public static final int BackActionBar=0x7f09000b;
+        public static final int Dialog=0x7f090008;
+        public static final int Library=0x7f090009;
+        public static final int Playback=0x7f09000a;
+        public static final int Theme_Transparent=0x7f090005;
     }
     public static final class xml {
-        public static final int prefs=0x7f050000;
+        public static final int preference_filerenamer=0x7f050000;
+        public static final int preference_headers=0x7f050001;
+        public static final int preference_misc=0x7f050002;
+        public static final int preference_personal=0x7f050003;
+        public static final int preferences=0x7f050004;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a AppTheme.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #AppTheme_listDragShadowBackground com.scto.filerenamer:listDragShadowBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #AppTheme_menuIconPreference com.scto.filerenamer:menuIconPreference}</code></td><td></td></tr>
+           </table>
+           @see #AppTheme_listDragShadowBackground
+           @see #AppTheme_menuIconPreference
+         */
+        public static final int[] AppTheme = {
+            0x7f010000, 0x7f010001
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.scto.filerenamer.R.attr#listDragShadowBackground}
+          attribute's value can be found in the {@link #AppTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:listDragShadowBackground
+        */
+        public static final int AppTheme_listDragShadowBackground = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.scto.filerenamer.R.attr#menuIconPreference}
+          attribute's value can be found in the {@link #AppTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:menuIconPreference
+        */
+        public static final int AppTheme_menuIconPreference = 1;
+    };
 }

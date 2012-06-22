@@ -45,12 +45,12 @@ public class SplashActivity extends Activity
         super.onCreate(savedInstanceState);
 
 		SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		splash = getPrefs.getBoolean("checkboxScreen", true);
+		splash = getPrefs.getBoolean("show_splash_screen", true);
 		if(splash == true)
 		{
 			Log.d(TAG, "SplashScreen ist auf true gesetzt");
 			setContentView(R.layout.splash);
-			music = getPrefs.getBoolean("checkboxMusic", true);
+			music = getPrefs.getBoolean("play_splash_screen_sound", true);
 			if(music == true)
 			{
 				Log.d(TAG, "SplashScreenMusic ist auf true gesetzt");

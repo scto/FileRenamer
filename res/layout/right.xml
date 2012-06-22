@@ -2,33 +2,63 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-
+  
     <LinearLayout
 		android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
-
-        <LinearLayout
+        
+		<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content">
-
-            <TextView android:textStyle="bold" android:textColor="@android:color/black" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Find and Replace" android:layout_weight="1.0" />
-
+            
+			<TextView
+				android:textStyle="bold"
+				android:textColor="@android:color/white"
+				android:gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/right_textview_find_and_replace"
+				android:layout_weight="1.0" />
+        
 		</LinearLayout>
         
-		<TextView android:layout_width="fill_parent" android:textColor="@android:color/black" android:layout_height="wrap_content" android:text="Find" />
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/right_textview_find" />
         
-		<EditText android:id="@id/txt_find" android:layout_width="fill_parent" android:textColor="@android:color/black" android:layout_height="wrap_content" android:singleLine="true" />
+		<EditText
+			android:id="@+id/txt_find"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true" />
         
-		<TextView android:layout_width="fill_parent" android:textColor="@android:color/black" android:layout_height="wrap_content" android:text="Replace" />
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/right_textview_replace" />
         
-		<EditText android:id="@id/txt_replace" android:layout_width="fill_parent" android:textColor="@android:color/black" android:layout_height="wrap_content" android:singleLine="true" />
+		<EditText
+			android:id="@+id/txt_replace"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true" />
         
-		<Button android:id="@id/bt_apply" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Preview" />
+		<Button
+			android:id="@+id/bt_preview"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/button_preview" />
         
-		<CheckBox android:id="@id/matchcase" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@android:color/black" android:checked="true" android:text="MatchCase" />
-    
+		<CheckBox
+			android:id="@+id/matchcase"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:checked="true"
+			android:text="@string/right_checkbox_matchcase" />
+
 	</LinearLayout>
 
 </ScrollView>
