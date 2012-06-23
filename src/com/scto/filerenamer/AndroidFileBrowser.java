@@ -31,6 +31,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	private final DISPLAYMODE displayMode = DISPLAYMODE.RELATIVE;
 	private List< IconifiedText > directoryEntries = new ArrayList< IconifiedText >();
 	private File currentDirectory = new File( "/sdcard" );
+	
 
  	private static final String TAG = AndroidFileBrowser.class.getSimpleName();
 	private static SharedPreferences sSettings;
@@ -82,11 +83,20 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	{
 		// On relative we display the full path in the title.
 		if( this.displayMode == DISPLAYMODE.RELATIVE )
+		{
 			this.setTitle( aDirectory.getAbsolutePath() + " :: " + getString( R.string.app_name ) );
+		}
 		if( aDirectory.isDirectory() )
 		{
 			this.currentDirectory = aDirectory;
-			fill( aDirectory.listFiles() );
+			if( aDirectory.listFiles() == null )
+			{
+				
+			}
+			else
+			{
+				fill( aDirectory.listFiles() );
+			}
 		}
 		else
 		{
@@ -151,9 +161,12 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		
 		// Add the "." == "current directory"
 		this.directoryEntries.add( new IconifiedText( getString( R.string.current_dir), getResources().getDrawable( R.drawable.folder ) ) );		
+		
 		// and the ".." == 'Up one level'
 		if( this.currentDirectory.getParent() != null )
+		{
 			this.directoryEntries.add( new IconifiedText( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ) ) );
+		}
 		
 		Drawable currentIcon = null;
 		for( File currentFile : files )
