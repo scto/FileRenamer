@@ -25,6 +25,10 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 
+/**
+ * From www.anddev.org 
+ * Building a Filebrowser.
+ */
 public class AndroidFileBrowser extends ListActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {	
 	private enum DISPLAYMODE { ABSOLUTE, RELATIVE; }

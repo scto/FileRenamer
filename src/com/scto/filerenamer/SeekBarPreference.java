@@ -24,18 +24,9 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-/**
- * SeekBar preference to set the shake force threshold.
- */
 public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener
 {
-	/**
-	 * The current value.
-	 */
 	private int mValue;
-	/**
-	 * TextView to display current threshold.
-	 */
 	private TextView mValueText;
 
 	public SeekBarPreference( Context context, AttributeSet attrs )
@@ -61,12 +52,6 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 		mValue = restoreValue ? getPersistedInt( mValue ) : ( Integer )defaultValue;
     }
 
-	/**
-	 * Create the summary for the given value.
-	 *
-	 * @param value The force threshold.
-	 * @return A string representation of the threshold.
-	 */
 	private String getSummary( int value )
 	{
 		if( "shake_threshold".equals( getKey() ) )

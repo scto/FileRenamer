@@ -28,9 +28,6 @@ import android.content.*;
 
 import com.scto.filerenamer.DebugLog;
 
-/**
- * The preferences activity in which one can change application preferences.
- */
 public class PreferencesActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
  	private static final String TAG = PreferencesActivity.class.getSimpleName();
@@ -38,9 +35,6 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	private static int mThemeId = 0;
 
 	
-	/**
-	 * Initialize the activity, loading the preference specifications.
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate( Bundle savedInstanceState )
@@ -111,12 +105,6 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	{
 		setTheme( mThemeId );
 		finish();
-		/*
-		Intent intent = new Intent( this, PreferencesActivity.class );
-		intent.putExtra( "theme", mThemeId );
-		startActivity( intent );
-		this.recreate();
-		*/
 	}	
 	
 	@Override

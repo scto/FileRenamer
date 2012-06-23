@@ -47,10 +47,6 @@ import java.util.ArrayList;
 
 import com.scto.filerenamer.DebugLog;
 
-/**
-* Demonstrates combining a TabHost with a ViewPager to implement a tab UI 
-* that switches between tabs and also allows the user to perform horizontal
-* flicks to move between the tabs. */
 public class FileRenamerActivity extends FragmentActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
  	private static final String TAG = FileRenamerActivity.class.getSimpleName();
@@ -61,19 +57,10 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 	ViewPager mViewPager;
 	TabsAdapter mTabsAdapter;
 
-	/**
-	 * The number of unique list types. The number of visible lists may be
-	 * smaller.
-	 */
 	public static final int MAX_ADAPTER_COUNT = 6;
-
 	private static SharedPreferences sSettings;
 	private static int mThemeId = -1;
 	
-	/**
-	 * The human-readable title for each list. The positions correspond to the
-	 * MediaUtils ids, so e.g. TITLES[MediaUtils.TYPE_SONG] = R.string.songs
-	 */
 	public static final int[] TITLES = 
 	{
 		R.string.addNumber,
@@ -257,17 +244,6 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 	  	builder.create().show();
     }
 	
-	/**
-	* This is a helper class that implements the management of tabs and all
-	* details of connecting a ViewPager with associated TabHost. It relies on a
-	* trick. Normally a tab host has a simple API for supplying a View or
-	* Intent that each tab will show. This is not sufficient for switching
-	* between pages. So instead we make the content part of the tab host
-	* 0dp high (it is not shown) and the TabsAdapter supplies its own dummy
-	* view to show as the tab content. It listens to changes in tabs, and takes
-	* care of switch to the correct paged in the ViewPager whenever the selected
-	* tab changes.
-	*/
 	public static class TabsAdapter extends FragmentPagerAdapter implements 
 				TabHost.OnTabChangeListener,
 				ViewPager.OnPageChangeListener
@@ -435,11 +411,6 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 		@Override
 		public void onPageSelected( int position )
 		{
-			// Unfortunately when TabHost changes the current tab, it kindly
-			// also takes care of putting focus on it when not in touch mode.
-			// The jerk.
-			// This hack tries to prevent this from pulling focus out of our
-			// ViewPager.
 			TabWidget widget = mTabHost.getTabWidget();
 			int oldFocusability = widget.getDescendantFocusability();
 			widget.setDescendantFocusability( ViewGroup.FOCUS_BLOCK_DESCENDANTS );

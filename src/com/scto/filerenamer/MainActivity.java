@@ -116,8 +116,6 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
-				//Intent openAboutUsActivity = new Intent("com.scto.filerenamer.ABOUTACTIVITY");
-				//startActivity(openAboutUsActivity);
 				showDialog( ABOUT_DIALOG );
 			}
 		});
@@ -126,8 +124,6 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
-				//Intent openHelpActivity = new Intent("com.scto.filerenamer.HELPACTIVITY");
-				//startActivity(openHelpActivity);
 				showDialog( HELP_DIALOG );
 			}
 		});
@@ -136,8 +132,6 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
-				//Intent openExitActivity = new Intent("com.scto.filerenamer.EXITACTIVITY");
-				//startActivity(openExitActivity);
 				showDialog( EXIT_DIALOG );
 			}
 		});
@@ -186,7 +180,6 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( DialogInterface dialog, int id )
 			{
-				// nichts weiter tun; Dialog schlie�en
 				dialog.dismiss();
 				finish();
 			}
@@ -196,12 +189,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( DialogInterface dialog, int id )
 			{
-				// nichts weiter tun; Dialog schlie�en
 				dialog.dismiss();
 			}
 		});
 
-		// nicht schliessen mit BACK-Button
 		builder.setCancelable( false );
 		AlertDialog dialog = builder.create();
 		return dialog; 
@@ -217,12 +208,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( DialogInterface dialog, int id )
 			{
-				// nichts weiter tun; Dialog schlie�en
 				dialog.dismiss();
 			}
 		});
 
-		// nicht schliessen mit BACK-Button
 		builder.setCancelable( false );
 		AlertDialog dialog = builder.create();
 		return dialog; 
@@ -238,12 +227,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( DialogInterface dialog, int id )
 			{
-				// nichts weiter tun; Dialog schlie�en
 				dialog.dismiss();
 			}
 		});
 
-		// nicht schliessen mit BACK-Button
 		builder.setCancelable( false );
 		AlertDialog dialog = builder.create();
 		return dialog; 
