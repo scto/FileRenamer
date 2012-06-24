@@ -10,9 +10,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 import android.os.Bundle;
 
@@ -46,9 +48,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
  	private static final String TAG = MainActivity.class.getSimpleName();
 	private static SharedPreferences sSettings;
 	private static int mThemeId = -1;
+	private static int mRootAccess = -1;
 	
 	Button bRename, bSettings, bAbout, bHelp, bExit;
-	TextView tvDisplay;
+	TextView tvDisplay, tvTitle;
 
 	final int ABOUT_DIALOG 		= 0;
 	final int HELP_DIALOG 		= 1;
@@ -73,7 +76,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
-		}
+		}		
 		
         super.onCreate( savedInstanceState );
         setContentView( R.layout.main );
@@ -91,7 +94,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			mActionBar.show();
 		}
-
+		
 		bRename.setOnClickListener( new View.OnClickListener()
 		{
 			public void onClick( View v )
@@ -221,7 +224,16 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setIcon( R.drawable.icon );
-		builder.setTitle( R.string.dialog_about_title );
+		PackageManager pm = getPackageManager();
+		try
+		{
+			PackageInfo pi = pm.getPackageInfo( "com.scto.filerenamer", 0 );
+			builder.setTitle( getString( R.string.app_name ) + " :: " + getString( R.string.app_version ) + " " + pi.versionName );
+		}
+		catch( NameNotFoundException e )
+		{
+			DebugLog.e( TAG, "NameNotFoundException: " + e.getMessage() );
+		}		
 		builder.setMessage( R.string.dialog_about_message ); 
 		builder.setPositiveButton( R.string.dialog_about_positive_button, new DialogInterface.OnClickListener()
 		{
@@ -239,7 +251,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	@Override
 	public boolean onCreateOptionsMenu( Menu menu )
 	{
-		//super.onCreateOptionsMenu(menu);
+		super.onCreateOptionsMenu(menu);
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate( R.menu.list_menu, menu );
 		return true;
@@ -324,5 +336,47 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	{
 		setTheme( mThemeId );
 		this.recreate();
-	}		
+	}
+	
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+	}
+	
+	@Override
+	public void onStop()
+	{
+		super.onStop();
+	}
+		
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+	}
+	
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();	
+	}
+	
+	@Override
+	public void onRestart()
+	{
+		super.onRestart();
+	}
+	
+	@Override
+	public void recreate()
+	{
+		super.recreate();
+	}
 }

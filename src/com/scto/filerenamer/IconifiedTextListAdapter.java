@@ -27,27 +27,44 @@ import android.widget.BaseAdapter;
 import com.scto.filerenamer.IconifiedText;
  
 /** @author Steven Osborn - <!-- m --><a class="postlink" href="http://steven.bitsetters.com">http://steven.bitsetters.com</a><!-- m --> */
-public class IconifiedTextListAdapter extends BaseAdapter {
+public class IconifiedTextListAdapter extends BaseAdapter
+{
 
 	/** Remember our context so we can use it when constructing views. */
 	private Context mContext;
 
-	private List<IconifiedText> mItems = new ArrayList<IconifiedText>();
+	private List< IconifiedText > mItems = new ArrayList< IconifiedText >();
 
-	public IconifiedTextListAdapter(Context context) {
+	public IconifiedTextListAdapter( Context context )
+	{
 		mContext = context;
 	}
 
-	public void addItem(IconifiedText it) { mItems.add(it); }
+	public void addItem( IconifiedText it )
+	{
+		mItems.add( it );
+	}
 
-	public void setListItems(List<IconifiedText> lit) { mItems = lit; }
+	public void setListItems( List< IconifiedText > lit )
+	{
+		mItems = lit;
+	}
 
 	/** @return The number of items in the */
-	public int getCount() { return mItems.size(); }
+	public int getCount()
+	{
+		return mItems.size();
+	}
 
-	public Object getItem(int position) { return mItems.get(position); }
+	public Object getItem( int position )
+	{
+		return mItems.get( position );
+	}
 
-	public boolean areAllItemsSelectable() { return false; }
+	public boolean areAllItemsSelectable()
+	{
+		return false;
+	}
 
 	public boolean isSelectable( int position )
 	{ 

@@ -60,7 +60,7 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 	public static final int MAX_ADAPTER_COUNT = 6;
 	private static SharedPreferences sSettings;
 	private static int mThemeId = -1;
-	
+ 	
 	public static final int[] TITLES = 
 	{
 		R.string.addNumber,

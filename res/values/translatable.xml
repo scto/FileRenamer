@@ -22,6 +22,7 @@ THE SOFTWARE.
 -->
 <resources>
 	<string name="app_name">File Renamer</string>
+	<string name="app_version">Version</string>
 	<string name="dirname_app_name">Fil Renamer - by scto</string>
     <string name="menu_new_folder">New Folder</string>
     <string name="dirnameinput_cmd_return">Save</string>
