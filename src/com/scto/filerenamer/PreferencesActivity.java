@@ -364,30 +364,19 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 		{
 			super.onCreate( state );
 
-			int theme = 0;
-			Bundle extras = getIntent().getExtras();
-			if( extras != null )
-			{
-				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
-			}
-			else
-			{
-				DebugLog.e( "Extras = null" );
-			}
-			if( theme != 0 )
-			{
-				setTheme( theme );
-				DebugLog.i( "Theme != 0" );
-			}
-			else
-			{
-				DebugLog.e( "theme = 0" );
-			}
+			SharedPreferences settings = getSettings(this);
+			sSettings = settings;
 			
 			WebView view = new WebView( this );
 			view.getSettings().setJavaScriptEnabled( true );
-			view.loadUrl( "file:///android_asset/about.html" );
+			if( sSettings.getBoolean( "change_theme", false ) == false )
+			{
+				view.loadUrl( "file:///android_asset/about_holo_light.html" );
+			}
+			else
+			{
+				view.loadUrl( "file:///android_asset/about_holo_dark.html" );
+			}
 			view.setBackgroundColor( Color.TRANSPARENT );
 			setContentView( view );
 		}
@@ -399,31 +388,20 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 		@Override
 		public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
 		{
-			int theme = 0;
-			Bundle extras = getActivity().getIntent().getExtras();
-			if( extras != null )
-			{
-				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
-			}
-			else
-			{
-				DebugLog.e( "Extras = null" );
-			}
-			if( theme != 0 )
-			{
-				getActivity().setTheme( theme );
-				DebugLog.i( "Theme != 0" );
-			}
-			else
-			{
-				DebugLog.e( "theme = 0" );
-			}
+			SharedPreferences settings = getSettings( getActivity() );
+			sSettings = settings;
 			
 			WebView view = ( WebView )super.onCreateView( inflater, container, savedInstanceState );
 			view.setLayerType( View.LAYER_TYPE_SOFTWARE, null );
 			view.getSettings().setJavaScriptEnabled( true );
-			view.loadUrl( "file:///android_asset/about.html" );
+			if( sSettings.getBoolean( "change_theme", false ) == false )
+			{
+				view.loadUrl( "file:///android_asset/about_holo_light.html" );
+			}
+			else
+			{
+				view.loadUrl( "file:///android_asset/about_holo_dark.html" );
+			}
 			view.setBackgroundColor( Color.TRANSPARENT );
 			return view;
 		}
