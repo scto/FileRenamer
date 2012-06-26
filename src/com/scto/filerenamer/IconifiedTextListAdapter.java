@@ -18,7 +18,6 @@ package com.scto.filerenamer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import com.scto.filerenamer.IconifiedText;
 /** @author Steven Osborn - <!-- m --><a class="postlink" href="http://steven.bitsetters.com">http://steven.bitsetters.com</a><!-- m --> */
 public class IconifiedTextListAdapter extends BaseAdapter
 {
-
 	/** Remember our context so we can use it when constructing views. */
 	private Context mContext;
 

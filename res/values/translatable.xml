@@ -57,6 +57,12 @@ THE SOFTWARE.
 	<string name="dialog_exit_message">Do you want to exit?</string>
 	<string name="dialog_exit_positive_button">Yes</string>
 	<string name="dialog_exit_negative_button">No</string>
+
+	<!-- FileBrowser Activity -->
+	<string name="contextMenuTitle">Choose</string>
+	<string name="contextMenuOpen">Open</string>
+	<string name="contextMenuSelect">Select</string>
+	<string name="contextMenuCancel">Cancel</string>
 		
 	<!-- ViewPager Activity -->
 		

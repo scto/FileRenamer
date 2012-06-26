@@ -1,35 +1,74 @@
 package com.scto.filerenamer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.Log;
+import android.app.*;
+import android.os.*;
+import android.util.*;
+import java.io.*;
 import java.util.*;
+import java.lang.Process;
 
 public class SuperUserRequestActivity extends Activity
 {
+	public static Process suProcess = null;
+
+	ExecuteThread executeThread = new ExecuteThread();
+
+	int ExecuteResponse = 999;
+	int ExecuteFinished = 1000;
+
+	String processName = "";
+	String processScript = "";
+	
+	DataOutputStream stdin = null;
+	DataInputStream stdout = null;
+	DataInputStream stderr = null;
+
+	String scriptOutput = "";
+	Boolean scriptRunning = false;
+	Boolean stdoutFinished = false;
+	Boolean stderrFinished = false;
+
+	Thread stdoutThread = null;
+	Thread stderrThread = null;
+	Thread stdinThread = null;
+		
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        execute();
+		if( canRunRootCommands() )
+		{
+        	if( execute() == true )
+			{
+				Log.d( "ROOT", "execute was true" );
+			}
+			else
+			{
+				Log.d( "ROOT", "execute was false" );
+			}
+		}
+		else
+		{
+			Log.d( "ROOT", "Can't run Root commands" );
+		}
+		finish();
+		
+		/*
+		Intent resultIntent = new Intent( null );
+		resultIntent.putExtra();
+		*/
     }
 	
     public static boolean canRunRootCommands()
 	{
         boolean retval = false;
-        Process suProcess;
 
-        try
+		try
         {
 			suProcess = Runtime.getRuntime().exec( "su" );
 
-			DataOutputStream os = 
-				new DataOutputStream( suProcess.getOutputStream() );
-			DataInputStream osRes = 
-				new DataInputStream( suProcess.getInputStream() );
+			DataOutputStream os = new DataOutputStream( suProcess.getOutputStream() );
+			DataInputStream osRes = new DataInputStream( suProcess.getInputStream() );
 
 			if( null != os && null != osRes )
 			{
@@ -84,8 +123,9 @@ public class SuperUserRequestActivity extends Activity
 	{
         // TODO Auto-generated method stub
         ArrayList< String > commands = new ArrayList< String >();
-		commands.add( "mount -remoung,rw" );
-        // TODO Auto-generated method stub
+		//commands.add( "mount -o remount,rw rootfs /" );
+		commands.add( "ls -R /data > /mnt/sdcard/my_data_files.txt" );
+		//commands.add( "mount -o remount,ro rootfs /" );
         return commands;
     }
 
@@ -148,6 +188,154 @@ public class SuperUserRequestActivity extends Activity
         }
 
         return retval;
+	}
+	
+	private Handler messageHandler = new Handler()
+	{
+		@Override
+		public void handleMessage( Message msg )
+		{
+			if( msg.what == ExecuteResponse )
+			{
+				if( scriptOutput.length() > 500 )
+				{
+					scriptOutput = scriptOutput.substring( scriptOutput.length() - 500, scriptOutput.length() );
+				}
+			}
+
+			if( msg.what == ExecuteFinished )
+			{
+			}
+
+			super.handleMessage(msg);
+		}
+
+	};
+	
+	class ExecuteThread extends Thread
+	{
+		public void run()
+		{
+			super.setPriority( MIN_PRIORITY );
+			Execute();
+		}
+
+		void Execute()
+		{
+			try
+			{
+				suProcess = Runtime.getRuntime().exec( processName );
+
+				stdin = new DataOutputStream( suProcess.getOutputStream() );
+				stdout = new DataInputStream( suProcess.getInputStream() );
+				stderr = new DataInputStream( suProcess.getErrorStream() );				
+
+				stdinThread = new Thread()
+				{
+					public void run()
+					{
+						super.setPriority( MIN_PRIORITY );
+
+						while( scriptRunning )
+						{
+							try
+							{
+								super.sleep( 200 );
+								messageHandler.sendMessage( Message.obtain( messageHandler, ExecuteResponse, "" ) );
+							}
+							catch( Exception e )
+							{
+								
+							}
+						}
+					}
+				};
+
+				stdoutThread = new Thread()
+				{
+					public void run()
+					{						
+						super.setPriority( MIN_PRIORITY );
+						try
+						{
+							String line;
+							while( ( line = stdout.readLine() ) != null )
+							{
+								super.sleep( 10 );
+								scriptOutput += line+"\n";
+							}
+							stdoutFinished = true;
+						}
+						catch( Exception e )
+						{
+							
+						}
+					}
+				};
+				
+				stderrThread = new Thread()
+				{
+					public void run()
+					{
+						super.setPriority( MIN_PRIORITY );
+
+						try
+						{
+							String line;
+							while( ( line = stderr.readLine() ) != null )
+							{
+								super.sleep( 10 );
+								scriptOutput += "stderr: " + line+"\n";
+							}
+							stderrFinished = true;
+
+						}
+						catch( Exception e )
+						{
+							
+						}
+					}
+				};
+
+				scriptRunning = true;
+
+				stdoutThread.start();
+				stderrThread.start();
+				stdinThread.start();
+
+				stdin.writeBytes( processScript + " \n" );
+				stdin.writeBytes( "exit\n" );
+
+				stdin.flush();
+
+				suProcess.waitFor();
+
+				while( !stdoutFinished || !stderrFinished )
+				{
+				}
+
+				stderr.close();
+				stdout.close();
+				stdin.close();
+
+				stdoutThread = null;
+				stderrThread = null;
+				stdinThread = null;
+
+				messageHandler.sendMessage( Message.obtain( messageHandler, ExecuteResponse, "" ) );
+
+				scriptRunning = false;
+
+				suProcess.destroy();				
+
+				messageHandler.sendMessage( Message.obtain( messageHandler, ExecuteFinished, "" ) );
+
+			}
+			catch( Exception e )
+			{
+				messageHandler.sendMessage( Message.obtain( messageHandler, ExecuteResponse, "Error while trying to execute.." ) );
+			}
+		}
 	}
 }
 

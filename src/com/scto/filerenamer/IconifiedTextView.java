@@ -16,48 +16,52 @@
  */
 package com.scto.filerenamer;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.content.*;
+import android.graphics.drawable.*;
+import android.widget.*;
 
-public class IconifiedTextView extends LinearLayout {
+public class IconifiedTextView extends LinearLayout
+{
 	
 	private TextView mText;
 	private ImageView mIcon;
+	private CheckBox mCheckBox;
 	
-	public IconifiedTextView(Context context, IconifiedText aIconifiedText) {
-		super(context);
+	public IconifiedTextView( Context context, IconifiedText aIconifiedText )
+	{
+		super( context );
 
 		/* First Icon and the Text to the right (horizontal),
 		 * not above and below (vertical) */
-		this.setOrientation(HORIZONTAL);
-
-		mIcon = new ImageView(context);
-		mIcon.setImageDrawable(aIconifiedText.getIcon());
+		this.setOrientation( HORIZONTAL );
+		
+		mIcon = new ImageView( context );
+		mIcon.setImageDrawable( aIconifiedText.getIcon() );
 		// left, top, right, bottom
-		mIcon.setPadding(0, 2, 5, 0); // 5px to the right
+		mIcon.setPadding( 0, 2, 5, 0 ); // 5px to the right
 		
 		/* At first, add the Icon to ourself
 		 * (! we are extending LinearLayout) */
-		addView(mIcon,  new LinearLayout.LayoutParams(
+		addView( mIcon, new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT ) );
 		
-		mText = new TextView(context);
-		mText.setText(aIconifiedText.getText());
+		mText = new TextView( context );
+		mText.setText( aIconifiedText.getText() );
 		mText.setTextSize( 22 );
 
 		/* Now the text (after the icon) */
-		addView(mText, new LinearLayout.LayoutParams(
+		addView( mText, new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT ) );
+				
 	}
 
-	public void setText(String words) {
-		mText.setText(words);
+	public void setText( String words )
+	{
+		mText.setText( words );
 	}
 	
-	public void setIcon(Drawable bullet) {
-		mIcon.setImageDrawable(bullet);
+	public void setIcon( Drawable bullet )
+	{
+		mIcon.setImageDrawable( bullet );
 	}
 }

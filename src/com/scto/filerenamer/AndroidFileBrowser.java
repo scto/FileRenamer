@@ -19,23 +19,20 @@ import java.util.*;
 
 public class AndroidFileBrowser extends ListActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-
-	private enum DISPLAYMODE{ ABSOLUTE, RELATIVE; }
-
-	private final DISPLAYMODE mDisplayMode = DISPLAYMODE.RELATIVE;
-	private List< IconifiedText > mDirectoryEntries = new ArrayList< IconifiedText >();
-	private File mCurrentDirectory;
-	private File mRootDirectory;
-	private boolean mIsRoot = false;
-	private File mSdcard;
-	private String mstrCurrentDirectory;
-	
- 	private static final String TAG = PreferencesActivity.class.getSimpleName();
+ 	private static final String TAG = AndroidFileBrowser.class.getSimpleName();
 	private static SharedPreferences sSettings;
 	private static int mThemeId = 0;
 	
-	private ArrayList< String > mListEntries = new ArrayList< String >();
+	private enum DISPLAYMODE{ ABSOLUTE, RELATIVE; }
+	private final DISPLAYMODE mDisplayMode = DISPLAYMODE.RELATIVE;
+	private List< IconifiedText > mDirectoryEntries = new ArrayList< IconifiedText >();
+	private File mCurrentDirectory;
+	private File mSdcard;
+	private String mstrSelectedFileString;
+	private int mSelectedFileEntryPosition;
 	
+	Boolean mContextMenuOpened = Boolean.valueOf( false );	
+		
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate( Bundle savedInstanceState )
@@ -58,7 +55,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		super.onCreate( savedInstanceState );
 		
 		mSdcard = Environment.getExternalStorageDirectory();
-		mstrCurrentDirectory = mSdcard.toString();
 		Object localObject = Environment.getExternalStorageState();
 		if( ( !( ( String )localObject ).contains( "mounted_ro" ) )
 		 && ( !( ( String )localObject ).contains( "checking" ) )
@@ -69,10 +65,24 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		 && ( !( ( String )localObject ).contains( "unmounted" ) )
 		 && ( !( ( String )localObject ).contains( "shared" ) ) )
 		{
-			browseToRoot( mstrCurrentDirectory );	
+			browseToRoot( mSdcard.toString() );	
 		}
-		
-		
+		else
+		{
+			localObject = new AlertDialog.Builder( this );
+			( (AlertDialog.Builder )localObject )
+					.setMessage( "Sdcard not found!" )
+					.setTitle( "Error!" )
+					.setCancelable( false )
+					.setPositiveButton( "Exit", new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface paramDialogInterface, int paramInt)
+						{
+							AndroidFileBrowser.this.finish();
+						}
+					});
+			( ( AlertDialog.Builder )localObject ).create().show();
+		}
 	}
 
 	@Override
@@ -120,6 +130,30 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		setTheme( mThemeId );
 		this.recreate();
 	}	
+
+	public boolean onContextItemSelected( MenuItem paramMenuItem )
+	{
+		super.onContextItemSelected( paramMenuItem );
+		action( paramMenuItem );
+		return true;
+	}
+
+	public void onContextMenuClosed( Menu paramMenu )
+	{
+		super.onContextMenuClosed( paramMenu );
+		if( this.mContextMenuOpened.booleanValue() )
+		{
+
+		}
+	}
+
+	public void onCreateContextMenu( ContextMenu paramContextMenu, View paramView, ContextMenu.ContextMenuInfo paramContextMenuInfo )
+	{
+		super.onCreateContextMenu( paramContextMenu, paramView, paramContextMenuInfo );
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate( R.menu.context_menu, paramContextMenu );
+		paramContextMenu.setHeaderTitle( R.string.contextMenuTitle );
+	}
 	
 	/**
 	 * This function browses to the 
@@ -147,8 +181,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		// On relative we display the full path in the title.
 		if( this.mDisplayMode == DISPLAYMODE.RELATIVE )
 		{
-			this.setTitle( aDirectory.getAbsolutePath() + " :: " + 
-						  getString( R.string.app_name ) );
+			this.setTitle( aDirectory.getAbsolutePath() + " :: " + getString( R.string.app_name ) );
 		}
 		
 		if( aDirectory.isDirectory() )
@@ -156,39 +189,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			this.mCurrentDirectory = aDirectory;
 			fill( aDirectory.listFiles() );
 		}
-		else
-		{
-			AlertDialog.Builder builder = new AlertDialog.Builder( this );
-			builder.setIcon( R.drawable.folder );
-			builder.setTitle( "Question" );
-			builder.setMessage( "Do you want to open that file?\n" + aDirectory.getName() ); 
-			builder.setPositiveButton( "Ok", new DialogInterface.OnClickListener() 
-				{
-					public void onClick( DialogInterface dialog, int id )
-					{
-						// Lets start an intent to View the file, that was clicked...
-						AndroidFileBrowser.this.openFile(aDirectory);
-					}
-				});
-
-			builder.setNegativeButton( "Cancel", new DialogInterface.OnClickListener()
-				{
-					public void onClick( DialogInterface dialog, int id )
-					{
-						// Do nothing ^^
-					}
-				});
-
-			builder.setCancelable( false );
-			AlertDialog dialog = builder.create();
-		}
-	}
-
-	private void openFile( File aFile )
-	{
-		Intent myIntent = new Intent( android.content.Intent.ACTION_VIEW, 
-									 Uri.parse( "file://" + aFile.getAbsolutePath() ) );
-		startActivity( myIntent );
 	}
 
 	private void fill( File[] files )
@@ -196,20 +196,17 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		this.mDirectoryEntries.clear();
 
 		// Add the "." == "current directory"
-		this.mDirectoryEntries.add( new IconifiedText(
-					getString( R.string.current_dir ), 
-					getResources().getDrawable( R.drawable.folder ) ) );		
+		this.mDirectoryEntries.add( new IconifiedText( getString( R.string.current_dir ), getResources().getDrawable( R.drawable.folder ) ) );		
 		
 		// and the ".." == 'Up one level'
 		if( this.mCurrentDirectory.getParent() != null )
 		{
 			if( this.mCurrentDirectory.equals( this.mSdcard ) )
 			{
-				Log.w( TAG, "[fill] [mCurrentDirectory is equal to mSdcard]" );
+
 			}
 			else
 			{
-				Log.w( TAG, "[fill] [mCurrentDirectory is not equal to mSdcard]" );
 				this.mDirectoryEntries.add( new IconifiedText( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ) ) );
 			}
 		}
@@ -226,23 +223,19 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 				/* Determine the Icon to be used, 
 				 * depending on the FileEndings defined in:
 				 * res/values/fileendings.xml. */
-				if( checkEndsWithInStringArray( fileName, getResources().
-											  getStringArray( R.array.fileEndingImage ) ) )
+				if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingImage ) ) )
 				{
 					currentIcon = getResources().getDrawable( R.drawable.image ); 
 				}
-				else if( checkEndsWithInStringArray( fileName, getResources().
-													getStringArray( R.array.fileEndingWebText ) ) )
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingWebText ) ) )
 				{
 					currentIcon = getResources().getDrawable( R.drawable.webtext );
 				}
-				else if( checkEndsWithInStringArray(fileName, getResources().
-													getStringArray( R.array.fileEndingPackage ) ) )
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingPackage ) ) )
 				{
 					currentIcon = getResources().getDrawable( R.drawable.packed );
 				}
-				else if( checkEndsWithInStringArray( fileName, getResources().
-													getStringArray( R.array.fileEndingAudio ) ) )
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingAudio ) ) )
 				{
 					currentIcon = getResources().getDrawable( R.drawable.audio );
 				}
@@ -255,23 +248,17 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			{
 				case ABSOLUTE:
 					/* On absolute Mode, we show the full path */
-					this.mDirectoryEntries.add( new IconifiedText( currentFile
-																.getPath(), currentIcon ) );
+					this.mDirectoryEntries.add( new IconifiedText( currentFile.getPath(), currentIcon ) );
 					break;
 				case RELATIVE: 
 					/* On relative Mode, we have to cut the
 					 * current-path at the beginning */
 					int currentPathStringLenght = this.mCurrentDirectory.getAbsolutePath().length();
-					this.mDirectoryEntries.add( new IconifiedText(
-												  currentFile.getAbsolutePath().
-												  substring( currentPathStringLenght ),
-												  currentIcon ) );
-
+					this.mDirectoryEntries.add( new IconifiedText( currentFile.getAbsolutePath().substring( currentPathStringLenght ), currentIcon ) );
 					break;
 			}
 		}
 		Collections.sort( this.mDirectoryEntries );
-
 		IconifiedTextListAdapter itla = new IconifiedTextListAdapter( this );
 		itla.setListItems( this.mDirectoryEntries );		
 		this.setListAdapter( itla );
@@ -282,14 +269,24 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	{
 		super.onListItemClick( l, v, position, id );
 
-		String selectedFileString = this.mDirectoryEntries.get( position ).getText();
+		this.mContextMenuOpened = Boolean.valueOf( true );
+		registerForContextMenu( l );
+		mSelectedFileEntryPosition = position;
+		v.showContextMenu();		
+		
+		 
+		/*
+		Log.d( "[" + TAG + "]", "selectedFileString: " + selectedFileString );
+		selectedFileString = this.mDirectoryEntries.get( position ).getText();
 		if( selectedFileString.equals( getString( R.string.current_dir ) ) )
 		{
 			// Refresh
+			Log.d( "[" + TAG + "]", "this.browseTo: " );
 			this.browseTo( this.mCurrentDirectory );
 		}
 		else if( selectedFileString.equals( getString( R.string.up_one_level ) ) )
 		{
+			Log.d( "[" + TAG + "]", "upOneLevel" );
 			this.upOneLevel();
 		}
 		else
@@ -298,18 +295,101 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			switch( this.mDisplayMode )
 			{
 				case RELATIVE:
-					clickedFile = new File( this.mCurrentDirectory.getAbsolutePath()
-										   + this.mDirectoryEntries.get( position ).getText() );
+					clickedFile = new File( this.mCurrentDirectory.getAbsolutePath() + this.mDirectoryEntries.get( position ).getText() );
 					break;
 				case ABSOLUTE:
 					clickedFile = new File( this.mDirectoryEntries.get( position ).getText() );
 					break;
 			}
 			if( clickedFile != null )
+			{
 				this.browseTo( clickedFile );
+			}
 		}
+		*/
 	}
 
+	public void action( MenuItem item )
+	{
+		this.mContextMenuOpened = Boolean.valueOf( false );
+		switch( item.getItemId() )
+		{
+			case R.id.menu_open:
+			{
+				if( this.mCurrentDirectory.isDirectory() )
+				{
+					mstrSelectedFileString = this.mDirectoryEntries.get( mSelectedFileEntryPosition ).getText();
+					if( mstrSelectedFileString.equals( getString( R.string.current_dir ) ) )
+					{
+						// Refresh
+						this.browseTo( this.mCurrentDirectory );
+					}
+					else if( mstrSelectedFileString.equals( getString( R.string.up_one_level ) ) )
+					{
+						this.upOneLevel();
+					}
+					else
+					{
+						File clickedFile = null;
+						switch( this.mDisplayMode )
+						{
+							case RELATIVE:
+								clickedFile = new File( this.mCurrentDirectory.getAbsolutePath() + this.mDirectoryEntries.get( mSelectedFileEntryPosition ).getText() );
+								break;
+							case ABSOLUTE:
+								clickedFile = new File( this.mDirectoryEntries.get( mSelectedFileEntryPosition ).getText() );
+								break;
+						}
+						if( clickedFile != null )
+						{
+							this.browseTo( clickedFile );
+						}
+					}
+				}
+			}
+			case R.id.menu_select:
+			{
+				Log.d( "[" + TAG  + "]", "[action] Select this: " + this.mCurrentDirectory.toString() );
+				/*
+				AlertDialog localAlertDialog;
+				if( !this.mstrWhat.contains( "renamer" ) )
+				{
+
+				}
+				else if( !this.mCurrentDirectory.isDirectory() )
+				{
+					this.mstrCurrentDirectory = this.mstrTempDirectory;
+				}
+				else if( this.mCurrentDirectory.list().length != 0 )
+				{
+					this.intent = new Intent( this, addnumber.class );
+					this.intent.putExtra( "dir", this.mstrCurrentDirectory );
+					startActivity( this.intent );
+					onDestroy();
+				}
+				else
+				{
+					localAlertDialog = new AlertDialog.Builder( this ).create();
+					localAlertDialog.setTitle( "Error:" );
+					localAlertDialog.setMessage( "No Files Found in this folder" );
+					localAlertDialog.setButton( "Ok", new DialogInterface.OnClickListener()
+					{
+						public void onClick( DialogInterface paramDialogInterface, int paramInt )
+						{
+							AndroidFileBrowser.this.finish();
+						}
+					});
+					localAlertDialog.show();
+				}
+				*/
+			}
+			case R.id.menu_cancel:
+			{
+				Log.d( "[" + TAG  + "]", "[action] Cancel: " + this.mCurrentDirectory.toString() );
+			}
+		}
+	}
+	
 	/** Checks whether checkItsEnd ends with
 	 * one of the Strings from fileEndings */
 	private boolean checkEndsWithInStringArray( String checkItsEnd, String[] fileEndings )
@@ -320,5 +400,11 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 				return true;
 		}
 		return false;
+	}
+	
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		finish();
 	}
 }

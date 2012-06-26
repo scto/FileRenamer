@@ -15,8 +15,10 @@
 
     <uses-permission
 		android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <application
+	<uses-permission
+		android:name="android.permission.ACCESS_SUPERUSER" />
+    
+	<application
 		android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
         android:logo="@drawable/ic_logo"
@@ -53,7 +55,16 @@
             </intent-filter>
         </activity>
 		
-
+        <activity
+			android:name=".SuperUserRequestActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+            <intent-filter >
+                <action android:name="com.scto.filerenamer.SUPERUSERREQUESTACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+		
         <activity
 			android:name=".FileRenamerActivity"
             android:label="@string/app_name"

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import android.util.Log;
 
 // http://muzikant-android.blogspot.ch/2011/02/how-to-get-root-access-and-execute.html
-public abstract class ExecuteAsRootBase extends AndroidFileBrowser
+public abstract class ExecuteAsRootBase
 {
 	public static boolean canRunRootCommands()
 	{
