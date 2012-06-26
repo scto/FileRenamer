@@ -94,6 +94,16 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			mActionBar.show();
 		}
+
+		Bundle extras = getIntent().getExtras();
+		if( extras != null )
+		{
+			this.setTitle( extras.getString( "dir" ) + " :: " + getString( R.string.app_name ) );
+		}
+		else
+		{
+			this.setTitle( " :: " + getString( R.string.app_name ) );
+		}
 		
 		bRename.setOnClickListener( new View.OnClickListener()
 		{
@@ -248,6 +258,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		return dialog; 
 	}
 
+	/*
 	@Override
 	public boolean onCreateOptionsMenu( Menu menu )
 	{
@@ -298,7 +309,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 			}
 		}
 	}	
-
+	*/
+	
 	public static SharedPreferences getSettings( Context context )
 	{
 		if( sSettings == null )

@@ -114,9 +114,14 @@
             
 			<Button
 				android:id="@+id/bPreview"
-				android:layout_width="fill_parent"
+				android:layout_width="250dp"
 				android:layout_height="wrap_content"
-				android:text="@string/button_preview" />
+				android:textSize="30sp"
+				android:textStyle="bold"
+				android:text="@string/button_preview"
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:background="@drawable/button" />
         
 		</LinearLayout>
     

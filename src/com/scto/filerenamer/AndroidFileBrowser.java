@@ -2,8 +2,8 @@ package com.scto.filerenamer;
 
 import android.app.*;
 import android.content.*;
+import android.graphics.*;
 import android.graphics.drawable.*;
-import android.net.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
@@ -21,6 +21,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 {
  	private static final String TAG = AndroidFileBrowser.class.getSimpleName();
 	private static SharedPreferences sSettings;
+	private static Intent mIntent;
 	private static int mThemeId = 0;
 	
 	private enum DISPLAYMODE{ ABSOLUTE, RELATIVE; }
@@ -53,6 +54,8 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		}
 		
 		super.onCreate( savedInstanceState );
+		ListView lv = getListView();
+		lv.setCacheColorHint( Color.TRANSPARENT );
 		
 		mSdcard = Environment.getExternalStorageDirectory();
 		Object localObject = Environment.getExternalStorageState();
@@ -268,45 +271,33 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	protected void onListItemClick( ListView l, View v, int position, long id )
 	{
 		super.onListItemClick( l, v, position, id );
-
 		this.mContextMenuOpened = Boolean.valueOf( true );
 		registerForContextMenu( l );
-		mSelectedFileEntryPosition = position;
-		v.showContextMenu();		
 		
-		 
-		/*
-		Log.d( "[" + TAG + "]", "selectedFileString: " + selectedFileString );
-		selectedFileString = this.mDirectoryEntries.get( position ).getText();
-		if( selectedFileString.equals( getString( R.string.current_dir ) ) )
+		mSelectedFileEntryPosition = position;
+		mstrSelectedFileString = this.mDirectoryEntries.get( position ).getText();
+		if( mstrSelectedFileString.equals( getString( R.string.up_one_level ) ) )
 		{
-			// Refresh
-			Log.d( "[" + TAG + "]", "this.browseTo: " );
-			this.browseTo( this.mCurrentDirectory );
-		}
-		else if( selectedFileString.equals( getString( R.string.up_one_level ) ) )
-		{
-			Log.d( "[" + TAG + "]", "upOneLevel" );
 			this.upOneLevel();
 		}
-		else
+
+		try
 		{
-			File clickedFile = null;
-			switch( this.mDisplayMode )
+			boolean result = v.showContextMenu();
+			if( result )
 			{
-				case RELATIVE:
-					clickedFile = new File( this.mCurrentDirectory.getAbsolutePath() + this.mDirectoryEntries.get( position ).getText() );
-					break;
-				case ABSOLUTE:
-					clickedFile = new File( this.mDirectoryEntries.get( position ).getText() );
-					break;
+				Log.d( "[" + TAG + "]", "ShowContextMenu Result: true" );
 			}
-			if( clickedFile != null )
+			else
 			{
-				this.browseTo( clickedFile );
+				Log.d( "[" + TAG + "]", "ShowContextMenu Result: false" );
 			}
 		}
-		*/
+		catch( NullPointerException e )
+		{
+			Log.d( "[" + TAG + "]", "NullPointerException ShowContextMenu: " + e.getMessage() );
+			e.printStackTrace();
+		}
 	}
 
 	public void action( MenuItem item )
@@ -346,26 +337,52 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 						}
 					}
 				}
+				break;
 			}
 			case R.id.menu_select:
 			{
-				Log.d( "[" + TAG  + "]", "[action] Select this: " + this.mCurrentDirectory.toString() );
-				/*
 				AlertDialog localAlertDialog;
-				if( !this.mstrWhat.contains( "renamer" ) )
+				if( this.mCurrentDirectory.isDirectory() )
 				{
-
-				}
-				else if( !this.mCurrentDirectory.isDirectory() )
-				{
-					this.mstrCurrentDirectory = this.mstrTempDirectory;
-				}
-				else if( this.mCurrentDirectory.list().length != 0 )
-				{
-					this.intent = new Intent( this, addnumber.class );
-					this.intent.putExtra( "dir", this.mstrCurrentDirectory );
-					startActivity( this.intent );
-					onDestroy();
+					mstrSelectedFileString = this.mDirectoryEntries.get( mSelectedFileEntryPosition ).getText();
+					if( mstrSelectedFileString.equals( getString( R.string.current_dir ) ) )
+					{
+						// Refresh
+						this.mIntent = new Intent( this, FileRenamerActivity.class );
+						this.mIntent.putExtra( "dir", this.mCurrentDirectory.toString() );
+						Log.w( "[" + TAG + "]", "this.mCurrentDirectory.toString(): " + this.mCurrentDirectory.toString() );
+						startActivity( this.mIntent );
+						onDestroy();
+					}
+					else if( mstrSelectedFileString.equals( getString( R.string.up_one_level ) ) )
+					{
+						this.mIntent = new Intent( this, FileRenamerActivity.class );
+						this.mIntent.putExtra( "dir", this.mCurrentDirectory.getParent() );
+						Log.w( "[" + TAG + "]", "this.mCurrentDirectory.getParent(): " + this.mCurrentDirectory.getParent() );
+						startActivity( this.mIntent );
+						onDestroy();
+					}
+					else
+					{
+						File clickedFile = null;
+						switch( this.mDisplayMode )
+						{
+							case RELATIVE:
+								clickedFile = new File( this.mCurrentDirectory.getAbsolutePath() + this.mDirectoryEntries.get( mSelectedFileEntryPosition ).getText() );
+								break;
+							case ABSOLUTE:
+								clickedFile = new File( this.mDirectoryEntries.get( mSelectedFileEntryPosition ).getText() );
+								break;
+						}
+						if( clickedFile != null )
+						{
+							this.mIntent = new Intent( this, FileRenamerActivity.class );
+							this.mIntent.putExtra( "dir", clickedFile.toString() );
+							Log.w( "[" + TAG + "]", "clickedFile.toString(): " + clickedFile.toString() );
+							startActivity( this.mIntent );
+							onDestroy();
+						}
+					}
 				}
 				else
 				{
@@ -381,11 +398,12 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 					});
 					localAlertDialog.show();
 				}
-				*/
+				break;
 			}
 			case R.id.menu_cancel:
 			{
 				Log.d( "[" + TAG  + "]", "[action] Cancel: " + this.mCurrentDirectory.toString() );
+				break;
 			}
 		}
 	}

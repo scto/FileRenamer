@@ -106,7 +106,17 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.addDate ) ).setIndicator( getString( R.string.addDate ) ), AddCharsFragment.class, null );
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.findAndReplace ) ).setIndicator( getString( R.string.findAndReplace ) ), AddDateFragment.class, null );
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.removeChars ) ).setIndicator( getString( R.string.removeChars ) ), RemoveCharsFragment.class, null );
-	
+
+		Bundle extras = getIntent().getExtras();
+		if( extras != null )
+		{
+			this.setTitle( extras.getString( "dir" ) + " :: " + getString( R.string.app_name ) );
+		}
+		else
+		{
+			this.setTitle( " :: " + getString( R.string.app_name ) );
+		}
+		
 		if( savedInstanceState != null )
 		{
 			mTabHost.setCurrentTabByTag( savedInstanceState.getString( "tab" ) );
