@@ -23,6 +23,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	private static SharedPreferences sSettings;
 	private static Intent mIntent;
 	private static int mThemeId = 0;
+	private static ActionBar mActionBar;
 	
 	private enum DISPLAYMODE{ ABSOLUTE, RELATIVE; }
 	private final DISPLAYMODE mDisplayMode = DISPLAYMODE.RELATIVE;
@@ -56,6 +57,16 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		super.onCreate( savedInstanceState );
 		ListView lv = getListView();
 		lv.setCacheColorHint( Color.TRANSPARENT );
+		lv.setFastScrollEnabled( true );
+		
+		ActionBar mActionBar = getActionBar();
+		if( mActionBar != null )
+		{
+			mActionBar.setDisplayHomeAsUpEnabled( true );
+			mActionBar.setDisplayShowHomeEnabled( true );
+			mActionBar.setDisplayShowTitleEnabled( true );
+			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+		}
 		
 		mSdcard = Environment.getExternalStorageDirectory();
 		Object localObject = Environment.getExternalStorageState();
@@ -420,9 +431,36 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		return false;
 	}
 	
+	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
 		finish();
+	}
+	
+	@Override
+	public void onCreateOptionMenu( Menu menu, MenuInflater inflater )
+	{
+		super.onCreateOptionsMenu( menu );
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected( MenuItem item )
+	{
+		switch( item.getItemId() )
+		{
+			case android.R.id.home:
+			{
+				Intent intent = new Intent( this, MainActivity.class );
+				intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP );
+				startActivity( intent );
+				return true;
+			}
+			default:
+			{
+				super.onOptionsItemSelected( item );	
+			}
+		}
+		return true;
 	}
 }

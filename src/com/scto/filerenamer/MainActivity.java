@@ -49,6 +49,9 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	private static SharedPreferences sSettings;
 	private static int mThemeId = -1;
 	private static int mRootAccess = -1;
+
+	private static final String PRIVATE_PREF = "filerenamer";
+	private static final String VERSION_KEY = "version_number";
 	
 	Button bRename, bSettings, bAbout, bHelp, bExit;
 	TextView tvDisplay, tvTitle;
@@ -148,6 +151,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 				showDialog( EXIT_DIALOG );
 			}
 		});
+		
+		init();
 	}
 
 	@Override
@@ -391,4 +396,53 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	{
 		super.recreate();
 	}
+	
+	private void init() {
+    	SharedPreferences settings = getSharedPreferences(PRIVATE_PREF, Context.MODE_PRIVATE);
+    	int currentVersionNumber = 0;
+
+		int savedVersionNumber = settings.getInt(VERSION_KEY, 0);
+
+		try
+		{
+   	 		PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+    	 	currentVersionNumber = pi.versionCode;
+   	 	}
+		catch( Exception e )
+		{
+
+		}
+
+   	 	if( currentVersionNumber > savedVersionNumber )
+		{   	 		
+   	 		showWhatsNewDialog();
+
+   	 		Editor editor = settings.edit();
+
+   	 		editor.putInt( VERSION_KEY, currentVersionNumber );
+   	 		editor.commit();
+   	 	}
+	}
+
+    private void showWhatsNewDialog()
+	{
+    	LayoutInflater inflater = LayoutInflater.from( this );		
+
+        View view = inflater.inflate( R.layout.dialog_whatsnew, null );
+
+  	  	Builder builder = new AlertDialog.Builder( this );
+
+	  	builder.setView( view ).setTitle( "Whats New" )
+			.setPositiveButton( "OK", new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick( DialogInterface dialog, int which )
+				{
+					dialog.dismiss();
+				}
+			});
+
+	  	builder.create().show();
+    }
+	
 }

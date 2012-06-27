@@ -18,10 +18,8 @@ public abstract class ExecuteAsRootBase
     	{
 			suProcess = Runtime.getRuntime().exec( "su" );
       
-			DataOutputStream os = 
-				new DataOutputStream( suProcess.getOutputStream() );
-      		DataInputStream osRes = 
-          		new DataInputStream( suProcess.getInputStream() );
+			DataOutputStream os = new DataOutputStream( suProcess.getOutputStream() );
+      		DataInputStream osRes = new DataInputStream( suProcess.getInputStream() );
       
       		if( null != os && null != osRes )
       		{

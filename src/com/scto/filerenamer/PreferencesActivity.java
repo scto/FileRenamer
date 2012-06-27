@@ -53,6 +53,15 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );
 		}
+
+		ActionBar mActionBar = getActionBar();
+		if( mActionBar != null )
+		{
+			mActionBar.setDisplayHomeAsUpEnabled( true );
+			mActionBar.setDisplayShowHomeEnabled( true );
+			mActionBar.setDisplayShowTitleEnabled( true );
+			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+		}
 		
 		// Setting Theme must be done before super.onCreate() and addPreferencesFromResource!
 		super.onCreate( savedInstanceState );		
@@ -112,7 +121,7 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	{
 		super.onStart();
 	}
-		
+	
 	@TargetApi(11)
 	@Override
 	public void onBuildHeaders( List<Header> target )
@@ -142,11 +151,19 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	}
 
 	@Override
+	public void onCreateOptionMenu( Menu menu, MenuInflater inflater )
+	{
+		super.onCreateOptionsMenu( menu );
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected( MenuItem item )
 	{
 		if( item.getItemId() == android.R.id.home )
 		{
-			finish();
+			Intent intent = new Intent( this, MainActivity.class );
+			intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP );
+			startActivity( intent );
 			return true;
 		}
 		else
