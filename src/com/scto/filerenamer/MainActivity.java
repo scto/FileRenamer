@@ -22,9 +22,11 @@ import android.preference.PreferenceManager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,8 +44,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import com.scto.filerenamer.DebugLog;
+import com.scto.filerenamer.BuildConfig;
+import com.scto.filerenamer.AboutDialog.AboutDialogListener;
+import com.scto.filerenamer.HelpDialog.HelpDialogListener;
+import com.scto.filerenamer.ExitDialog.ExitDialogListener;
+import com.scto.filerenamer.WhatsNewDialog.WhatsNewDialogListener;
 
-public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener
+public class MainActivity extends FragmentActivity implements 
+				SharedPreferences.OnSharedPreferenceChangeListener,
+				AboutDialogListener,
+				HelpDialogListener,
+				ExitDialogListener,
+				WhatsNewDialogListener
+				
 {
  	private static final String TAG = MainActivity.class.getSimpleName();
 	private static SharedPreferences sSettings;
@@ -56,9 +69,11 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	Button bRename, bSettings, bAbout, bHelp, bExit;
 	TextView tvDisplay, tvTitle;
 
+	/*
 	final int ABOUT_DIALOG 		= 0;
 	final int HELP_DIALOG 		= 1;
 	final int EXIT_DIALOG 		= 2;
+	*/
 	
 	ActionBar mActionBar = null;
 	
@@ -66,24 +81,38 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     @Override
     public void onCreate( Bundle savedInstanceState )
 	{
+		if( BuildConfig.DEBUG )
+		{
+			Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState )" );
+		}
 		SharedPreferences settings = getSettings(this);
 		settings.registerOnSharedPreferenceChangeListener(this);
 		sSettings = settings;
 
 		if( sSettings.getBoolean( "change_theme", false ) == false )
 		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "sSettings.getBoolean == false" );
+				Log.i( "[" + TAG + "]", "mThemeId = R.style.AppTheme_Light" );
+			}			
 			mThemeId = R.style.AppTheme_Light;
 			setTheme( mThemeId );
 		}
 		else
 		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "sSettings.getBoolean == true" );
+				Log.i( "[" + TAG + "]", "mThemeId = R.style.AppTheme_Dark" );
+			}			
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
 		}		
 		
         super.onCreate( savedInstanceState );
         setContentView( R.layout.main );
-
+		
 		tvDisplay = ( TextView ) findViewById( R.id.tvDisplay );
 
 		bRename = ( Button ) findViewById( R.id.bRename );
@@ -97,14 +126,29 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			mActionBar.show();
 		}
+		else
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "mActionBar == null" );
+			}			
+		}
 
 		Bundle extras = getIntent().getExtras();
 		if( extras != null )
 		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "getIntent().getExtras() : extras != null" );
+			}
 			this.setTitle( extras.getString( "dir" ) + " :: " + getString( R.string.app_name ) );
 		}
 		else
 		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "getIntent().getExtras() : extras == null" );
+			}			
 			this.setTitle( " :: " + getString( R.string.app_name ) );
 		}
 		
@@ -112,6 +156,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "bRename.setOnClickListener() : Clicked" );
+				}			
 				Intent openAndroidFileBrowser = new Intent("com.scto.filerenamer.ANDROIDFILEBROWSER");
 				openAndroidFileBrowser.putExtra("what", "renamer" );
 				openAndroidFileBrowser.putExtra("theme", mThemeId );
@@ -123,6 +171,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "bSettings.setOnClickListener() : Clicked" );
+				}			
 				Intent openPreferencesActivity = new Intent( "com.scto.filerenamer.PREFERENCESACTIVITY" );
 				startActivity( openPreferencesActivity );
 			}
@@ -132,7 +184,13 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
-				showDialog( ABOUT_DIALOG );
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "bAbout.setOnClickListener() : Clicked" );
+				}			
+				FragmentManager fm = getSupportFragmentManager();
+				AboutDialog aboutDialog = new AboutDialog();
+				aboutDialog.show( fm, "dlg_about" );
 			}
 		});
 
@@ -140,7 +198,13 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
-				showDialog( HELP_DIALOG );
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "bHelp.setOnClickListener() : Clicked" );
+				}			
+				FragmentManager fm = getSupportFragmentManager();
+				HelpDialog helpDialog = new HelpDialog();
+				helpDialog.show( fm, "dlg_help" );
 			}
 		});
 
@@ -148,7 +212,13 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 		{
 			public void onClick( View v )
 			{
-				showDialog( EXIT_DIALOG );
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "bExit.setOnClickListener() : Clicked" );
+				}			
+				FragmentManager fm = getSupportFragmentManager();
+				ExitDialog exitDialog = new ExitDialog();
+				exitDialog.show( fm, "dlg_exit" );
 			}
 		});
 		
@@ -156,165 +226,88 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 	}
 
 	@Override
+	public void onBackPressed()
+	{
+		if( BuildConfig.DEBUG )
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "onBackPressed() : Clicked" );
+			}			
+		}
+	}
+	
+	@Override
 	protected void onSaveInstanceState( Bundle outState )
 	{
 		super.onSaveInstanceState( outState );
 		outState.putInt( "theme", mThemeId );
 	}
+
+	@Override
+    public void onFinishAboutDialog( boolean exit )
+	{
+		if( BuildConfig.DEBUG )
+		{
+			Log.i( "[" + TAG + "]", "onFinishAboutDialog() : Recived" );
+		}
+		if( exit == true )
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "onFinishAboutDialog() : exit == true" );
+			}			
+		}
+    }
 	
 	@Override
-	protected Dialog onCreateDialog( int dialogId )
+    public void onFinishHelpDialog( boolean exit )
 	{
-		Dialog myDialog = null;
-		switch( dialogId )
+		if( BuildConfig.DEBUG )
 		{
-			case ABOUT_DIALOG:
-				{
-					myDialog = createAboutDialog();
-					break;
-				}
-			case HELP_DIALOG:
-				{
-					myDialog = createHelpDialog();
-					break;
-				}
-			case EXIT_DIALOG:
-				{
-					myDialog = createExitDialog(); 
-					break;
-				}
+			Log.i( "[" + TAG + "]", "onFinishHelpDialog() : Recived" );
 		}
-		return myDialog;
-	}
-
-
-	private AlertDialog createExitDialog()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder( this );
-		builder.setIcon( R.drawable.icon );
-		builder.setTitle( R.string.dialog_exit_title );
-		builder.setMessage( R.string.dialog_exit_message ); 
-		builder.setPositiveButton( R.string.dialog_exit_positive_button, new DialogInterface.OnClickListener() 
+		if( exit == true )
 		{
-			public void onClick( DialogInterface dialog, int id )
+			if( BuildConfig.DEBUG )
 			{
-				dialog.dismiss();
-				finish();
-			}
-		});
-
-		builder.setNegativeButton( R.string.dialog_exit_negative_button, new DialogInterface.OnClickListener()
-		{
-			public void onClick( DialogInterface dialog, int id )
-			{
-				dialog.dismiss();
-			}
-		});
-
-		builder.setCancelable( false );
-		AlertDialog dialog = builder.create();
-		return dialog; 
-	}
-
-	private AlertDialog createHelpDialog()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder( this );
-		builder.setIcon( R.drawable.icon );
-		builder.setTitle( R.string.dialog_help_title );
-		builder.setMessage( R.string.dialog_help_message ); 
-		builder.setPositiveButton( R.string.dialog_help_positive_button, new DialogInterface.OnClickListener()
-		{
-			public void onClick( DialogInterface dialog, int id )
-			{
-				dialog.dismiss();
-			}
-		});
-
-		builder.setCancelable( false );
-		AlertDialog dialog = builder.create();
-		return dialog; 
-	}
-
-	private AlertDialog createAboutDialog()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setIcon( R.drawable.icon );
-		PackageManager pm = getPackageManager();
-		try
-		{
-			PackageInfo pi = pm.getPackageInfo( "com.scto.filerenamer", 0 );
-			builder.setTitle( getString( R.string.app_name ) + " :: " + getString( R.string.app_version ) + " " + pi.versionName );
+				Log.i( "[" + TAG + "]", "onFinishHelpDialog() : exit == true" );
+			}			
 		}
-		catch( NameNotFoundException e )
-		{
-			DebugLog.e( TAG, "NameNotFoundException: " + e.getMessage() );
-		}		
-		builder.setMessage( R.string.dialog_about_message ); 
-		builder.setPositiveButton( R.string.dialog_about_positive_button, new DialogInterface.OnClickListener()
-		{
-			public void onClick( DialogInterface dialog, int id )
-			{
-				dialog.dismiss();
-			}
-		});
-
-		builder.setCancelable( false );
-		AlertDialog dialog = builder.create();
-		return dialog; 
-	}
-
-	/*
+    }
+	
 	@Override
-	public boolean onCreateOptionsMenu( Menu menu )
+    public void onFinishExitDialog( boolean exit )
 	{
-		super.onCreateOptionsMenu(menu);
-		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate( R.menu.list_menu, menu );
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected( MenuItem item )
-	{
-		Dialog myDialog = null;
-
-		switch(item.getItemId())
+		if( BuildConfig.DEBUG )
 		{
-			case R.id.menu_about:
-			{
-				Toast.makeText( this, "Tapped about", Toast.LENGTH_SHORT ).show();
-				myDialog = createAboutDialog();
-				showDialog( ABOUT_DIALOG );
-				return true;
-			}
-			case R.id.menu_exit:
-			{
-				Toast.makeText( this, "Tapped exit", Toast.LENGTH_SHORT ).show();
-				myDialog = createExitDialog();
-				showDialog( EXIT_DIALOG );
-				return true;
-			}
-			case R.id.menu_help:
-			{
-				Toast.makeText( this, "Tapped help", Toast.LENGTH_SHORT ).show();
-				myDialog = createHelpDialog();
-				showDialog( HELP_DIALOG );
-				return true;
-			}
-			case R.id.menu_settings:
-			{
-				Toast.makeText( this, "Tapped settings", Toast.LENGTH_SHORT ).show();
-				Intent openPreferencesActivity = new Intent( "com.scto.filerenamer.PREFERENCESACTIVITY" );
-				startActivity( openPreferencesActivity );
-				return true;
-			}
-			default:
-			{
-				return super.onOptionsItemSelected( item );
-			}
+			Log.i( "[" + TAG + "]", "onFinishExitDialog() : Recived" );
 		}
-	}	
-	*/
+		if( exit == true )
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "onFinishExitDialog() : exit == true" );
+			}			
+			finish();
+		}
+    }
+		
+	@Override
+    public void onFinishWhatsNewDialog( boolean exit )
+	{
+		if( BuildConfig.DEBUG )
+		{
+			Log.i( "[" + TAG + "]", "onFinishWhatsNewDialog() : Recived" );
+		}
+		if( exit == true )
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "onFinishWhatsNewDialog() : exit == true" );
+			}			
+		}
+    }
 	
 	public static SharedPreferences getSettings( Context context )
 	{
@@ -415,34 +408,13 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
 
    	 	if( currentVersionNumber > savedVersionNumber )
 		{   	 		
-   	 		showWhatsNewDialog();
-
+			FragmentManager fm = getSupportFragmentManager();
+			WhatsNewDialog whatsNewDialog = new WhatsNewDialog();
+			whatsNewDialog.show( fm, "dlg_whats_new" );
+			
    	 		Editor editor = settings.edit();
-
    	 		editor.putInt( VERSION_KEY, currentVersionNumber );
    	 		editor.commit();
    	 	}
 	}
-
-    private void showWhatsNewDialog()
-	{
-    	LayoutInflater inflater = LayoutInflater.from( this );		
-
-        View view = inflater.inflate( R.layout.dialog_whatsnew, null );
-
-  	  	Builder builder = new AlertDialog.Builder( this );
-
-	  	builder.setView( view ).setTitle( "Whats New" )
-			.setPositiveButton( "OK", new DialogInterface.OnClickListener()
-			{
-				@Override
-				public void onClick( DialogInterface dialog, int which )
-				{
-					dialog.dismiss();
-				}
-			});
-
-	  	builder.create().show();
-    }
-	
 }

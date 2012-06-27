@@ -33,7 +33,7 @@ limitations under the License.
 		android:key="show_splash_screen"
 		android:title="@string/show_splash_screen_title"
 		android:summary="@string/show_splash_screen_summary"
-		android:defaultValue="false" />
+		android:defaultValue="true" />
 	<com.scto.filerenamer.SeekBarPreference
 		android:key="show_splash_screen_timeout"
 		android:negativeButtonText="@null"
@@ -45,5 +45,5 @@ limitations under the License.
 		android:title="@string/play_splash_screen_sound_title"
 		android:summary="@string/play_splash_screen_sound_summary"
 		android:dependency="show_splash_screen"
-		android:defaultValue="false" />
+		android:defaultValue="true" />
 </PreferenceScreen>

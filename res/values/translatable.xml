@@ -58,6 +58,10 @@ THE SOFTWARE.
 	<string name="dialog_exit_positive_button">Yes</string>
 	<string name="dialog_exit_negative_button">No</string>
 
+	<string name="dialog_whats_new_title">Update</string>
+	<string name="dialog_whats_new_message">26. June 2012\tVersion 0.1.1\nDialogs are now Fragments\n\n26. June 2012\tVersion 0.1.0\nFixed NullPointerException\n\n20. June 2012\tVersion 0.0.1\nInitial Version</string>
+	<string name="dialog_whats_new_positive_button">Ok</string>
+	
 	<!-- FileBrowser Activity -->
 	<string name="contextMenuTitle">Choose</string>
 	<string name="contextMenuOpen">Open</string>

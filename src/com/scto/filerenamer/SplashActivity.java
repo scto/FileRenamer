@@ -48,18 +48,27 @@ public class SplashActivity extends Activity
 		splash = getPrefs.getBoolean("show_splash_screen", true);
 		if(splash == true)
 		{
-			Log.d(TAG, "SplashScreen ist auf true gesetzt");
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "splash = getPrefs.getBoolean : true" );
+			}			
 			setContentView(R.layout.splash);
 			music = getPrefs.getBoolean("play_splash_screen_sound", true);
 			if(music == true)
 			{
-				Log.d(TAG, "SplashScreenMusic ist auf true gesetzt");
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "music = getPrefs.getBoolean : true" );
+				}			
 				ourSong = MediaPlayer.create(SplashActivity.this, R.raw.splashsound);
 				ourSong.start();
 			}
 			else
 			{
-				Log.d(TAG, "SplashScreenMusic ist auf false gesetzt");
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "music = getPrefs.getBoolean : false" );
+				}			
 			}
 			mSplashThread = new Thread()
 			{
@@ -98,7 +107,10 @@ public class SplashActivity extends Activity
 		}
 		else
 		{
-			Log.d(TAG, "SplashScreen ist auf false gesetzt");
+			if( BuildConfig.DEBUG )
+			{
+				Log.i( "[" + TAG + "]", "splash = getPrefs.getBoolean : false" );
+			}			
 			Intent openMainActivity = new Intent("com.scto.filerenamer.MAINACTIVITY");
 			startActivity(openMainActivity);
 		}

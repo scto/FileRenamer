@@ -32,6 +32,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	private File mSdcard;
 	private String mstrSelectedFileString;
 	private int mSelectedFileEntryPosition;
+	private static ActionMode mActionMode;
 	
 	Boolean mContextMenuOpened = Boolean.valueOf( false );	
 		
@@ -59,7 +60,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		lv.setCacheColorHint( Color.TRANSPARENT );
 		lv.setFastScrollEnabled( true );
 		
-		ActionBar mActionBar = getActionBar();
+		mActionBar = getActionBar();
 		if( mActionBar != null )
 		{
 			mActionBar.setDisplayHomeAsUpEnabled( true );
@@ -463,4 +464,63 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean onLongClick( View view )
+	{
+		if( mActionMode != null )
+		{
+			return false;
+		}
+		mActionMode = AndroidFileBrowser.this.startActionMode( mContentSelectionActionModeCallback );
+		view.setSelected( true );
+		return true;
+	}
+	
+	private ActionMode.Callback mContentSelectionActionModeCallback = new ActionMode.Callback()
+	{
+		public boolean onCreateActionMode( ActionMode actionMode, Menu menu )
+		{
+			actionMode.setTitle( "Test" );
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate( R.menu.context_menu, menu );
+			return true;
+		}
+	
+		public boolean onPrepareActionMode( ActionMode actionMode, Menu menu )
+		{
+			return false;
+		}
+	
+		public boolean onActionItemClicked( ActionMode actionMode, MenuItem menuItem )
+		{
+			switch( menuItem.getItemId() )
+			{
+				case R.id.menu_open:
+				{
+					//
+					actionMode.finish();
+					return true;
+				}
+				case R.id.menu_select:
+				{
+					//
+					actionMode.finish();
+					return true;
+				}
+				case R.id.menu_cancel:
+				{
+					//
+					actionMode.finish();
+					return true;
+				}
+			}
+			return false;
+		}
+	
+		public void onDestroyActionMode( ActionMode actionMode )
+		{
+			mActionMode = null;
+		}
+	};
 }
