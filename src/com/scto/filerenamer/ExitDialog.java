@@ -48,6 +48,7 @@ public class ExitDialog extends DialogFragment
 					dismiss();
 				}
 			})
+			.setCancelable( false )
 			.create();
 	}
 }

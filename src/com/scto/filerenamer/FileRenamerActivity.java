@@ -11,6 +11,7 @@
 
 package com.scto.filerenamer;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 
@@ -31,6 +32,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,8 +47,6 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import com.scto.filerenamer.DebugLog;
 
 public class FileRenamerActivity extends FragmentActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
@@ -89,6 +90,22 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
 		}
+
+		ActionBar mActionBar = getActionBar();
+		if( mActionBar != null )
+		{
+			mActionBar.setDisplayHomeAsUpEnabled( true );
+			mActionBar.setDisplayShowHomeEnabled( true );
+			mActionBar.setDisplayShowTitleEnabled( true );
+			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+		}
+		else
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "mActionBar == null" );
+			}
+		}
 		
 		setContentView( R.layout.fragment_tabs_pager );
 		
@@ -112,6 +129,10 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 		}
 		else
 		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "onCreate( savedInstanceState ) : extras == null" );
+			}
 			this.setTitle( " :: " + getString( R.string.app_name ) );
 		}
 		
@@ -155,7 +176,13 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 				startActivity( intent );
 				return true;
 			}
-
+			case android.R.id.home:
+			{
+				Intent intent = new Intent( this, MainActivity.class );
+				intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP );
+				startActivity( intent );
+				return true;
+			}	
 			default:
 			{
 				return super.onOptionsItemSelected( item );
@@ -341,9 +368,9 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 		}
 
 		@Override
-		public CharSequence getPageTitle(int position)
+		public CharSequence getPageTitle( int position )
 		{
-			return mContext.getResources().getText(TITLES[position]);
+			return mContext.getResources().getText( TITLES[ position ] );
 		}
 		
 		@Override

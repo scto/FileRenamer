@@ -18,15 +18,14 @@ package com.scto.filerenamer;
 
 import android.annotation.*;
 import android.app.*;
+import android.content.*;
 import android.graphics.*;
 import android.os.*;
 import android.preference.*;
+import android.util.*;
 import android.view.*;
 import android.webkit.*;
 import java.util.*;
-import android.content.*;
-
-import com.scto.filerenamer.DebugLog;
 
 public class PreferencesActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
@@ -61,6 +60,13 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			mActionBar.setDisplayShowHomeEnabled( true );
 			mActionBar.setDisplayShowTitleEnabled( true );
 			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+		}
+		else
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "mActionBar == null" );
+			}
 		}
 		
 		// Setting Theme must be done before super.onCreate() and addPreferencesFromResource!
@@ -131,20 +137,24 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 		if( extras != null )
 		{
 			theme = extras.getInt( "theme" );
-			DebugLog.i( "Extras != null" );
 		}
 		else
 		{
-			DebugLog.e( "Extras = null" );
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "onBuildHeaders( List<Header> target ) : extras == null" );
+			}
 		}
 		if( theme != 0 )
 		{
 			setTheme( theme );
-			DebugLog.i( "Theme != 0" );
 		}
 		else
 		{
-			DebugLog.e( "theme = 0" );
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "onBuildHeaders( List<Header> target ) : theme == null" );
+			}
 		}
 		
 		loadHeadersFromResource( R.xml.preference_headers, target );
@@ -173,10 +183,7 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	}
 
 	public static class PersonalActivity extends PreferenceActivity
-	{
-		private static SharedPreferences sSettings;
-		private static boolean mThemeId = false;
-		
+	{		
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onCreate( Bundle savedInstanceState )
@@ -188,20 +195,24 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			if( extras != null )
 			{
 				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
 			}
 			else
 			{
-				DebugLog.e( "Extras = null" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : extras == null" );
+				}
 			}
 			if( theme != 0 )
 			{
 				setTheme( theme );
-				DebugLog.i( "Theme != 0" );
 			}
 			else
 			{
-				DebugLog.e( "theme = 0" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : theme == null" );
+				}
 			}
 			
 			addPreferencesFromResource( R.xml.preference_personal );
@@ -222,20 +233,24 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			if( extras != null )
 			{
 				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
 			}
 			else
 			{
-				DebugLog.e( "Extras = null" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : extras == null" );
+				}
 			}
 			if( theme != 0 )
 			{
 				getActivity().setTheme( theme );
-				DebugLog.i( "Theme != 0" );
 			}
 			else
 			{
-				DebugLog.e( "theme = 0" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : theme == null" );
+				}
 			}
 			
 			addPreferencesFromResource( R.xml.preference_personal );
@@ -255,20 +270,24 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			if( extras != null )
 			{
 				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
 			}
 			else
 			{
-				DebugLog.e( "Extras = null" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : extras == null" );
+				}
 			}
 			if( theme != 0 )
 			{
 				setTheme( theme );
-				DebugLog.i( "Theme != 0" );
 			}
 			else
 			{
-				DebugLog.e( "theme = 0" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : theme == null" );
+				}
 			}
 			
 			addPreferencesFromResource( R.xml.preference_filerenamer );
@@ -288,20 +307,24 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			if( extras != null )
 			{
 				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
 			}
 			else
 			{
-				DebugLog.e( "Extras = null" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : extras == null" );
+				}
 			}
 			if( theme != 0 )
 			{
 				getActivity().setTheme( theme );
-				DebugLog.i( "Theme != 0" );
 			}
 			else
 			{
-				DebugLog.e( "theme = 0" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : theme == null" );
+				}
 			}
 			
 			addPreferencesFromResource( R.xml.preference_filerenamer );
@@ -321,20 +344,24 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			if( extras != null )
 			{
 				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
 			}
 			else
 			{
-				DebugLog.e( "Extras = null" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : extras == null" );
+				}
 			}
 			if( theme != 0 )
 			{
 				setTheme( theme );
-				DebugLog.i( "Theme != 0" );
 			}
 			else
 			{
-				DebugLog.e( "theme = 0" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : theme == null" );
+				}
 			}
 			
 			addPreferencesFromResource( R.xml.preference_misc );
@@ -354,20 +381,24 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			if( extras != null )
 			{
 				theme = extras.getInt( "theme" );
-				DebugLog.i( "Extras != null" );
 			}
 			else
 			{
-				DebugLog.e( "Extras = null" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : extras == null" );
+				}
 			}
 			if( theme != 0 )
 			{
 				getActivity().setTheme( theme );
-				DebugLog.i( "Theme != 0" );
 			}
 			else
 			{
-				DebugLog.e( "theme = 0" );
+				if( BuildConfig.DEBUG )
+				{
+					Log.w( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : theme == null" );
+				}
 			}
 			
 			addPreferencesFromResource( R.xml.preference_misc );
@@ -388,10 +419,20 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			view.getSettings().setJavaScriptEnabled( true );
 			if( sSettings.getBoolean( "change_theme", false ) == false )
 			{
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : change_theme == false" );
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : view.loadUrl: about_holo_light.html" );
+				}				
 				view.loadUrl( "file:///android_asset/about_holo_light.html" );
 			}
 			else
 			{
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : change_theme == true" );
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : view.loadUrl: about_holo_dark.html" );
+				}
 				view.loadUrl( "file:///android_asset/about_holo_dark.html" );
 			}
 			view.setBackgroundColor( Color.TRANSPARENT );
@@ -413,10 +454,20 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			view.getSettings().setJavaScriptEnabled( true );
 			if( sSettings.getBoolean( "change_theme", false ) == false )
 			{
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : change_theme == false" );
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : view.loadUrl: about_holo_light.html" );
+				}
 				view.loadUrl( "file:///android_asset/about_holo_light.html" );
 			}
 			else
 			{
+				if( BuildConfig.DEBUG )
+				{
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : change_theme == true" );
+					Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState ) : view.loadUrl: about_holo_dark.html" );
+				}
 				view.loadUrl( "file:///android_asset/about_holo_dark.html" );
 			}
 			view.setBackgroundColor( Color.TRANSPARENT );

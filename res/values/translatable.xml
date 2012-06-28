@@ -30,6 +30,13 @@ THE SOFTWARE.
     <string name="up_one_level">..</string>
     <string name="current_dir">.</string>
 	
+    <!-- EULA -->
+    <string name="eula_title">License agreement</string>
+    <string name="eula_accept">Accept</string>
+    <string name="eula_refuse">Don\'t accept</string>
+    <string name="disclaimer_title">Disclaimer</string>    
+    <string name="disclaimer_accept">Accept</string>
+	
 	<!-- Main Activity (main screen) -->
 	<string name="tvDisplay">Menu</string>
 	<string name="bRename">Rename</string>
@@ -104,6 +111,7 @@ THE SOFTWARE.
 	<string name="right_checkbox_matchcase">MatchCase</string>
 		
 	<!-- Farright Page -->
+	<string name="farright_textview_remove_char_at">Remove char at</string>
 	<string name="farright_textview_remove_chars">Remove char(s)</string>
 	<string name="farright_edittext_remove_chars">1</string>
 	<string name="farright_edittext_start_at">1</string>

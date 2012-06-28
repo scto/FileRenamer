@@ -37,6 +37,7 @@ public class HelpDialog extends DialogFragment
 
 				}
 			})
+			.setCancelable( false )
 			.create();
 	}
 }

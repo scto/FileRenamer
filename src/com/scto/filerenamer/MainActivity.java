@@ -49,6 +49,7 @@ import com.scto.filerenamer.AboutDialog.AboutDialogListener;
 import com.scto.filerenamer.HelpDialog.HelpDialogListener;
 import com.scto.filerenamer.ExitDialog.ExitDialogListener;
 import com.scto.filerenamer.WhatsNewDialog.WhatsNewDialogListener;
+import com.scto.filerenamer.Eula;
 
 public class MainActivity extends FragmentActivity implements 
 				SharedPreferences.OnSharedPreferenceChangeListener,
@@ -60,6 +61,8 @@ public class MainActivity extends FragmentActivity implements
 {
  	private static final String TAG = MainActivity.class.getSimpleName();
 	private static SharedPreferences sSettings;
+	private static ActionBar mActionBar = null;
+	
 	private static int mThemeId = -1;
 	private static int mRootAccess = -1;
 
@@ -68,19 +71,13 @@ public class MainActivity extends FragmentActivity implements
 	
 	Button bRename, bSettings, bAbout, bHelp, bExit;
 	TextView tvDisplay, tvTitle;
-
-	/*
-	final int ABOUT_DIALOG 		= 0;
-	final int HELP_DIALOG 		= 1;
-	final int EXIT_DIALOG 		= 2;
-	*/
-	
-	ActionBar mActionBar = null;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle savedInstanceState )
 	{
+		Eula.showEula( this );
+		
 		if( BuildConfig.DEBUG )
 		{
 			Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState )" );

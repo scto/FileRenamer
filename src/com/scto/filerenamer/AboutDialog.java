@@ -37,6 +37,7 @@ public class AboutDialog extends DialogFragment
 
 				}
 			})
+			.setCancelable( false )
 			.create();
 	}
 }

@@ -48,7 +48,7 @@ THE SOFTWARE.
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="string_farright_textview_remove_char_at" />
+			android:text="@string/farright_textview_remove_char_at" />
         
 		<EditText
 			android:id="@+id/txt_charat"
