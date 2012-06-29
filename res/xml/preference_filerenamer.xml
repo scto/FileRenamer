@@ -32,6 +32,7 @@ THE SOFTWARE.
 		android:key="root_access_mode"
 		android:title="@string/root_access_title"
 		android:entries="@array/root_access_entries"
-		android:entryValues="@array/entry_values"
-		android:defaultValue="2" />
+		android:entryValues="@array/root_access_values"
+		android:dependency="check_root_access_on_startup"
+		android:defaultValue="Grant" />
 </PreferenceScreen>

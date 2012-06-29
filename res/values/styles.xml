@@ -1,47 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-Copyright (C) 2012 Thomas Schmid <tschmid35@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
--->
 <resources>
+
+	<!-- =============================================================== -->
+	<!-- Generic Styles -->
+	<!-- =============================================================== -->
+
+	<style name="list_divider">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">1dip</item>
+		<item name="android:layout_marginTop">4dip</item>
+		<item name="android:layout_marginBottom">4dip</item>
+	</style>
+
+	<!-- =============================================================== -->
+	<!-- List separator Styles -->
+	<!-- =============================================================== -->
+	
+    <!-- List separator with a blue underline -->
+    <style name="SeparatorTextViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/list_separator_min_height</item>
+        <item name="android:background">@drawable/list_section_divider_holo_custom</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/holo_blue_dark</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingRight">@dimen/list_separator_padding_left_right</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+	
+	<!-- =============================================================== -->
+	<!-- ActionBar Styles -->
+	<!-- =============================================================== -->
+	
     <style name="ActionBar" parent="@android:style/Widget.Holo.ActionBar" />
 
+	<!-- =============================================================== -->
+	<!-- ActionBar Light Styles -->
+	<!-- =============================================================== -->
+	
     <style name="ActionBar.Light" parent="@style/ActionBar">
         <item name="android:background">@color/actionbar_background_light</item>
     </style>
 
+	<!-- =============================================================== -->
+	<!-- ActionBar Dark Styles -->
+	<!-- =============================================================== -->
+	
     <style name="ActionBar.Dark" parent="@style/ActionBar">
         <item name="android:background">@color/actionbar_background_dark</item>
     </style>
 
+	<!-- =============================================================== -->
+	<!-- Holo Light Theme -->
+	<!-- =============================================================== -->
+	
     <style name="AppTheme.Light" parent="@android:style/Theme.Holo.Light">
         <item name="android:windowActionBarOverlay">false</item>
         <item name="listDragShadowBackground">@android:color/background_light</item>
 		<item name="menuIconPreference">@drawable/ic_menu_preference_holo_light</item>
 	</style>
 
+	<!-- =============================================================== -->
+	<!-- Holo Dark Theme -->
+	<!-- =============================================================== -->
+	
     <style name="AppTheme.Dark" parent="@android:style/Theme.Holo">
         <item name="android:windowActionBarOverlay">false</item>
         <item name="listDragShadowBackground">@android:color/background_dark</item>
 		<item name="menuIconPreference">@drawable/ic_menu_preference_holo_dark</item>
 	</style>
+
+	<!-- =============================================================== -->
+	<!-- White Theme -->
+	<!-- =============================================================== -->
+
+	<style name="AppTheme.White" parent="@android:Theme" >
+		<item name="pageBackground">@style/page_background_wh</item>
+		<item name="pagePaddingLayout">@style/page_padding_layout_wh</item>		
+		<item name="textTitle">@style/text_title_wh</item>
+		<item name="textTitleHidden">@style/text_title_hidden_wh</item>
+		<item name="textSubheader">@style/text_subheader_wh</item>
+		<item name="textLarge">@style/text_large_wh</item>
+		<item name="textRegular">@style/text_regular_wh</item>
+		<item name="textCheckBox">@style/text_check_box_wh</item>
+		<item name="textCurrentActivityGreen">@style/text_current_activity_green_wh</item>
+		<item name="whiteBackground">@style/white_background_wh</item>
+		<item name="button">@style/button_wh</item>
+		<item name="list">@style/list_wh</item>
+		<item name="listItem">@style/list_item_wh</item>
+		<item name="listDivider">@style/list_divider_wh</item>
+		<item name="pageMargin">@dimen/page_margin_wh</item>
+	</style>
+
+	<!-- =============================================================== -->
+	<!-- Blue Theme -->
+	<!-- =============================================================== -->
+
+	<style name="AppTheme.Blue" parent="@android:Theme" >
+		<item name="pageBackground">@style/page_background_bl</item>
+		<item name="pagePaddingLayout">@style/page_padding_layout_bl</item>		
+		<item name="textTitle">@style/text_title_bl</item>
+		<item name="textTitleHidden">@style/text_title_hidden_bl</item>
+		<item name="textSubheader">@style/text_subheader_bl</item>
+		<item name="textLarge">@style/text_large_bl</item>
+		<item name="textRegular">@style/text_regular_bl</item>
+		<item name="textCheckBox">@style/text_regular_bl</item>
+		<item name="whiteBackground">@style/white_background_bl</item>
+		<item name="button">@style/button_bl</item>
+		<item name="list">@style/list_bl</item>
+		<item name="listItem">@style/list_item_bl</item>
+		<item name="listDivider">@style/list_divider_bl</item>
+		<item name="pageMargin">@dimen/page_margin_bl</item>
+	</style>
+	
+	<!-- =============================================================== -->
+	<!-- Transparent Styles ( Splash Screen ) -->
+	<!-- =============================================================== -->
 	
 	<style name="Theme.Transparent" parent="android:Theme">
         <item name="android:windowIsTranslucent">true</item>
@@ -53,10 +132,192 @@ THE SOFTWARE.
 		<item name="android:windowAnimationStyle">@style/Animations.SplashScreen</item>
     </style>
 
+	<!-- =============================================================== -->
+	<!-- Animation Styles ( Splash Screen ) -->
+	<!-- =============================================================== -->
+	
 	<style name="Animations" parent="@android:Animation" />
 	<style name="Animations.SplashScreen">
 		<item name="android:windowEnterAnimation">@anim/appear</item>
 		<item name="android:windowExitAnimation">@anim/disappear</item> 
 	</style>
+	
+	<!-- =============================================================== -->
+	<!-- Blue styles -->
+	<!-- =============================================================== -->
 
+	<dimen name="page_margin_bl">2sp</dimen>
+	<dimen name="content_left_margin_bl">8sp</dimen>
+
+ 	<style name="page_background_bl">
+ 		<item name="android:background">#000</item>
+ 		<item name="android:padding">@dimen/page_margin_bl</item>
+ 		<!-- 
+ 		<item name="android:layout_marginTop">8dip</item>
+ 		<item name="android:layout_marginBottom">20dip</item>
+ 		 -->
+ 	</style>
+ 	<style name="page_padding_layout_bl">
+ 		<item name="android:padding">@dimen/page_margin_bl</item>
+ 	</style>
+	 	
+	<style name="text_title_bl">
+		<item name="android:textColor">#FFF</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">24sp</item>
+		<item name="android:gravity">center_vertical|left</item>
+		<item name="android:paddingLeft">5sp</item>
+		<item name="android:shadowDx">1.0</item>
+		<item name="android:shadowDy">1.0</item>
+		<item name="android:shadowRadius">1</item>
+		<item name="android:shadowColor">#DDD</item>
+		<item name="android:background">#FF004488</item>
+	</style>
+	
+	<style name="text_title_hidden_bl">
+		<item name="android:visibility">gone</item>
+	</style>
+	
+	<style name="text_subheader_bl">
+		<item name="android:textColor">#08C</item>
+		<item name="android:paddingLeft">5sp</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:shadowDy">1.0</item>
+		<item name="android:shadowRadius">1</item>
+		<item name="android:shadowColor">#666</item>
+	</style>
+	<style name="text_large_bl">
+		<item name="android:textColor">#FFF</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">22sp</item>
+	</style>
+	<style name="text_regular_bl">
+		<item name="android:textColor">@color/text_bl_regular</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="white_background_bl">
+		<item name="android:background">@drawable/white_container_bl</item>
+		<item name="android:padding">5sp</item>
+	</style>
+	<style name="button_bl">
+		<item name="android:background">@drawable/button_bl</item>-->
+		<item name="android:textColor">#000</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:layout_margin">3sp</item>
+		<item name="android:paddingTop">11sp</item>
+		<item name="android:paddingBottom">11sp</item>
+	</style>
+	<style name="list_bl">
+		<item name="android:background">#000</item>
+		<item name="android:paddingTop">15sp</item>
+		<item name="android:paddingBottom">15sp</item>
+		<item name="android:listSelector">@drawable/list_item_bl</item>
+		<item name="android:cacheColorHint">#00000000</item>
+		<item name="android:divider">@drawable/list_divider_bl</item>
+		<item name="android:dividerHeight">1dip</item>
+		<item name="android:footerDividersEnabled">false</item>
+		<item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+		<item name="android:scrollbarAlwaysDrawHorizontalTrack">true</item>
+		<item name="android:scrollbars">vertical</item>
+	</style>
+	<style name="list_item_bl" parent="text_large_bl">
+		<item name="android:background">@drawable/list_item_bl</item>
+		<item name="android:focusable">true</item>
+		<item name="android:clickable">true</item>		
+	</style>
+	<style name="list_divider_bl" parent="list_divider">
+		<item name="android:background">@drawable/list_divider_bl</item>
+	</style>
+	
+	<!-- =============================================================== -->
+ 	<!-- White styles                                                    -->
+	<!-- =============================================================== -->
+
+	<dimen name="page_margin_wh">5sp</dimen>
+ 	<dimen name="content_left_margin_wh">8sp</dimen>
+ 	
+ 	<style name="page_background_wh">
+ 		<item name="android:background">@drawable/gray_gradient_background</item>
+ 		<item name="android:padding">@dimen/page_margin_wh</item>
+ 	</style>
+ 	<style name="page_padding_layout_wh">
+ 		<item name="android:padding">@dimen/page_margin_wh</item>
+ 	</style> 	
+	<style name="text_title_wh">
+		<item name="android:background">@drawable/title_bar_wh</item>
+		<item name="android:gravity">center_vertical|center_horizontal</item>
+		<item name="android:textColor">#FFF</item>
+		<item name="android:textSize">24sp</item>
+		<item name="android:shadowDx">1.0</item>
+		<item name="android:shadowDy">1.0</item>
+		<item name="android:shadowRadius">3</item>
+		<item name="android:shadowColor">#888</item>
+	</style>	
+	<style name="text_title_hidden_wh" parent="text_title_wh">
+	</style>	
+	<style name="text_subheader_wh">
+		<item name="android:textColor">#FFF</item>
+		<item name="android:textSize">14sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:shadowDy">1.0</item>
+		<item name="android:shadowRadius">1</item>
+		<item name="android:shadowColor">#000</item>
+	</style>
+	<style name="text_large_wh">
+		<item name="android:textColor">@color/text_wh_large</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:shadowDy">1.0</item>
+		<item name="android:shadowRadius">1</item>
+		<item name="android:shadowColor">#888</item>
+	</style>
+	<style name="text_regular_wh">
+		<item name="android:textColor">@color/text_wh_regular</item>
+		<item name="android:textSize">15sp</item>
+	</style>
+	<style name="text_check_box_wh">
+		<item name="android:textColor">@color/text_wh_regular</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="text_current_activity_green_wh" parent="text_large_wh">
+	</style>
+	<style name="white_background_wh">
+		<item name="android:background">@drawable/white_container_wh</item>
+		<item name="android:padding">10sp</item>
+	</style>
+	<style name="button_wh" parent="text_large_wh">
+		<item name="android:background">@drawable/button_wh</item>
+		<item name="android:layout_margin">3sp</item>
+	</style>
+	<style name="list_wh">
+		<item name="android:background">@drawable/white_container_wh</item>
+		<item name="android:paddingTop">15sp</item>
+		<item name="android:paddingBottom">15sp</item>
+		<item name="android:paddingLeft">5sp</item>
+		<item name="android:paddingRight">5sp</item>
+		<item name="android:listSelector">@drawable/list_item_wh</item>
+		<item name="android:cacheColorHint">#00000000</item>
+		<item name="android:divider">@drawable/list_divider_wh</item>
+		<item name="android:dividerHeight">1dip</item>
+		<item name="android:footerDividersEnabled">false</item>
+		<item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+		<item name="android:scrollbars">vertical</item>
+	</style>
+	<style name="list_item_wh" parent="text_large_wh">
+		<item name="android:background">@drawable/list_item_wh</item>
+		<item name="android:paddingTop">15sp</item>
+		<item name="android:paddingBottom">15sp</item>
+		<item name="android:paddingLeft">5sp</item>
+		<item name="android:paddingRight">5sp</item>
+		<item name="android:focusable">true</item>
+		<item name="android:clickable">true</item>		
+	</style>
+	<style name="list_divider_wh" parent="list_divider">
+		<item name="android:background">@drawable/list_divider_wh</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">2sp</item>
+	</style>
+	
 </resources>

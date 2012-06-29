@@ -28,23 +28,11 @@ THE SOFTWARE.
 		android:title="@string/change_theme_title"
 		android:summary="@string/change_theme_summary"
 		android:defaultValue="false" />
-	<com.scto.filerenamer.ListPreferenceSummary
-		android:key="theme_type"
-		android:title="@string/theme_type_title"
-		android:entries="@array/theme_type_entries"
-		android:entryValues="@array/entry_values"
-		android:defaultValue="2" />
 	<CheckBoxPreference
 		android:key="show_splash_screen"
 		android:title="@string/show_splash_screen_title"
 		android:summary="@string/show_splash_screen_summary"
 		android:defaultValue="true" />
-	<com.scto.filerenamer.SeekBarPreference
-		android:key="show_splash_screen_timeout"
-		android:negativeButtonText="@null"
-		android:dialogLayout="@layout/time_pref"
-		android:defaultValue="100"
-		android:title="@string/show_splash_screen_timeout_title" />
 	<CheckBoxPreference
 		android:key="play_splash_screen_sound"
 		android:title="@string/play_splash_screen_sound_title"

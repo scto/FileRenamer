@@ -33,17 +33,25 @@ THE SOFTWARE.
         <item>.wav</item>
         <item>.ogg</item>
         <item>.midi</item>
+		<item>.flac</item>
+		<item>.wma</item>
     </array>
 	<array name="fileEndingPackage">
         <item>.jar</item>
         <item>.zip</item>
         <item>.rar</item>
         <item>.gz</item>
+		<item>.tar</item>
+		<item>.bz</item>
+		<item>.bzip</item>
+		<item>.tar.gz</item>
+		<item>.tar.bz</item>
     </array>
 	<array name="fileEndingWebText">
         <item>.htm</item>
         <item>.html</item>
         <item>.php</item>
+		<item>.css</item>
     </array>
 </resources>
      

@@ -34,6 +34,8 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	private int mSelectedFileEntryPosition;
 	private static ActionMode mActionMode;
 	
+	private boolean mRootAcess;
+	
 	Boolean mContextMenuOpened = Boolean.valueOf( false );	
 		
 	/** Called when the activity is first created. */
@@ -53,6 +55,15 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		{
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
+		}
+	
+		if( sSettings.getBoolean( "check_root_access_on_startup", false ) == false )
+		{
+			mRootAcess = false;
+		}
+		else
+		{
+			mRootAcess = true;	
 		}
 		
 		super.onCreate( savedInstanceState );
@@ -137,6 +148,18 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 				mThemeId = R.style.AppTheme_Dark;
 			}
 			updateTheme();
+		}
+		if( "check_root_access_on_startup".equals( key ) )
+		{
+			boolean root = settings.getBoolean( "check_root_access_on_startup", false );
+			if( root = false )
+			{
+				mRootAcess = false;
+			}
+			else
+			{
+				mRootAcess = true;	
+			}
 		}
 	}
 
@@ -283,9 +306,11 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	protected void onListItemClick( ListView l, View v, int position, long id )
 	{
 		super.onListItemClick( l, v, position, id );
-		this.mContextMenuOpened = Boolean.valueOf( true );
-		registerForContextMenu( l );
-		
+		if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB )
+		{
+			this.mContextMenuOpened = Boolean.valueOf( true );
+			registerForContextMenu( l );
+		}
 		mSelectedFileEntryPosition = position;
 		mstrSelectedFileString = this.mDirectoryEntries.get( position ).getText();
 		if( mstrSelectedFileString.equals( getString( R.string.up_one_level ) ) )
@@ -295,14 +320,26 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 
 		try
 		{
-			boolean result = v.showContextMenu();
-			if( result )
+			if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB )
 			{
-				Log.d( "[" + TAG + "]", "ShowContextMenu Result: true" );
+				boolean result = v.showContextMenu();
+				 if( result )
+				 {
+					 Log.d( "[" + TAG + "]", "ShowContextMenu Result: true" );
+				 }
+				 else
+				 {
+					 Log.d( "[" + TAG + "]", "ShowContextMenu Result: false" );
+				 }		
 			}
 			else
 			{
-				Log.d( "[" + TAG + "]", "ShowContextMenu Result: false" );
+				if( mActionMode != null )
+				{
+					//return false;
+				}
+				mActionMode = AndroidFileBrowser.this.startActionMode( mContentSelectionActionModeCallback );
+				v.setSelected( true );
 			}
 		}
 		catch( NullPointerException e )
@@ -362,7 +399,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 						// Refresh
 						this.mIntent = new Intent( this, FileRenamerActivity.class );
 						this.mIntent.putExtra( "dir", this.mCurrentDirectory.toString() );
-						Log.w( "[" + TAG + "]", "this.mCurrentDirectory.toString(): " + this.mCurrentDirectory.toString() );
 						startActivity( this.mIntent );
 						onDestroy();
 					}
@@ -370,7 +406,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 					{
 						this.mIntent = new Intent( this, FileRenamerActivity.class );
 						this.mIntent.putExtra( "dir", this.mCurrentDirectory.getParent() );
-						Log.w( "[" + TAG + "]", "this.mCurrentDirectory.getParent(): " + this.mCurrentDirectory.getParent() );
 						startActivity( this.mIntent );
 						onDestroy();
 					}
@@ -390,7 +425,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 						{
 							this.mIntent = new Intent( this, FileRenamerActivity.class );
 							this.mIntent.putExtra( "dir", clickedFile.toString() );
-							Log.w( "[" + TAG + "]", "clickedFile.toString(): " + clickedFile.toString() );
 							startActivity( this.mIntent );
 							onDestroy();
 						}
@@ -414,7 +448,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			}
 			case R.id.menu_cancel:
 			{
-				Log.d( "[" + TAG  + "]", "[action] Cancel: " + this.mCurrentDirectory.toString() );
 				break;
 			}
 		}
@@ -481,7 +514,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	{
 		public boolean onCreateActionMode( ActionMode actionMode, Menu menu )
 		{
-			actionMode.setTitle( "Test" );
+			actionMode.setTitle( R.string.contextMenuTitle );
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate( R.menu.context_menu, menu );
 			return true;
@@ -498,19 +531,19 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			{
 				case R.id.menu_open:
 				{
-					//
+					action( menuItem );
 					actionMode.finish();
 					return true;
 				}
 				case R.id.menu_select:
 				{
-					//
+					action( menuItem );
 					actionMode.finish();
 					return true;
 				}
 				case R.id.menu_cancel:
 				{
-					//
+					action( menuItem );
 					actionMode.finish();
 					return true;
 				}

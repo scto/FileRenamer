@@ -66,7 +66,19 @@ THE SOFTWARE.
 	<string name="dialog_exit_negative_button">No</string>
 
 	<string name="dialog_whats_new_title">Update</string>
-	<string name="dialog_whats_new_message">26. June 2012\tVersion 0.1.1\nDialogs are now Fragments\n\n26. June 2012\tVersion 0.1.0\nFixed NullPointerException\n\n20. June 2012\tVersion 0.0.1\nInitial Version</string>
+	<string name="dialog_whats_new_message">
+		28. June 2012\tVersion 0.1.2\n- Fixed xml resources\n- Added 2 Themes\n\n
+		27. June 2012\tVersion 0.1.1\n- Dialogs are now Fragments\n\n
+		26. June 2012\tVersion 0.1.0\n- Fixed NullPointerException\n- Fixed ClassCastException\n\n
+		25. June 2012\tVersion 0.0.9\n- Added Filebrowser\n\n
+		25. June 2012\tVersion 0.0.8\n- Fixesn\n
+		25. June 2012\tVersion 0.0.7\n- Added Preference\n\n
+		25. June 2012\tVersion 0.0.6\n- Added Theme switching\n\n
+		25. June 2012\tVersion 0.0.5\n- Fixes\n\n
+		25. June 2012\tVersion 0.0.4\n- Added Tab Pages\n\n
+		25. June 2012\tVersion 0.0.3\n- Added View Tab Pager\n\n
+		25. June 2012\tVersion 0.0.2\n - Fixes\n\n		
+		20. June 2012\tVersion 0.0.1\nInitial Version</string>
 	<string name="dialog_whats_new_positive_button">Ok</string>
 	
 	<!-- FileBrowser Activity -->
@@ -156,13 +168,13 @@ THE SOFTWARE.
 		
 	<!-- Preference Misc -->
 	<string name="misc_features">Miscellaneous Features</string>
-	<string name="change_theme_title">Change Theme</string>
-	<string name="change_theme_summary">Switching between Holo Light Theme and Holo Dark Theme</string>
+	<string name="change_theme_title">Theming</string>
+	<string name="change_theme_summary">Disabled</string>
 	<string name="theme_type_title">Select the Theme type</string>
-	<string name="holo_light">Holo Light</string>
-	<string name="holo_dark">Holo Dark</string>
-	<string name="holo_light_no_titlebar">Holo Light no Titlebar</string>
-	<string name="holo_dark_no_titlebar">Holo Dark no Titlebar</string>
+	<string name="holo_light">Holo Light Theme</string>
+	<string name="holo_dark">Holo Dark Theme</string>
+	<string name="white_theme">White Theme</string>
+	<string name="blue_theme">Blue Theme</string>
 	<string name="show_splash_screen_title">Show a Splashscreen</string>
 	<string name="show_splash_screen_summary">Shows a Splashscreen for some time</string>
 	<string name="show_splash_screen_timeout_title">Splashscreen Timeout</string>		

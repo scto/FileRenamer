@@ -45,7 +45,6 @@ import java.util.ArrayList;
 
 import com.scto.filerenamer.DebugLog;
 import com.scto.filerenamer.BuildConfig;
-import com.scto.filerenamer.AboutDialog.AboutDialogListener;
 import com.scto.filerenamer.HelpDialog.HelpDialogListener;
 import com.scto.filerenamer.ExitDialog.ExitDialogListener;
 import com.scto.filerenamer.WhatsNewDialog.WhatsNewDialogListener;
@@ -53,7 +52,6 @@ import com.scto.filerenamer.Eula;
 
 public class MainActivity extends FragmentActivity implements 
 				SharedPreferences.OnSharedPreferenceChangeListener,
-				AboutDialogListener,
 				HelpDialogListener,
 				ExitDialogListener,
 				WhatsNewDialogListener
@@ -64,11 +62,10 @@ public class MainActivity extends FragmentActivity implements
 	private static ActionBar mActionBar = null;
 	
 	private static int mThemeId = -1;
-	private static int mRootAccess = -1;
 
 	private static final String PRIVATE_PREF = "filerenamer";
 	private static final String VERSION_KEY = "version_number";
-	
+
 	Button bRename, bSettings, bAbout, bHelp, bExit;
 	TextView tvDisplay, tvTitle;
 	
@@ -78,35 +75,21 @@ public class MainActivity extends FragmentActivity implements
 	{
 		Eula.showEula( this );
 		
-		if( BuildConfig.DEBUG )
-		{
-			Log.i( "[" + TAG + "]", "onCreate( Bundle savedInstanceState )" );
-		}
 		SharedPreferences settings = getSettings(this);
 		settings.registerOnSharedPreferenceChangeListener(this);
 		sSettings = settings;
 
 		if( sSettings.getBoolean( "change_theme", false ) == false )
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "sSettings.getBoolean == false" );
-				Log.i( "[" + TAG + "]", "mThemeId = R.style.AppTheme_Light" );
-			}			
 			mThemeId = R.style.AppTheme_Light;
 			setTheme( mThemeId );
 		}
 		else
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "sSettings.getBoolean == true" );
-				Log.i( "[" + TAG + "]", "mThemeId = R.style.AppTheme_Dark" );
-			}			
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
 		}		
-		
+
         super.onCreate( savedInstanceState );
         setContentView( R.layout.main );
 		
@@ -114,7 +97,6 @@ public class MainActivity extends FragmentActivity implements
 
 		bRename = ( Button ) findViewById( R.id.bRename );
 		bSettings = ( Button ) findViewById( R.id.bSettings );
-		bAbout = ( Button ) findViewById( R.id.bAboutUs );
 		bHelp = ( Button ) findViewById( R.id.bHelp );
 		bExit = ( Button ) findViewById( R.id.bExit );
 
@@ -123,29 +105,14 @@ public class MainActivity extends FragmentActivity implements
 		{
 			mActionBar.show();
 		}
-		else
-		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.w( "[" + TAG + "]", "mActionBar == null" );
-			}			
-		}
 
 		Bundle extras = getIntent().getExtras();
 		if( extras != null )
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "getIntent().getExtras() : extras != null" );
-			}
 			this.setTitle( extras.getString( "dir" ) + " :: " + getString( R.string.app_name ) );
 		}
 		else
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.w( "[" + TAG + "]", "getIntent().getExtras() : extras == null" );
-			}			
 			this.setTitle( " :: " + getString( R.string.app_name ) );
 		}
 		
@@ -153,10 +120,6 @@ public class MainActivity extends FragmentActivity implements
 		{
 			public void onClick( View v )
 			{
-				if( BuildConfig.DEBUG )
-				{
-					Log.i( "[" + TAG + "]", "bRename.setOnClickListener() : Clicked" );
-				}			
 				Intent openAndroidFileBrowser = new Intent("com.scto.filerenamer.ANDROIDFILEBROWSER");
 				openAndroidFileBrowser.putExtra("what", "renamer" );
 				openAndroidFileBrowser.putExtra("theme", mThemeId );
@@ -168,26 +131,8 @@ public class MainActivity extends FragmentActivity implements
 		{
 			public void onClick( View v )
 			{
-				if( BuildConfig.DEBUG )
-				{
-					Log.i( "[" + TAG + "]", "bSettings.setOnClickListener() : Clicked" );
-				}			
 				Intent openPreferencesActivity = new Intent( "com.scto.filerenamer.PREFERENCESACTIVITY" );
 				startActivity( openPreferencesActivity );
-			}
-		});
-
-		bAbout.setOnClickListener( new View.OnClickListener()
-		{
-			public void onClick( View v )
-			{
-				if( BuildConfig.DEBUG )
-				{
-					Log.i( "[" + TAG + "]", "bAbout.setOnClickListener() : Clicked" );
-				}			
-				FragmentManager fm = getSupportFragmentManager();
-				AboutDialog aboutDialog = new AboutDialog();
-				aboutDialog.show( fm, "dlg_about" );
 			}
 		});
 
@@ -195,10 +140,6 @@ public class MainActivity extends FragmentActivity implements
 		{
 			public void onClick( View v )
 			{
-				if( BuildConfig.DEBUG )
-				{
-					Log.i( "[" + TAG + "]", "bHelp.setOnClickListener() : Clicked" );
-				}			
 				FragmentManager fm = getSupportFragmentManager();
 				HelpDialog helpDialog = new HelpDialog();
 				helpDialog.show( fm, "dlg_help" );
@@ -209,10 +150,6 @@ public class MainActivity extends FragmentActivity implements
 		{
 			public void onClick( View v )
 			{
-				if( BuildConfig.DEBUG )
-				{
-					Log.i( "[" + TAG + "]", "bExit.setOnClickListener() : Clicked" );
-				}			
 				FragmentManager fm = getSupportFragmentManager();
 				ExitDialog exitDialog = new ExitDialog();
 				exitDialog.show( fm, "dlg_exit" );
@@ -225,13 +162,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onBackPressed()
 	{
-		if( BuildConfig.DEBUG )
-		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "onBackPressed() : Clicked" );
-			}			
-		}
+
 	}
 	
 	@Override
@@ -240,52 +171,30 @@ public class MainActivity extends FragmentActivity implements
 		super.onSaveInstanceState( outState );
 		outState.putInt( "theme", mThemeId );
 	}
-
+	
 	@Override
     public void onFinishAboutDialog( boolean exit )
 	{
-		if( BuildConfig.DEBUG )
-		{
-			Log.i( "[" + TAG + "]", "onFinishAboutDialog() : Recived" );
-		}
 		if( exit == true )
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "onFinishAboutDialog() : exit == true" );
-			}			
+
 		}
     }
 	
 	@Override
     public void onFinishHelpDialog( boolean exit )
 	{
-		if( BuildConfig.DEBUG )
-		{
-			Log.i( "[" + TAG + "]", "onFinishHelpDialog() : Recived" );
-		}
 		if( exit == true )
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "onFinishHelpDialog() : exit == true" );
-			}			
+
 		}
     }
 	
 	@Override
     public void onFinishExitDialog( boolean exit )
 	{
-		if( BuildConfig.DEBUG )
-		{
-			Log.i( "[" + TAG + "]", "onFinishExitDialog() : Recived" );
-		}
 		if( exit == true )
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "onFinishExitDialog() : exit == true" );
-			}			
 			finish();
 		}
     }
@@ -293,16 +202,9 @@ public class MainActivity extends FragmentActivity implements
 	@Override
     public void onFinishWhatsNewDialog( boolean exit )
 	{
-		if( BuildConfig.DEBUG )
-		{
-			Log.i( "[" + TAG + "]", "onFinishWhatsNewDialog() : Recived" );
-		}
 		if( exit == true )
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "onFinishWhatsNewDialog() : exit == true" );
-			}			
+
 		}
     }
 	
@@ -326,8 +228,8 @@ public class MainActivity extends FragmentActivity implements
 		SharedPreferences settings = getSettings(this);
 		if ("change_theme".equals(key))
 		{
-			boolean theme = settings.getBoolean( "change_theme", false );
-			if( theme == false )
+			boolean themeId = settings.getBoolean( "change_theme", false );
+			if( themeId == false )
 			{
 				mThemeId = R.style.AppTheme_Light;
 			}
@@ -372,7 +274,10 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onDestroy()
 	{
-		super.onDestroy();	
+		super.onDestroy();
+		SharedPreferences.Editor editor = getSettings( this ).edit();
+		editor.putInt( "theme", mThemeId );
+		editor.commit();
 	}
 	
 	@Override

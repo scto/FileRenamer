@@ -102,7 +102,7 @@ THE SOFTWARE.
 			android:text="@string/button_preview"
 			android:gravity="center"
 			android:layout_gravity="center"
-			android:background="@drawable/button" />
+			style="?button" />
 		
 	</LinearLayout>
 

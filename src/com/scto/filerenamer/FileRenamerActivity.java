@@ -99,23 +99,18 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 			mActionBar.setDisplayShowTitleEnabled( true );
 			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
 		}
-		else
-		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.w( "[" + TAG + "]", "mActionBar == null" );
-			}
-		}
 		
 		setContentView( R.layout.fragment_tabs_pager );
 		
 		mTabHost = ( TabHost )findViewById( android.R.id.tabhost );
 		mTabHost.setup();
 
-		mViewPager = ( ViewPager )findViewById( R.id.pager );
-
+		mViewPager = ( ViewPager )findViewById( R.id.pager );        
+		mViewPager.setPageMargin( getResources().getInteger( R.integer.viewpager_margin_width ) );
+        mViewPager.setPageMarginDrawable( R.drawable.viewpager_margin );
+        mViewPager.setCurrentItem( 1 );
+		
 		mTabsAdapter = new TabsAdapter( this, mTabHost, mViewPager );
-
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.addNumber ) ).setIndicator( getString( R.string.addNumber ) ), AddNumbersFragment.class, null );
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.addCustom ) ).setIndicator( getString( R.string.addCustom ) ), AddCustomFragment.class, null );
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.addDate ) ).setIndicator( getString( R.string.addDate ) ), AddCharsFragment.class, null );
@@ -127,20 +122,12 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 		{
 			this.setTitle( extras.getString( "dir" ) + " :: " + getString( R.string.app_name ) );
 		}
-		else
-		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.w( "[" + TAG + "]", "onCreate( savedInstanceState ) : extras == null" );
-			}
-			this.setTitle( " :: " + getString( R.string.app_name ) );
-		}
 		
 		if( savedInstanceState != null )
 		{
 			mTabHost.setCurrentTabByTag( savedInstanceState.getString( "tab" ) );
 		}
-	}
+	}		
 
 	@Override
 	protected void onSaveInstanceState( Bundle outState )
