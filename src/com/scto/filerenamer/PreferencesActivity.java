@@ -1,17 +1,23 @@
 /*
- Copyright (C) 2011 The Android Open Source Project
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
+ * Copyright (C) 2012 Thomas Schmid <tschmid35@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 package com.scto.filerenamer;
@@ -30,18 +36,18 @@ import java.util.*;
 public class PreferencesActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
  	private static final String TAG = PreferencesActivity.class.getSimpleName();
-	private static SharedPreferences sSettings;
+	private static SharedPreferences mSettings;
 	private static int mThemeId = 0;
-		
+
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate( Bundle savedInstanceState )
 	{
-		SharedPreferences settings = getSettings(this);
-		settings.registerOnSharedPreferenceChangeListener(this);
-		sSettings = settings;
+		SharedPreferences mSettings = Prefs.getSharedPreferences( this );
+		mSettings.registerOnSharedPreferenceChangeListener( this );
 
-		if( sSettings.getBoolean( "change_theme", false ) == false )
+		if( Prefs.getThemeType( this ) == false )
 		{
 			mThemeId = R.style.AppTheme_Light;
 			setTheme( mThemeId );
@@ -51,14 +57,20 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );
 		}
-	
+
 		ActionBar mActionBar = getActionBar();
 		if( mActionBar != null )
 		{
 			mActionBar.setDisplayHomeAsUpEnabled( true );
 			mActionBar.setDisplayShowHomeEnabled( true );
 			mActionBar.setDisplayShowTitleEnabled( true );
-			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+		}
+		else
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "mActionBar == null" );
+			}
 		}
 		
 		// Setting Theme must be done before super.onCreate() and addPreferencesFromResource!
@@ -75,15 +87,6 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
         super.onSaveInstanceState(outState);
 	}
 	
-	public static SharedPreferences getSettings( Context context )
-	{
-		if( sSettings == null )
-		{
-			sSettings = PreferenceManager.getDefaultSharedPreferences( context );
-		}
-		return sSettings;
-	}
-
 	@Override
 	public void onSharedPreferenceChanged( SharedPreferences settings, String key )
 	{
@@ -92,12 +95,9 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 
 	private void loadPreference(String key)
 	{
-		SharedPreferences settings = getSettings(this);
-
-		if( "change_theme".equals( key ) )
+		if ("change_theme".equals(key))
 		{
-			boolean themeId = settings.getBoolean( "change_theme", false );
-			if( themeId == false )
+			if( Prefs.getThemeType( this ) == false )
 			{
 				mThemeId = R.style.AppTheme_Light;
 			}
@@ -125,6 +125,7 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	@Override
 	public void onBuildHeaders( List<Header> target )
 	{
+
 		loadHeadersFromResource( R.xml.preference_headers, target );
 	}
 
@@ -224,12 +225,9 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 		{
 			super.onCreate( state );
 
-			SharedPreferences settings = getSettings(this);
-			sSettings = settings;
-			
 			WebView view = new WebView( this );
 			view.getSettings().setJavaScriptEnabled( true );
-			if( sSettings.getBoolean( "change_theme", false ) == false )
+			if( Prefs.getThemeType( this ) == false )
 			{
 				view.loadUrl( "file:///android_asset/about_holo_light.html" );
 			}
@@ -248,13 +246,10 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 		@Override
 		public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
 		{
-			SharedPreferences settings = getSettings( getActivity() );
-			sSettings = settings;
-			
 			WebView view = ( WebView )super.onCreateView( inflater, container, savedInstanceState );
 			view.setLayerType( View.LAYER_TYPE_SOFTWARE, null );
 			view.getSettings().setJavaScriptEnabled( true );
-			if( sSettings.getBoolean( "change_theme", false ) == false )
+			if( Prefs.getThemeType( container.getContext() ) == false )
 			{
 				view.loadUrl( "file:///android_asset/about_holo_light.html" );
 			}

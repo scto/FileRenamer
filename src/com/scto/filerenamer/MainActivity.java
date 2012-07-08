@@ -1,54 +1,41 @@
+/*
+ * Copyright (C) 2012 Thomas Schmid <tschmid35@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.scto.filerenamer;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
+import android.app.*;
+import android.content.*;
+import android.content.pm.*;
+import android.content.res.*;
+import android.os.*;
+import android.support.v4.app.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import com.scto.filerenamer.ExitDialog.*;
+import com.scto.filerenamer.HelpDialog.*;
+import com.scto.filerenamer.WhatsNewDialog.*;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-
-import android.os.Bundle;
-
-import android.preference.PreferenceManager;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.ListView;
-import android.widget.TabHost;
-import android.widget.TabWidget;
-import android.widget.TextView;
-import android.widget.Button;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-
-import com.scto.filerenamer.DebugLog;
-import com.scto.filerenamer.BuildConfig;
-import com.scto.filerenamer.HelpDialog.HelpDialogListener;
-import com.scto.filerenamer.ExitDialog.ExitDialogListener;
-import com.scto.filerenamer.WhatsNewDialog.WhatsNewDialogListener;
-import com.scto.filerenamer.Eula;
 
 public class MainActivity extends FragmentActivity implements 
 				SharedPreferences.OnSharedPreferenceChangeListener,
@@ -58,14 +45,11 @@ public class MainActivity extends FragmentActivity implements
 				
 {
  	private static final String TAG = MainActivity.class.getSimpleName();
-	private static SharedPreferences sSettings;
+	private static SharedPreferences mSharedPreferences;
 	private static ActionBar mActionBar = null;
 	
 	private static int mThemeId = -1;
-
-	private static final String PRIVATE_PREF = "filerenamer";
-	private static final String VERSION_KEY = "version_number";
-
+	
 	Button bRename, bSettings, bAbout, bHelp, bExit;
 	TextView tvDisplay, tvTitle;
 	
@@ -73,13 +57,23 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void onCreate( Bundle savedInstanceState )
 	{
-		Eula.showEula( this );
+		Eula.showEula( this, getApplicationContext() );
+	
+		try
+		{
+			mSharedPreferences = Prefs.getSharedPreferences( this );
+		}
+		catch( NullPointerException e )
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "mSharedPreferences == NullPointerException :" + e.getMessage() );
+			}			
+		}
 		
-		SharedPreferences settings = getSettings(this);
-		settings.registerOnSharedPreferenceChangeListener(this);
-		sSettings = settings;
+		mSharedPreferences.registerOnSharedPreferenceChangeListener( this );
 
-		if( sSettings.getBoolean( "change_theme", false ) == false )
+		if( Prefs.getThemeType( this ) == false )
 		{
 			mThemeId = R.style.AppTheme_Light;
 			setTheme( mThemeId );
@@ -89,21 +83,21 @@ public class MainActivity extends FragmentActivity implements
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
 		}		
-
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.main );
 		
-		tvDisplay = ( TextView ) findViewById( R.id.tvDisplay );
-
-		bRename = ( Button ) findViewById( R.id.bRename );
-		bSettings = ( Button ) findViewById( R.id.bSettings );
-		bHelp = ( Button ) findViewById( R.id.bHelp );
-		bExit = ( Button ) findViewById( R.id.bExit );
-
 		mActionBar = getActionBar();
 		if( mActionBar != null )
 		{
-			mActionBar.show();
+			mActionBar.setDisplayHomeAsUpEnabled( false );
+			mActionBar.setDisplayShowHomeEnabled( true );
+			mActionBar.setDisplayShowTitleEnabled( true );
+			//mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+		}
+		else
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "mActionBar == null" );
+			}
 		}
 
 		Bundle extras = getIntent().getExtras();
@@ -115,6 +109,16 @@ public class MainActivity extends FragmentActivity implements
 		{
 			this.setTitle( " :: " + getString( R.string.app_name ) );
 		}
+		
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.main );
+		
+		tvDisplay = ( TextView ) findViewById( R.id.tvDisplay );
+
+		bRename = ( Button ) findViewById( R.id.bRename );
+		bSettings = ( Button ) findViewById( R.id.bSettings );
+		bHelp = ( Button ) findViewById( R.id.bHelp );
+		bExit = ( Button ) findViewById( R.id.bExit );
 		
 		bRename.setOnClickListener( new View.OnClickListener()
 		{
@@ -162,24 +166,24 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onBackPressed()
 	{
-
+		if( BuildConfig.DEBUG )
+		{
+			Log.i( "[" + TAG + "]", "onBackPressed() : Clicked" );			
+		}
 	}
 	
 	@Override
 	protected void onSaveInstanceState( Bundle outState )
 	{
+        outState.putInt( "theme", mThemeId );
 		super.onSaveInstanceState( outState );
-		outState.putInt( "theme", mThemeId );
 	}
 	
 	@Override
-    public void onFinishAboutDialog( boolean exit )
+	public void onConfigurationChanged( Configuration newConfig )
 	{
-		if( exit == true )
-		{
-
-		}
-    }
+		super.onConfigurationChanged( newConfig );
+	}
 	
 	@Override
     public void onFinishHelpDialog( boolean exit )
@@ -208,33 +212,24 @@ public class MainActivity extends FragmentActivity implements
 		}
     }
 	
-	public static SharedPreferences getSettings( Context context )
-	{
-		if( sSettings == null )
-		{
-			sSettings = PreferenceManager.getDefaultSharedPreferences( context );
-		}
-		return sSettings;
-	}
-
 	@Override
 	public void onSharedPreferenceChanged( SharedPreferences settings, String key )
 	{
 		loadPreference( key );
 	}
 
-	private void loadPreference(String key)
+	private void loadPreference( String key )
 	{
-		SharedPreferences settings = getSettings(this);
 		if ("change_theme".equals(key))
 		{
-			boolean themeId = settings.getBoolean( "change_theme", false );
-			if( themeId == false )
+			if( Prefs.getThemeType( this ) == false )
 			{
+				Prefs.setThemeType( this, false );
 				mThemeId = R.style.AppTheme_Light;
 			}
 			else
 			{
+				Prefs.setThemeType( this, true );
 				mThemeId = R.style.AppTheme_Dark;
 			}
 			updateTheme();
@@ -274,10 +269,8 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onDestroy()
 	{
+		mSharedPreferences.unregisterOnSharedPreferenceChangeListener( this );
 		super.onDestroy();
-		SharedPreferences.Editor editor = getSettings( this ).edit();
-		editor.putInt( "theme", mThemeId );
-		editor.commit();
 	}
 	
 	@Override
@@ -285,18 +278,10 @@ public class MainActivity extends FragmentActivity implements
 	{
 		super.onRestart();
 	}
-	
-	@Override
-	public void recreate()
-	{
-		super.recreate();
-	}
-	
+		
 	private void init() {
-    	SharedPreferences settings = getSharedPreferences(PRIVATE_PREF, Context.MODE_PRIVATE);
-    	int currentVersionNumber = 0;
-
-		int savedVersionNumber = settings.getInt(VERSION_KEY, 0);
+		int currentVersionNumber = 0;
+		int savedVersionNumber = Prefs.getVersionNumber( this );
 
 		try
 		{
@@ -314,9 +299,7 @@ public class MainActivity extends FragmentActivity implements
 			WhatsNewDialog whatsNewDialog = new WhatsNewDialog();
 			whatsNewDialog.show( fm, "dlg_whats_new" );
 			
-   	 		Editor editor = settings.edit();
-   	 		editor.putInt( VERSION_KEY, currentVersionNumber );
-   	 		editor.commit();
+			Prefs.setVersionNumber( this, currentVersionNumber );
    	 	}
 	}
 }

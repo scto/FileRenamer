@@ -21,33 +21,84 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <resources>
+	<array name="fileEndingText">
+        <item>.txt</item>
+    </array>
+	<array name="fileEndingConf">
+        <item>.conf</item>
+        <item>.bak</item>
+		<item>.rc</item>
+	</array>	
+	<array name="fileEndingWord">
+        <item>.doc</item>
+		<item>.docx</item>
+    </array>
+	<array name="fileEndingExcel">
+        <item>.xls</item>
+		<item>.xlsx</item>
+    </array>	
+	<array name="fileEndingPowerPoint">
+        <item>.ppt</item>
+		<item>.pptx</item>
+    </array>	
+	<array name="fileEndingZip">
+        <item>.zip</item>
+        <item>.gzip</item>
+		<item>.gz</item>
+		<item>.bz</item>
+		<item>.bzip</item>
+		<item>.tar.gz</item>
+		<item>.tar.bz</item>
+	</array>	
+	<array name="fileEndingPdf">
+        <item>.pdf</item>
+    </array>
+	<array name="fileEndingAndroid">
+        <item>.apk</item>
+    </array>	
+	<array name="fileEndingExecutable">
+        <item>.exe</item>
+    </array>
+	<array name="fileEndingXml">
+        <item>.xml</item>
+    </array>
 	<array name="fileEndingImage">
         <item>.png</item>
         <item>.gif</item>
+		<item>.tiff</item>
         <item>.jpg</item>
         <item>.jpeg</item>
         <item>.bmp</item>
+		<item>.svg</item>
+		<item>.ai</item>
     </array>
 	<array name="fileEndingAudio">
         <item>.mp3</item>
+		<item>.m4a</item>
+		<item>.m4p</item>
         <item>.wav</item>
         <item>.ogg</item>
         <item>.midi</item>
 		<item>.flac</item>
 		<item>.wma</item>
     </array>
-	<array name="fileEndingPackage">
+	<array name="fileEndingVideo">
+        <item>.mp4</item>
+        <item>.m4v</item>
+		<item>.3gp</item>
+		<item>.wmv</item>
+        <item>.avi</item>
+        <item>.flv</item>
+    </array>	
+	<array name="fileEndingJar">
         <item>.jar</item>
-        <item>.zip</item>
-        <item>.rar</item>
-        <item>.gz</item>
-		<item>.tar</item>
-		<item>.bz</item>
-		<item>.bzip</item>
-		<item>.tar.gz</item>
-		<item>.tar.bz</item>
     </array>
-	<array name="fileEndingWebText">
+	<array name="fileEndingPacked">
+        <item>.jar</item>
+        <item>.rar</item>
+		<item>.tar</item>
+    </array>
+	<array name="fileEndingBrowser">
         <item>.htm</item>
         <item>.html</item>
         <item>.php</item>

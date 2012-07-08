@@ -22,28 +22,33 @@
 
 package com.scto.filerenamer;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
-
-public class AddCharsFragment extends Fragment
+import android.content.*;
+import android.preference.*;
+import android.util.*;
+ 
+/**
+ * Overrides ListPreference to show the selected value as the summary.
+ *
+ * (ListPreference should supposedly be able to do this itself if %s is in the
+ * summary, but as far as I can tell that behavior is broken.)
+ */
+public class ListPreferenceSummary extends ListPreference
 {
-	@Override
-	public void onCreate( Bundle savedInstanceState )
+	public ListPreferenceSummary( Context context, AttributeSet attrs )
 	{
-		super.onCreate( savedInstanceState );
+		super( context, attrs );
 	}
 
 	@Override
-	public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+	public CharSequence getSummary()
 	{
-		View v = new View( getActivity() );
-		v = inflater.inflate( R.layout.middle, container, false );
-		return v;
+		return getEntry();
+	}
+
+	@Override
+	protected void onDialogClosed( boolean positiveResult )
+	{
+		super.onDialogClosed( positiveResult );
+		notifyChanged();
 	}
 }

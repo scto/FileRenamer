@@ -1,13 +1,24 @@
-/* * Copyright (C) 2011 The Android Open Source Project *
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at *
-* http://www.apache.org/licenses/LICENSE-2.0 *
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License. */
+/*
+ * Copyright (C) 2012 Thomas Schmid <tschmid35@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 package com.scto.filerenamer;
 
@@ -99,18 +110,23 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 			mActionBar.setDisplayShowTitleEnabled( true );
 			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
 		}
+		else
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "mActionBar == null" );
+			}
+		}
 		
 		setContentView( R.layout.fragment_tabs_pager );
 		
 		mTabHost = ( TabHost )findViewById( android.R.id.tabhost );
 		mTabHost.setup();
 
-		mViewPager = ( ViewPager )findViewById( R.id.pager );        
-		mViewPager.setPageMargin( getResources().getInteger( R.integer.viewpager_margin_width ) );
-        mViewPager.setPageMarginDrawable( R.drawable.viewpager_margin );
-        mViewPager.setCurrentItem( 1 );
-		
+		mViewPager = ( ViewPager )findViewById( R.id.pager );
+
 		mTabsAdapter = new TabsAdapter( this, mTabHost, mViewPager );
+
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.addNumber ) ).setIndicator( getString( R.string.addNumber ) ), AddNumbersFragment.class, null );
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.addCustom ) ).setIndicator( getString( R.string.addCustom ) ), AddCustomFragment.class, null );
 		mTabsAdapter.addTab( mTabHost.newTabSpec( getString( R.string.addDate ) ).setIndicator( getString( R.string.addDate ) ), AddCharsFragment.class, null );
@@ -122,18 +138,28 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 		{
 			this.setTitle( extras.getString( "dir" ) + " :: " + getString( R.string.app_name ) );
 		}
+		else
+		{
+			if( BuildConfig.DEBUG )
+			{
+				Log.w( "[" + TAG + "]", "onCreate( savedInstanceState ) : extras == null" );
+			}
+			this.setTitle( " :: " + getString( R.string.app_name ) );
+		}
 		
 		if( savedInstanceState != null )
 		{
-			mTabHost.setCurrentTabByTag( savedInstanceState.getString( "tab" ) );
+            mActionBar.setSelectedNavigationItem( savedInstanceState.getInt( "action_bar_tab", 0 ) );			
+			mTabHost.setCurrentTabByTag( savedInstanceState.getString( "tab_host" ) );
 		}
-	}		
+	}
 
 	@Override
 	protected void onSaveInstanceState( Bundle outState )
 	{
 		super.onSaveInstanceState( outState );
-		outState.putString( "tab", mTabHost.getCurrentTabTag() );
+		outState.putString( "tab_host", mTabHost.getCurrentTabTag() );
+		outState.putInt( "action_bar_tab", getActionBar().getSelectedNavigationIndex() );
 		outState.putInt( "theme", mThemeId );
 	}
 

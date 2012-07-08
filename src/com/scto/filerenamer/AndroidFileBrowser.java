@@ -1,3 +1,25 @@
+/*
+ * Copyright (C) 2012 Thomas Schmid <tschmid35@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.scto.filerenamer;
 
 import android.app.*;
@@ -12,31 +34,26 @@ import android.widget.*;
 import java.io.*;
 import java.util.*;
 
-/**
- * From www.anddev.org 
- * Building a Filebrowser.
- */
-
-public class AndroidFileBrowser extends ListActivity implements SharedPreferences.OnSharedPreferenceChangeListener
+public class AndroidFileBrowser extends ListActivity implements
+ 						SharedPreferences.OnSharedPreferenceChangeListener,
+						View.OnLongClickListener
 {
  	private static final String TAG = AndroidFileBrowser.class.getSimpleName();
-	private static SharedPreferences sSettings;
+
+	private static SharedPreferences mSettings;	
 	private static Intent mIntent;
-	private static int mThemeId = 0;
 	private static ActionBar mActionBar;
+	private static ActionMode mActionMode;
+	private static int mThemeId = 0;
 	
 	private enum DISPLAYMODE{ ABSOLUTE, RELATIVE; }
 	private final DISPLAYMODE mDisplayMode = DISPLAYMODE.RELATIVE;
-	private List< IconifiedText > mDirectoryEntries = new ArrayList< IconifiedText >();
+
+	private List< AndroidFileBrowserFile > mDirectoryEntries = new ArrayList< AndroidFileBrowserFile >();
 	private File mCurrentDirectory;
 	private File mSdcard;
 	private String mstrSelectedFileString;
 	private int mSelectedFileEntryPosition;
-	private static ActionMode mActionMode;
-	
-	private boolean mRootAcess;
-	
-	Boolean mContextMenuOpened = Boolean.valueOf( false );	
 		
 	/** Called when the activity is first created. */
 	@Override
@@ -44,9 +61,9 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	{
 		SharedPreferences settings = getSettings(this);
 		settings.registerOnSharedPreferenceChangeListener(this);
-		sSettings = settings;
+		mSettings = settings;
 
-		if( sSettings.getBoolean( "change_theme", false ) == false )
+		if( mSettings.getBoolean( "change_theme", false ) == false )
 		{
 			mThemeId = R.style.AppTheme_Light;
 			setTheme( mThemeId );
@@ -56,16 +73,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
 		}
-	
-		if( sSettings.getBoolean( "check_root_access_on_startup", false ) == false )
-		{
-			mRootAcess = false;
-		}
-		else
-		{
-			mRootAcess = true;	
-		}
-		
+
 		super.onCreate( savedInstanceState );
 		ListView lv = getListView();
 		lv.setCacheColorHint( Color.TRANSPARENT );
@@ -77,7 +85,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			mActionBar.setDisplayHomeAsUpEnabled( true );
 			mActionBar.setDisplayShowHomeEnabled( true );
 			mActionBar.setDisplayShowTitleEnabled( true );
-			mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
+			//mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
 		}
 		
 		mSdcard = Environment.getExternalStorageDirectory();
@@ -120,11 +128,11 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 
 	public static SharedPreferences getSettings( Context context )
 	{
-		if( sSettings == null )
+		if( mSettings == null )
 		{
-			sSettings = PreferenceManager.getDefaultSharedPreferences( context );
+			mSettings = PreferenceManager.getDefaultSharedPreferences( context );
 		}
-		return sSettings;
+		return mSettings;
 	}
 
 	@Override
@@ -149,63 +157,25 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 			}
 			updateTheme();
 		}
-		if( "check_root_access_on_startup".equals( key ) )
-		{
-			boolean root = settings.getBoolean( "check_root_access_on_startup", false );
-			if( root = false )
-			{
-				mRootAcess = false;
-			}
-			else
-			{
-				mRootAcess = true;	
-			}
-		}
 	}
-
+	
 	public void updateTheme()
 	{
 		setTheme( mThemeId );
 		this.recreate();
-	}	
-
-	public boolean onContextItemSelected( MenuItem paramMenuItem )
-	{
-		super.onContextItemSelected( paramMenuItem );
-		action( paramMenuItem );
-		return true;
 	}
 
-	public void onContextMenuClosed( Menu paramMenu )
-	{
-		super.onContextMenuClosed( paramMenu );
-		if( this.mContextMenuOpened.booleanValue() )
-		{
-
-		}
-	}
-
-	public void onCreateContextMenu( ContextMenu paramContextMenu, View paramView, ContextMenu.ContextMenuInfo paramContextMenuInfo )
-	{
-		super.onCreateContextMenu( paramContextMenu, paramView, paramContextMenuInfo );
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate( R.menu.context_menu, paramContextMenu );
-		paramContextMenu.setHeaderTitle( R.string.contextMenuTitle );
-	}
-	
-	/**
-	 * This function browses to the 
-	 * root-directory of the file-system.
-	 */
 	private void browseToRoot( String strPath )
 	{
+		if( !new ShellCommand().canSU() )
+		{
+			Toast.makeText( this, "SU not found", Toast.LENGTH_SHORT ).show();
+		}
 		browseTo( new File( strPath ) );
     }
-
-	/**
-	 * This function browses up one level 
-	 * according to the field: currentDirectory
-	 */
+	
+	//new ShellCommand().su.runWaitFor( "mv /sdcard/Android/data/com.aokp.backup/files/backups /sdcard/AOKP_Backup/" );
+	
 	private void upOneLevel()
 	{
 		if( this.mCurrentDirectory.getParent() != null )
@@ -216,7 +186,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 
 	private void browseTo( final File aDirectory )
 	{
-		// On relative we display the full path in the title.
 		if( this.mDisplayMode == DISPLAYMODE.RELATIVE )
 		{
 			this.setTitle( aDirectory.getAbsolutePath() + " :: " + getString( R.string.app_name ) );
@@ -224,8 +193,14 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		
 		if( aDirectory.isDirectory() )
 		{
-			this.mCurrentDirectory = aDirectory;
-			fill( aDirectory.listFiles() );
+			if( aDirectory.canRead() )
+			{	this.mCurrentDirectory = aDirectory;
+				fill( aDirectory.listFiles() );
+			}
+			else
+			{
+				Toast.makeText( this.getApplicationContext(), "Can't read folder due to permissions", Toast.LENGTH_SHORT ).show();
+			}
 		}
 	}
 
@@ -234,29 +209,38 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		this.mDirectoryEntries.clear();
 
 		// Add the "." == "current directory"
-		this.mDirectoryEntries.add( new IconifiedText( getString( R.string.current_dir ), getResources().getDrawable( R.drawable.folder ) ) );		
+		this.mDirectoryEntries.add( new AndroidFileBrowserFile( getString( R.string.current_dir ), getResources().getDrawable( R.drawable.folder ), true, "", "" ) );		
 		
 		// and the ".." == 'Up one level'
 		if( this.mCurrentDirectory.getParent() != null )
 		{
-			if( this.mCurrentDirectory.equals( this.mSdcard ) )
-			{
+			//if( this.mCurrentDirectory.equals( this.mSdcard ) )
+			//{
 
-			}
-			else
-			{
-				this.mDirectoryEntries.add( new IconifiedText( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ) ) );
-			}
+			//}
+			//else
+			//{
+			this.mDirectoryEntries.add( new AndroidFileBrowserFile( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ), true, "", "" ) );
+			//}
 		}
 		Drawable currentIcon = null;
+		boolean isFolder;
+		String permissions;
+		String fileSize;
+		
 		for( File currentFile : files )
 		{
+			permissions = getFilePermission( currentFile );
+			fileSize = getFileSize( currentFile );
+			
 			if( currentFile.isDirectory() )
 			{
+				isFolder = true;
 				currentIcon = getResources().getDrawable( R.drawable.folder );
 			}
 			else
 			{
+				isFolder = false;
 				String fileName = currentFile.getName();
 				/* Determine the Icon to be used, 
 				 * depending on the FileEndings defined in:
@@ -265,93 +249,189 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 				{
 					currentIcon = getResources().getDrawable( R.drawable.image ); 
 				}
-				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingWebText ) ) )
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingAndroid ) ) )
 				{
-					currentIcon = getResources().getDrawable( R.drawable.webtext );
+					currentIcon = getResources().getDrawable( R.drawable.android );
 				}
-				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingPackage ) ) )
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingExecutable ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.application );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingBrowser ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.browser );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingPacked ) ) )
 				{
 					currentIcon = getResources().getDrawable( R.drawable.packed );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingZip ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.zip );
 				}
 				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingAudio ) ) )
 				{
 					currentIcon = getResources().getDrawable( R.drawable.audio );
 				}
-				else
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingVideo ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.video );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingWord ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.word );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingExcel ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.excel );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingPowerPoint ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.powerpoint );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingText ) ) )
 				{
 					currentIcon = getResources().getDrawable( R.drawable.text );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingConf ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.notes );
+				}				
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingJar ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.jar );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingPdf ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.pdf );
+				}
+				else if( checkEndsWithInStringArray( fileName, getResources().getStringArray( R.array.fileEndingXml ) ) )
+				{
+					currentIcon = getResources().getDrawable( R.drawable.xml );
+				}
+				else
+				{
+					currentIcon = getResources().getDrawable( R.drawable.unknow );
 				}				
 			}
 			switch( this.mDisplayMode )
 			{
 				case ABSOLUTE:
-					/* On absolute Mode, we show the full path */
-					this.mDirectoryEntries.add( new IconifiedText( currentFile.getPath(), currentIcon ) );
+					this.mDirectoryEntries.add( new AndroidFileBrowserFile( currentFile.getPath(), currentIcon, isFolder, permissions, fileSize ) );
 					break;
 				case RELATIVE: 
-					/* On relative Mode, we have to cut the
-					 * current-path at the beginning */
 					int currentPathStringLenght = this.mCurrentDirectory.getAbsolutePath().length();
-					this.mDirectoryEntries.add( new IconifiedText( currentFile.getAbsolutePath().substring( currentPathStringLenght ), currentIcon ) );
+					this.mDirectoryEntries.add( new AndroidFileBrowserFile( currentFile.getAbsolutePath().substring( currentPathStringLenght ), currentIcon, isFolder, permissions, fileSize ) );
 					break;
 			}
 		}
-		Collections.sort( this.mDirectoryEntries );
-		IconifiedTextListAdapter itla = new IconifiedTextListAdapter( this );
-		itla.setListItems( this.mDirectoryEntries );		
-		this.setListAdapter( itla );
+		updateStorageLabel();
+		Collections.sort( this.mDirectoryEntries, AndroidFileBrowserFile.mAndroidFileBrowserFileComparator );
+		AndroidFileBrowserListAdapter listAdapter = new AndroidFileBrowserListAdapter( this );
+		listAdapter.setListItems( this.mDirectoryEntries );		
+		this.setListAdapter( listAdapter );
+	}
+	
+	private void updateStorageLabel()
+	{
+		long total, aval;
+		int kb = 1024;
+		String srcTitle, destTitle, storageLabel;
+		
+		StatFs fs = new StatFs( Environment.getExternalStorageDirectory().getPath() );
+		total = fs.getBlockCount() * ( fs.getBlockSize() / kb );
+		aval = fs.getAvailableBlocks() * ( fs.getBlockSize() / kb );
+		srcTitle = getTitle().toString();
+		storageLabel = String.format( "\t\t\t\tSdCard: Total %2f GB " + "\t\tAvailable %2f GB", ( double )total / ( kb * kb ), ( double )aval / ( kb * kb ) );
+		destTitle = srcTitle + " " + storageLabel;
+		setTitle( destTitle );
 	}
 
+	public String getFilePermission( File file )
+	{
+		String per = "-";
+		if( file.isDirectory() )
+		{
+			per += "d";
+		}
+		if( file.canRead() )
+		{
+			per += "r";
+		}
+		if( file.canWrite() )
+		{
+			per += "w";
+		}
+		if( file.canExecute() )
+		{
+			per += "x";
+		}
+		return per;
+	}
+
+	public String getFileSize( File file )
+	{
+		String fileSize;
+		int KB = 1024;
+		int MB = KB * KB;
+		int GB = MB * KB;
+		
+		if( file.isFile() )
+		{
+			double size = file.length();
+			if( size > GB )
+			{
+				fileSize = String.format( "%.2f Gb ", ( double )size / GB );
+			}
+			else if( size < GB && size > MB )
+			{
+				fileSize = String.format( "%.2f Mb ", ( double )size / MB );
+			}
+			else if( size < MB && size > KB )
+			{
+				fileSize = String.format( "%.2f Kb ", ( double )size / KB );
+			}
+			else
+			{
+				fileSize = String.format( "%.2f bytes ", ( double )size );
+			}
+			return fileSize;
+		}
+		else
+		{
+			return "";
+		}
+	}
+	
 	@Override
 	protected void onListItemClick( ListView l, View v, int position, long id )
 	{
 		super.onListItemClick( l, v, position, id );
-		if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB )
+		if( mActionMode != null )
 		{
-			this.mContextMenuOpened = Boolean.valueOf( true );
-			registerForContextMenu( l );
+			return;
 		}
+
 		mSelectedFileEntryPosition = position;
-		mstrSelectedFileString = this.mDirectoryEntries.get( position ).getText();
+		mstrSelectedFileString = this.mDirectoryEntries.get( position ).getText();		
 		if( mstrSelectedFileString.equals( getString( R.string.up_one_level ) ) )
 		{
 			this.upOneLevel();
 		}
+		else if( mstrSelectedFileString.equals( getString( R.string.current_dir ) ) )
+		{
 
-		try
-		{
-			if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB )
-			{
-				boolean result = v.showContextMenu();
-				 if( result )
-				 {
-					 Log.d( "[" + TAG + "]", "ShowContextMenu Result: true" );
-				 }
-				 else
-				 {
-					 Log.d( "[" + TAG + "]", "ShowContextMenu Result: false" );
-				 }		
-			}
-			else
-			{
-				if( mActionMode != null )
-				{
-					//return false;
-				}
-				mActionMode = AndroidFileBrowser.this.startActionMode( mContentSelectionActionModeCallback );
-				v.setSelected( true );
-			}
 		}
-		catch( NullPointerException e )
+		else
 		{
-			Log.d( "[" + TAG + "]", "NullPointerException ShowContextMenu: " + e.getMessage() );
-			e.printStackTrace();
+			mActionMode = AndroidFileBrowser.this.startActionMode( mContentSelectionActionModeCallback );
+			v.setSelected( true );
 		}
+
 	}
 
 	public void action( MenuItem item )
 	{
-		this.mContextMenuOpened = Boolean.valueOf( false );
 		switch( item.getItemId() )
 		{
 			case R.id.menu_open:
@@ -361,7 +441,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 					mstrSelectedFileString = this.mDirectoryEntries.get( mSelectedFileEntryPosition ).getText();
 					if( mstrSelectedFileString.equals( getString( R.string.current_dir ) ) )
 					{
-						// Refresh
 						this.browseTo( this.mCurrentDirectory );
 					}
 					else if( mstrSelectedFileString.equals( getString( R.string.up_one_level ) ) )
@@ -399,6 +478,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 						// Refresh
 						this.mIntent = new Intent( this, FileRenamerActivity.class );
 						this.mIntent.putExtra( "dir", this.mCurrentDirectory.toString() );
+						Log.w( "[" + TAG + "]", "this.mCurrentDirectory.toString(): " + this.mCurrentDirectory.toString() );
 						startActivity( this.mIntent );
 						onDestroy();
 					}
@@ -406,6 +486,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 					{
 						this.mIntent = new Intent( this, FileRenamerActivity.class );
 						this.mIntent.putExtra( "dir", this.mCurrentDirectory.getParent() );
+						Log.w( "[" + TAG + "]", "this.mCurrentDirectory.getParent(): " + this.mCurrentDirectory.getParent() );
 						startActivity( this.mIntent );
 						onDestroy();
 					}
@@ -453,8 +534,6 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 		}
 	}
 	
-	/** Checks whether checkItsEnd ends with
-	 * one of the Strings from fileEndings */
 	private boolean checkEndsWithInStringArray( String checkItsEnd, String[] fileEndings )
 	{
 		for( String aEnd : fileEndings )
@@ -514,7 +593,7 @@ public class AndroidFileBrowser extends ListActivity implements SharedPreference
 	{
 		public boolean onCreateActionMode( ActionMode actionMode, Menu menu )
 		{
-			actionMode.setTitle( R.string.contextMenuTitle );
+			actionMode.setTitle( "Test" );
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate( R.menu.context_menu, menu );
 			return true;
