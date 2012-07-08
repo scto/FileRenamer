@@ -59,11 +59,10 @@ public class AndroidFileBrowser extends ListActivity implements
 	@Override
 	public void onCreate( Bundle savedInstanceState )
 	{
-		SharedPreferences settings = getSettings(this);
-		settings.registerOnSharedPreferenceChangeListener(this);
-		mSettings = settings;
+		mSettings = Prefs.getSharedPreferences( this );
+		mSettings.registerOnSharedPreferenceChangeListener( this );
 
-		if( mSettings.getBoolean( "change_theme", false ) == false )
+		if( Prefs.getThemeType( this ) == false )
 		{
 			mThemeId = R.style.AppTheme_Light;
 			setTheme( mThemeId );
@@ -126,15 +125,6 @@ public class AndroidFileBrowser extends ListActivity implements
 		outState.putInt( "theme", mThemeId );
 	}
 
-	public static SharedPreferences getSettings( Context context )
-	{
-		if( mSettings == null )
-		{
-			mSettings = PreferenceManager.getDefaultSharedPreferences( context );
-		}
-		return mSettings;
-	}
-
 	@Override
 	public void onSharedPreferenceChanged( SharedPreferences settings, String key )
 	{
@@ -143,11 +133,9 @@ public class AndroidFileBrowser extends ListActivity implements
 
 	private void loadPreference(String key)
 	{
-		SharedPreferences settings = getSettings(this);
 		if ("change_theme".equals(key))
 		{
-			boolean theme = settings.getBoolean( "change_theme", false );
-			if( theme == false )
+			if( Prefs.getThemeType( this ) == false )
 			{
 				mThemeId = R.style.AppTheme_Light;
 			}
@@ -214,13 +202,10 @@ public class AndroidFileBrowser extends ListActivity implements
 		// and the ".." == 'Up one level'
 		if( this.mCurrentDirectory.getParent() != null )
 		{
+			this.mDirectoryEntries.add( new AndroidFileBrowserFile( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ), true, "", "" ) );
 			//if( this.mCurrentDirectory.equals( this.mSdcard ) )
 			//{
 
-			//}
-			//else
-			//{
-			this.mDirectoryEntries.add( new AndroidFileBrowserFile( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ), true, "", "" ) );
 			//}
 		}
 		Drawable currentIcon = null;

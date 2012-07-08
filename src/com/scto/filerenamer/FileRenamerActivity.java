@@ -68,7 +68,7 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 	TabsAdapter mTabsAdapter;
 
 	public static final int MAX_ADAPTER_COUNT = 6;
-	private static SharedPreferences sSettings;
+	private static SharedPreferences mSettings;
 	private static int mThemeId = -1;
  	
 	public static final int[] TITLES = 
@@ -87,11 +87,10 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 	{
 		super.onCreate( savedInstanceState );
 		
-		SharedPreferences settings = getSettings(this);
-		settings.registerOnSharedPreferenceChangeListener(this);
-		sSettings = settings;
+		mSettings = Prefs.getSharedPreferences( this );
+		mSettings.registerOnSharedPreferenceChangeListener(this);
 		
-		if( sSettings.getBoolean( "change_theme", false ) == false )
+		if( Prefs.getThemeType( this ) == false )
 		{
 			mThemeId = R.style.AppTheme_Light;
 			setTheme( mThemeId );
@@ -203,15 +202,6 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
         }
 	}
 	
-	public static SharedPreferences getSettings( Context context )
-	{
-		if( sSettings == null )
-		{
-			sSettings = PreferenceManager.getDefaultSharedPreferences( context );
-		}
-		return sSettings;
-	}
-	
 	@Override
 	public void onSharedPreferenceChanged( SharedPreferences settings, String key )
 	{
@@ -220,11 +210,9 @@ public class FileRenamerActivity extends FragmentActivity implements SharedPrefe
 	
 	private void loadPreference(String key)
 	{
-		SharedPreferences settings = getSettings(this);
 		if ("change_theme".equals(key))
 		{
-			boolean theme = settings.getBoolean( "change_theme", false );
-			if( theme == false )
+			if( Prefs.getThemeType( this ) == false )
 			{
 				mThemeId = R.style.AppTheme_Light;
 			}

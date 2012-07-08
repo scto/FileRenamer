@@ -57,8 +57,6 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void onCreate( Bundle savedInstanceState )
 	{
-		Eula.showEula( this, getApplicationContext() );
-	
 		try
 		{
 			mSharedPreferences = Prefs.getSharedPreferences( this );
@@ -83,6 +81,8 @@ public class MainActivity extends FragmentActivity implements
 			mThemeId = R.style.AppTheme_Dark;
 			setTheme( mThemeId );			
 		}		
+
+		Eula.showEula( this, getApplicationContext() );
 		
 		mActionBar = getActionBar();
 		if( mActionBar != null )
@@ -90,7 +90,6 @@ public class MainActivity extends FragmentActivity implements
 			mActionBar.setDisplayHomeAsUpEnabled( false );
 			mActionBar.setDisplayShowHomeEnabled( true );
 			mActionBar.setDisplayShowTitleEnabled( true );
-			//mActionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_TABS );
 		}
 		else
 		{
@@ -190,7 +189,7 @@ public class MainActivity extends FragmentActivity implements
 	{
 		if( exit == true )
 		{
-
+			Toast.makeText( this, TAG + "onFinishHelpDialog()", Toast.LENGTH_SHORT );
 		}
     }
 	
@@ -199,6 +198,7 @@ public class MainActivity extends FragmentActivity implements
 	{
 		if( exit == true )
 		{
+			Toast.makeText( this, TAG + "onFinishExitDialog()", Toast.LENGTH_SHORT );
 			finish();
 		}
     }
@@ -208,7 +208,7 @@ public class MainActivity extends FragmentActivity implements
 	{
 		if( exit == true )
 		{
-
+			Toast.makeText( this, TAG + "onFinishWhatsNewDialog()", Toast.LENGTH_SHORT );
 		}
     }
 	
@@ -279,7 +279,8 @@ public class MainActivity extends FragmentActivity implements
 		super.onRestart();
 	}
 		
-	private void init() {
+	private void init() 
+	{
 		int currentVersionNumber = 0;
 		int savedVersionNumber = Prefs.getVersionNumber( this );
 

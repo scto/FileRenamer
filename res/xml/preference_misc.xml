@@ -27,16 +27,16 @@ THE SOFTWARE.
 		android:key="change_theme"
 		android:title="@string/change_theme_title"
 		android:summary="@string/change_theme_summary"
-		android:defaultValue="false" />
+		android:defaultValue="true" />
 	<CheckBoxPreference
 		android:key="show_splash_screen"
 		android:title="@string/show_splash_screen_title"
 		android:summary="@string/show_splash_screen_summary"
-		android:defaultValue="true" />
+		android:defaultValue="false" />
 	<CheckBoxPreference
 		android:key="play_splash_screen_sound"
 		android:title="@string/play_splash_screen_sound_title"
 		android:summary="@string/play_splash_screen_sound_summary"
 		android:dependency="show_splash_screen"
-		android:defaultValue="true" />
+		android:defaultValue="false" />
 </PreferenceScreen>

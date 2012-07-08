@@ -34,41 +34,26 @@ import java.util.*;
 public class SplashActivity extends Activity
 {
  	private static final String TAG = SplashActivity.class.getSimpleName();
+	private static SharedPreferences mSettings;
 	MediaPlayer ourSong;
 	boolean music, splash;
 	Thread mSplashThread;
 	
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
+    public void onCreate( Bundle savedInstanceState )
 	{
         super.onCreate(savedInstanceState);
 
-		SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		splash = getPrefs.getBoolean("show_splash_screen", true);
-		if(splash == true)
+		mSettings = Prefs.getSharedPreferences( getBaseContext() );
+		if( Prefs.getSplashScreen( getApplicationContext() ) == true )
 		{
-			if( BuildConfig.DEBUG )
+			setContentView( R.layout.splash );
+			
+			if( Prefs.getSplashMusic( getApplicationContext() ) == true )
 			{
-				Log.i( "[" + TAG + "]", "splash = getPrefs.getBoolean : true" );
-			}			
-			setContentView(R.layout.splash);
-			music = getPrefs.getBoolean("play_splash_screen_sound", true);
-			if(music == true)
-			{
-				if( BuildConfig.DEBUG )
-				{
-					Log.i( "[" + TAG + "]", "music = getPrefs.getBoolean : true" );
-				}			
-				ourSong = MediaPlayer.create(SplashActivity.this, R.raw.splashsound);
+				ourSong = MediaPlayer.create( SplashActivity.this, R.raw.splashsound );
 				ourSong.start();
-			}
-			else
-			{
-				if( BuildConfig.DEBUG )
-				{
-					Log.i( "[" + TAG + "]", "music = getPrefs.getBoolean : false" );
-				}			
 			}
 			mSplashThread = new Thread()
 			{
@@ -76,30 +61,30 @@ public class SplashActivity extends Activity
 				{
 					try
 					{
-						if(splash == true)
+						if( splash == true )
 						{
-							if(music == true)
+							if( music == true )
 							{
-								sleep(14000);
+								sleep( 14000 );
 							}
 							else
 							{
-								sleep(3000);
+								sleep( 3000 );
 							}
 						}
 						else
 						{
-							sleep(0);
+							sleep( 0 );
 						}
 					}
-					catch (InterruptedException e)
+					catch( InterruptedException e )
 					{
 						e.printStackTrace();
 					}
 					finally
 					{
-						Intent openMainActivity = new Intent("com.scto.filerenamer.MAINACTIVITY");
-						startActivity(openMainActivity);
+						Intent openMainActivity = new Intent( "com.scto.filerenamer.MAINACTIVITY" );
+						startActivity( openMainActivity );
 					}
 				}
 			};
@@ -107,12 +92,8 @@ public class SplashActivity extends Activity
 		}
 		else
 		{
-			if( BuildConfig.DEBUG )
-			{
-				Log.i( "[" + TAG + "]", "splash = getPrefs.getBoolean : false" );
-			}			
-			Intent openMainActivity = new Intent("com.scto.filerenamer.MAINACTIVITY");
-			startActivity(openMainActivity);
+			Intent openMainActivity = new Intent( "com.scto.filerenamer.MAINACTIVITY" );
+			startActivity( openMainActivity );
 		}
 	}
 	
@@ -120,9 +101,9 @@ public class SplashActivity extends Activity
 	protected void onPause()
 	{
 		super.onPause();
-		if(splash == true)
+		if( splash == true )
 		{
-			if(music == true)
+			if( music == true )
 			{
 				ourSong.release();
 			}			
@@ -134,11 +115,12 @@ public class SplashActivity extends Activity
      * Processes splash screen touch events
      */
     @Override
-    public boolean onTouchEvent(MotionEvent evt)
+    public boolean onTouchEvent( MotionEvent evt )
     {
-        if(evt.getAction() == MotionEvent.ACTION_DOWN)
+        if( evt.getAction() == MotionEvent.ACTION_DOWN )
         {
-            synchronized(mSplashThread){
+            synchronized( mSplashThread )
+			{
                 mSplashThread.notifyAll();
             }
         }

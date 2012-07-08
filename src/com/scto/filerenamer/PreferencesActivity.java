@@ -44,7 +44,7 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	@Override
 	protected void onCreate( Bundle savedInstanceState )
 	{
-		SharedPreferences mSettings = Prefs.getSharedPreferences( this );
+		mSettings = Prefs.getSharedPreferences( this );
 		mSettings.registerOnSharedPreferenceChangeListener( this );
 
 		if( Prefs.getThemeType( this ) == false )
