@@ -26,16 +26,20 @@ THE SOFTWARE.
 		<item name="android:textColor">@android:color/primary_text_light</item>
 	</style>
 
-	<!-- Color used in LibraryActivity list dividers -->
+	<!-- Color used in AndroidFileBrowserActivity list dividers -->
 	<color name="divider_color">#f444</color>
 	
-	<string-array name="root_access_values">
-		<item>Grant</item>
-		<item>Deny</item>
+	<string-array name="theme_type_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
 	</string-array>
 		
-	<string-array name="root_access_entries">
-		<item>@string/enable_root</item>
-		<item>@string/disable_root</item>
+	<string-array name="theme_type_entries">
+		<item>@string/holo_light</item>
+		<item>@string/holo_dark</item>
+		<item>@string/white_theme</item>
+		<item>@string/blue_theme</item>
 	</string-array>	
 </resources>

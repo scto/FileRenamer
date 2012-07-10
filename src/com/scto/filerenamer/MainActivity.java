@@ -82,6 +82,7 @@ public class MainActivity extends FragmentActivity implements
 			setTheme( mThemeId );			
 		}		
 
+		//Eula.showDisclaimer( this );
 		Eula.showEula( this, getApplicationContext() );
 		
 		mActionBar = getActionBar();
@@ -159,6 +160,13 @@ public class MainActivity extends FragmentActivity implements
 			}
 		});
 		
+		/*
+		ChangeLog cl = new ChangeLog( this );
+		if( cl.firstRun() )
+		{
+			cl.getLogDialog().show();
+		}
+		*/
 		init();
 	}
 
@@ -182,6 +190,15 @@ public class MainActivity extends FragmentActivity implements
 	public void onConfigurationChanged( Configuration newConfig )
 	{
 		super.onConfigurationChanged( newConfig );
+		// Checks the orientation of the screen
+		if( newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE )
+		{
+			Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+		}
+		else if( newConfig.orientation == Configuration.ORIENTATION_PORTRAIT )
+		{
+			Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	@Override
@@ -281,26 +298,26 @@ public class MainActivity extends FragmentActivity implements
 		
 	private void init() 
 	{
-		int currentVersionNumber = 0;
-		int savedVersionNumber = Prefs.getVersionNumber( this );
+		String currentVersionName = "";
+		String savedVersionName = Prefs.getVersionName( this );
 
 		try
 		{
-   	 		PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
-    	 	currentVersionNumber = pi.versionCode;
+   	 		PackageInfo pi = getPackageManager().getPackageInfo( getPackageName(), 0 );
+    	 	currentVersionName = pi.packageName;
    	 	}
 		catch( Exception e )
 		{
 
 		}
 
-   	 	if( currentVersionNumber > savedVersionNumber )
+   	 	if( !currentVersionName.equals( savedVersionName ) )
 		{   	 		
 			FragmentManager fm = getSupportFragmentManager();
 			WhatsNewDialog whatsNewDialog = new WhatsNewDialog();
 			whatsNewDialog.show( fm, "dlg_whats_new" );
 			
-			Prefs.setVersionNumber( this, currentVersionNumber );
+			Prefs.setVersionName( this, currentVersionName );
    	 	}
 	}
 }

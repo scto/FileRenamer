@@ -32,17 +32,19 @@ public class Prefs
 
 	public static final String KEY_CHANGE_THEME = "change_theme";
 	public static final String KEY_TEXT_COLOR = "text_color";
-	public static final String KEY_VERSION_NUMBER = "version_number";
+	public static final String KEY_VERSION_NAME = "version_name";
+	public static final String KEY_VERSION_CODE = "version_code";
 	public static final String KEY_EULA_ACCEPTED = "eula_accepted";
 	public static final String KEY_SPLASH_SCREEN = "show_splash_screen";
 	public static final String KEY_SPLASH_MUSIC = "play_splash_screen_sound";
+	public static final String KEY_ROOT_ENABLED = "root_enabled";
 	
 	public static SharedPreferences getSharedPreferences( Context c )
 	{
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
 		return prefs;
 	}
-	
+
     public static boolean getThemeType( Context c )
 	{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
@@ -67,18 +69,30 @@ public class Prefs
         return prefs.edit().putInt( KEY_TEXT_COLOR, use ).commit();
     }
 
-    public static int getVersionNumber( Context c )
+    public static String getVersionName( Context c )
 	{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
-        return prefs.getInt( KEY_VERSION_NUMBER, -1 );
+        return prefs.getString( KEY_VERSION_NAME, "" );
     }
 
-    public static boolean setVersionNumber( Context c, int use )
+    public static boolean setVersionName( Context c, String use )
 	{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
-        return prefs.edit().putInt( KEY_VERSION_NUMBER, use ).commit();
+        return prefs.edit().putString( KEY_VERSION_NAME, use ).commit();
     }
 
+    public static int getVersionCode( Context c )
+	{
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
+        return prefs.getInt( KEY_VERSION_CODE, -1 );
+    }
+
+    public static boolean setVersionKey( Context c, int use )
+	{
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
+        return prefs.edit().putInt( KEY_VERSION_CODE, use ).commit();
+    }
+	
     public static boolean getEulaAccepted( Context c )
 	{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
@@ -94,10 +108,10 @@ public class Prefs
     public static boolean getSplashScreen( Context c )
 	{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
-        return prefs.getBoolean( KEY_SPLASH_SCREEN, false );
+        return prefs.getBoolean( KEY_SPLASH_SCREEN, true );
     }
 
-    public static boolean getSplashScreen( Context c, boolean use )
+    public static boolean setSplashScreen( Context c, boolean use )
 	{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
         return prefs.edit().putBoolean( KEY_SPLASH_SCREEN, use ).commit();
@@ -109,10 +123,21 @@ public class Prefs
         return prefs.getBoolean( KEY_SPLASH_MUSIC, false );
     }
 
-    public static boolean getSplashMusic( Context c, boolean use )
+    public static boolean setSplashMusic( Context c, boolean use )
 	{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
         return prefs.edit().putBoolean( KEY_SPLASH_MUSIC, use ).commit();
     }
 	
+    public static boolean getRootEnabled( Context c )
+	{
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
+        return prefs.getBoolean( KEY_ROOT_ENABLED, false );
+    }
+
+    public static boolean setRootEnabled( Context c, boolean use )
+	{
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( c );
+        return prefs.edit().putBoolean( KEY_ROOT_ENABLED, use ).commit();
+    }	
 }

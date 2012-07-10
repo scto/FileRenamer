@@ -33,9 +33,4 @@ THE SOFTWARE.
     	android:key="email_adress"
     	android:summary="@string/preference_personal_edittext_email_summary">
     </EditTextPreference>
-	<CheckBoxPreference
-		android:key="root_button"
-		android:title="@string/preference_personal_checkbox_root_title"
-		android:summary="@string/preference_personal_checkbox_root_summary"
-		android:defaultValue="true" />
 </PreferenceScreen>

@@ -44,6 +44,7 @@ public class AndroidFileBrowser extends ListActivity implements
 	private static Intent mIntent;
 	private static ActionBar mActionBar;
 	private static ActionMode mActionMode;
+	private static boolean mRootMode = false;
 	private static int mThemeId = 0;
 	
 	private enum DISPLAYMODE{ ABSOLUTE, RELATIVE; }
@@ -62,6 +63,8 @@ public class AndroidFileBrowser extends ListActivity implements
 		mSettings = Prefs.getSharedPreferences( this );
 		mSettings.registerOnSharedPreferenceChangeListener( this );
 
+		mRootMode = Prefs.getRootEnabled( this );
+		
 		if( Prefs.getThemeType( this ) == false )
 		{
 			mThemeId = R.style.AppTheme_Light;
@@ -145,6 +148,17 @@ public class AndroidFileBrowser extends ListActivity implements
 			}
 			updateTheme();
 		}
+		else if ("root_enabled".equals( key ) )
+		{
+			if( Prefs.getRootEnabled( this ) == false )
+			{
+				mRootMode = false;
+			}
+			else
+			{
+				mRootMode = true;
+			}			
+		}
 	}
 	
 	public void updateTheme()
@@ -155,9 +169,12 @@ public class AndroidFileBrowser extends ListActivity implements
 
 	private void browseToRoot( String strPath )
 	{
-		if( !new ShellCommand().canSU() )
+		if( mRootMode == true )
 		{
-			Toast.makeText( this, "SU not found", Toast.LENGTH_SHORT ).show();
+			if( !new ShellCommand().canSU() )
+			{
+				Toast.makeText( this, "SU not found", Toast.LENGTH_SHORT ).show();
+			}
 		}
 		browseTo( new File( strPath ) );
     }
@@ -202,12 +219,22 @@ public class AndroidFileBrowser extends ListActivity implements
 		// and the ".." == 'Up one level'
 		if( this.mCurrentDirectory.getParent() != null )
 		{
-			this.mDirectoryEntries.add( new AndroidFileBrowserFile( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ), true, "", "" ) );
-			//if( this.mCurrentDirectory.equals( this.mSdcard ) )
-			//{
+			if( mRootMode == true )
+			{
+				if( this.mCurrentDirectory.equals( this.mSdcard ) )
+				{
+					this.mDirectoryEntries.add( new AndroidFileBrowserFile( getString( R.string.up_one_level ), getResources().getDrawable( R.drawable.uponelevel ), true, "", "" ) );					
+				}
+			}
+			else
+			{
+				if( this.mCurrentDirectory.equals( this.mSdcard ) )
+				{
 
-			//}
+				}				
+			}
 		}
+
 		Drawable currentIcon = null;
 		boolean isFolder;
 		String permissions;
@@ -386,6 +413,16 @@ public class AndroidFileBrowser extends ListActivity implements
 		{
 			return "";
 		}
+	}
+
+	public static String getFileType( String fileName )
+	{      
+		return "File type: "+ fileName.substring( fileName.lastIndexOf( "." ) + 1 );
+	}
+
+	public static String getFileName( String fileName )
+	{
+		return fileName.substring( fileName.lastIndexOf( "/" ) + 1 );
 	}
 	
 	@Override

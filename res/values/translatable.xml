@@ -36,7 +36,7 @@ THE SOFTWARE.
     <string name="eula_refuse">Don\'t accept</string>
     <string name="disclaimer_title">Disclaimer</string>    
     <string name="disclaimer_accept">Accept</string>
-	
+
 	<!-- Main Activity (main screen) -->
 	<string name="tvDisplay">Menu</string>
 	<string name="bRename">Rename</string>
@@ -67,6 +67,10 @@ THE SOFTWARE.
 
 	<string name="dialog_whats_new_title">Update</string>
 	<string name="dialog_whats_new_message">
+		09. July 2012\tVersion 0.1.6\n- Reorganised the Sourcecode\n- Added 2 Themes more\n\n
+		03. July 2012\tVersion 0.1.5\n- Added Rootmode in Filebrowser\n\n
+		30. June 2012\tVersion 0.1.4\n- Fixed Filebrowser\n- Fixed Filebrowser icons\n\n
+		29. June 2012\tVersion 0.1.3\n- Extended Filebrowser\n\n
 		28. June 2012\tVersion 0.1.2\n- Fixed xml resources\n- Added 2 Themes\n\n
 		27. June 2012\tVersion 0.1.1\n- Dialogs are now Fragments\n\n
 		26. June 2012\tVersion 0.1.0\n- Fixed NullPointerException\n- Fixed ClassCastException\n\n
@@ -150,10 +154,7 @@ THE SOFTWARE.
 	<string name="preference_personal_edittext_name_title">Enter your Name</string>
 	<string name="preference_personal_edittext_name_summary">Enter your Name</string>
 	<string name="preference_personal_edittext_email_title">Enter your Name</string>
-	<string name="preference_personal_edittext_email_summary">Enter your Name</string>
-	<string name="preference_personal_checkbox_root_title">Root access</string>
-	<string name="preference_personal_checkbox_root_summary">Allow root access, but be careful, hope you know what you do</string>
-	
+	<string name="preference_personal_edittext_email_summary">Enter your Name</string>	
 	
 	<!-- Notification Preference -->
 	<string name="notifications">Notifications</string>

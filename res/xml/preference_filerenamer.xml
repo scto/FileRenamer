@@ -24,15 +24,9 @@ THE SOFTWARE.
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:persistent="true">
 	<CheckBoxPreference
-		android:key="check_root_access_on_startup"
+		android:key="root_enabled"
 		android:title="@string/check_root_access_on_startup_title"
 		android:summary="@string/check_root_access_on_startup_summary"
-		android:defaultValue="false" />
-	<com.scto.filerenamer.ListPreferenceSummary
-		android:key="root_access_mode"
-		android:title="@string/root_access_title"
-		android:entries="@array/root_access_entries"
-		android:entryValues="@array/root_access_values"
-		android:dependency="check_root_access_on_startup"
-		android:defaultValue="Grant" />
+		android:defaultValue="false">
+	</CheckBoxPreference>
 </PreferenceScreen>

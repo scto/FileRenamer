@@ -24,20 +24,19 @@ package com.scto.filerenamer;
 
 import android.app.*;
 import android.content.*;
-import android.media.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
 import android.view.*;
 import java.util.*;
+import android.widget.*;
  
 public class SplashActivity extends Activity
 {
  	private static final String TAG = SplashActivity.class.getSimpleName();
 	private static SharedPreferences mSettings;
-	MediaPlayer ourSong;
-	boolean music, splash;
-	Thread mSplashThread;
+	private ViewSwitcher mViewSwitcher;
+	boolean mSplash;
 	
     /** Called when the activity is first created. */
     @Override
@@ -45,85 +44,95 @@ public class SplashActivity extends Activity
 	{
         super.onCreate(savedInstanceState);
 
-		mSettings = Prefs.getSharedPreferences( getBaseContext() );
+		mSettings = Prefs.getSharedPreferences( getApplicationContext() );
 		if( Prefs.getSplashScreen( getApplicationContext() ) == true )
 		{
-			setContentView( R.layout.splash );
-			
-			if( Prefs.getSplashMusic( getApplicationContext() ) == true )
-			{
-				ourSong = MediaPlayer.create( SplashActivity.this, R.raw.splashsound );
-				ourSong.start();
-			}
-			mSplashThread = new Thread()
-			{
-				public void run()
-				{
-					try
-					{
-						if( splash == true )
-						{
-							if( music == true )
-							{
-								sleep( 14000 );
-							}
-							else
-							{
-								sleep( 3000 );
-							}
-						}
-						else
-						{
-							sleep( 0 );
-						}
-					}
-					catch( InterruptedException e )
-					{
-						e.printStackTrace();
-					}
-					finally
-					{
-						Intent openMainActivity = new Intent( "com.scto.filerenamer.MAINACTIVITY" );
-						startActivity( openMainActivity );
-					}
-				}
-			};
-			mSplashThread.start();			
+			mSplash = true;
+			new LoadViewTask().execute();			
 		}
 		else
 		{
 			Intent openMainActivity = new Intent( "com.scto.filerenamer.MAINACTIVITY" );
 			startActivity( openMainActivity );
-		}
+		}		
 	}
+	
+    private class LoadViewTask extends AsyncTask< Void, Integer, Void >
+    {
+    	private TextView mTextView;
+    	private ProgressBar mProgressBar;
+
+		@Override
+		protected void onPreExecute() 
+		{
+	        mViewSwitcher = new ViewSwitcher( SplashActivity.this );
+			mViewSwitcher.addView( ViewSwitcher.inflate( SplashActivity.this, R.layout.splash, null ) );
+
+			mTextView = ( TextView ) mViewSwitcher.findViewById( R.id.TextViewProgress );
+			mProgressBar = ( ProgressBar ) mViewSwitcher.findViewById( R.id.ProgressBar );
+			mProgressBar.setMax( 100 );
+
+			setContentView( mViewSwitcher );
+		}
+
+		@Override
+		protected Void doInBackground( Void... params ) 
+		{
+			try 
+			{
+				synchronized( this ) 
+				{
+					int counter = 0;
+					while( counter <= 100 )
+					{
+						this.wait( 50 );
+						counter++;
+						publishProgress( counter );
+					}
+				}
+			} 
+			catch( InterruptedException e ) 
+			{
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate( Integer... values ) 
+		{
+			if( values[ 0 ] <= 100 )
+			{
+				mTextView.setText( "Progress: " + Integer.toString( values[ 0 ] ) + "%" );
+				mProgressBar.setProgress( values[ 0 ] );
+			}
+		}
+
+		@Override
+		protected void onPostExecute( Void result ) 
+		{
+			Intent openMainActivity = new Intent( "com.scto.filerenamer.MAINACTIVITY" );
+			startActivity( openMainActivity );
+		}
+    }
+
+    @Override
+    public void onBackPressed() 
+    {
+    	if( mViewSwitcher.getDisplayedChild() == 0 )
+    	{
+    		return;
+    	}
+    	else
+    	{
+    		super.onBackPressed();
+    	}
+    }
 	
 	@Override	
 	protected void onPause()
 	{
 		super.onPause();
-		if( splash == true )
-		{
-			if( music == true )
-			{
-				ourSong.release();
-			}			
-		}
 		finish();
 	}
-	
-	/**
-     * Processes splash screen touch events
-     */
-    @Override
-    public boolean onTouchEvent( MotionEvent evt )
-    {
-        if( evt.getAction() == MotionEvent.ACTION_DOWN )
-        {
-            synchronized( mSplashThread )
-			{
-                mSplashThread.notifyAll();
-            }
-        }
-        return true;
-    }
 }

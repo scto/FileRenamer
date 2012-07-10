@@ -20,9 +20,55 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-	android:background="@drawable/splash_background" >
-</LinearLayout>
+	android:background="#6B8AAD">
+
+	<ImageView
+        android:id="@+id/Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+	</ImageView>
+	
+    <TextView
+        android:id="@+id/TextViewLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ProgressBar"
+        android:layout_centerHorizontal="true"
+        android:text="Loading, please wait..."
+        android:textAppearance="?android:attr/textAppearanceMedium">
+	</TextView>
+	
+    <ProgressBar
+        android:id="@+id/ProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+		android:layout_marginBottom="20dip"
+		android:layout_marginLeft="20dip"
+		android:layout_marginRight="20dip"
+		android:layout_marginTop="10dip">
+	</ProgressBar>
+	
+    <TextView
+        android:id="@+id/TextViewProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ProgressBar"
+        android:layout_centerHorizontal="true"
+        android:text="Progress: 0%"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="#ffffffff"
+		android:shadowColor="#000000"
+		android:shadowDx="2.0"
+		android:shadowDy="2.0"
+		android:shadowRadius="3.0">
+	</TextView>
+	
+</RelativeLayout>

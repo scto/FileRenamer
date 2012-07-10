@@ -25,12 +25,14 @@ package com.scto.filerenamer;
 import android.annotation.*;
 import android.app.*;
 import android.content.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.os.*;
 import android.preference.*;
 import android.util.*;
 import android.view.*;
 import android.webkit.*;
+import android.widget.*;
 import java.util.*;
 
 public class PreferencesActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -120,6 +122,21 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 	{
 		super.onStart();
 	}
+
+	@Override
+	public void onConfigurationChanged( Configuration newConfig )
+	{
+		super.onConfigurationChanged( newConfig );
+		// Checks the orientation of the screen
+		if( newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE )
+		{
+			Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+		}
+		else if( newConfig.orientation == Configuration.ORIENTATION_PORTRAIT )
+		{
+			Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+		}
+	}
 	
 	@TargetApi(11)
 	@Override
@@ -159,8 +176,7 @@ public class PreferencesActivity extends PreferenceActivity implements SharedPre
 		{
 			super.onCreate( savedInstanceState );
 			addPreferencesFromResource( R.xml.preference_personal );
-		}
-		
+		}		
 	}
 
 	@TargetApi(11)
